@@ -1,8 +1,8 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Promovează-te pe Bonusmax (RO)",
-  description: "Sponsored placements, listări și colaborări pentru operatori licențiați ONJN și agenții.",
+  title: "Promoveaza-te pe Bonusmax (RO)",
+  description: "Sponsored placements, listari ?i colaborari pentru operatori licen?ia?i ONJN ?i agen?ii.",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
-import { hashIp, scoreLead, verifyForm } from "@/src/lib/partners";
+import { hashIp, scoreLead, verifyForm } from "@/lib/partners";
 import { headers } from "next/headers";
 
 async function notifySlack(payload: any) {

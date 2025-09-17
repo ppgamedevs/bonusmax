@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import { headers } from "next/headers";
-import { hashIp, makeSlug, cleanExcerpt } from "@/src/lib/feedy";
+import { hashIp, makeSlug, cleanExcerpt } from "@/lib/feedy";
 
 export async function POST(req: Request) {
   const h = headers();

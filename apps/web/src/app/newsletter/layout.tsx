@@ -1,7 +1,7 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Newsletter săptămânal (RO)",
+  title: "Newsletter saptam�nal (RO)",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

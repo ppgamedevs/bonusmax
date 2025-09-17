@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import Parser from "rss-parser";
 import * as cheerio from "cheerio";
-import { makeSlug, cleanExcerpt } from "@/src/lib/feedy";
+import { makeSlug, cleanExcerpt } from "@/lib/feedy";
 
 function ok(url: URL) {
   return !!process.env.CRON_KEY && url.searchParams.get("key") === process.env.CRON_KEY;
