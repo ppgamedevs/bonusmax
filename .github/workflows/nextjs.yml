@@ -1,21 +1,40 @@
+<<<<<<< HEAD
 ﻿# .github/workflows/nextjs.yml
 name: Deploy Next.js site to Pages
+=======
+# .github/workflows/deploy.yml
+name: Deploy Next.js site to Pages
+
+>>>>>>> 9de55a373dfc1bf93d5731a1a5536ca20e38b306
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9de55a373dfc1bf93d5731a1a5536ca20e38b306
 permissions:
   contents: read
   pages: write
   id-token: write
+<<<<<<< HEAD
 concurrency:
   group: "pages"
   cancel-in-progress: false
+=======
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+>>>>>>> 9de55a373dfc1bf93d5731a1a5536ca20e38b306
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
+<<<<<<< HEAD
         working-directory: apps/web
     steps:
       - name: Checkout
@@ -24,10 +43,18 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 8
+=======
+        working-directory: apps/web   # 👈 your app path
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v4
+
+>>>>>>> 9de55a373dfc1bf93d5731a1a5536ca20e38b306
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+<<<<<<< HEAD
           cache: "pnpm"
       - name: Install deps
         run: pnpm install --frozen-lockfile
@@ -47,6 +74,49 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+=======
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install deps (pnpm)
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          # optional when you already manage next.config.js yourself
+          static_site_generator: next
+
+      - name: Build (Next export via next.config.js)
+        run: pnpm build
+        # If you rely on env var instead of next.config.js, uncomment:
+        # env:
+        #   NEXT_PUBLIC_BASE_PATH: /bonusmax
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/out   # 👈 points to the exported folder
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+>>>>>>> 9de55a373dfc1bf93d5731a1a5536ca20e38b306
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
