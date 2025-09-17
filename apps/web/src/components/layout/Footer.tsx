@@ -1,4 +1,5 @@
 import { PaymentRow } from "../PaymentIcons";
+import Link from 'next/link';
 
 export default function Footer() {
   const link =
@@ -30,26 +31,26 @@ export default function Footer() {
             <span className="text-lg font-semibold">Bonusmax</span>
           </div>
           <p className="mt-3 text-sm text-zinc-400">
-            ComparaÃˆâ€ºii de bonusuri, verificate Ãˆâ„¢i actualizate.
+            ComparaÃƒË†Ã¢â‚¬Âºii de bonusuri, verificate ÃƒË†Ã¢â€žÂ¢i actualizate.
           </p>
 
           {/* Social (inline SVG, monochrome + glow on hover) */}
           <div className="mt-5 flex items-center gap-4">
-            <a aria-label="X" href="/" className="group" rel="noopener">
+            <Link aria-label="X" href="/" className="group" rel="noopener">
               <XIcon className={glow}/>
-            </a>
-            <a aria-label="Facebook" href="/" className="group" rel="noopener">
+            </Link>
+            <Link aria-label="Facebook" href="/" className="group" rel="noopener">
               <FacebookIcon className={glow}/>
-            </a>
-            <a aria-label="LinkedIn" href="/" className="group" rel="noopener">
+            </Link>
+            <Link aria-label="LinkedIn" href="/" className="group" rel="noopener">
               <LinkedInIcon className={glow}/>
-            </a>
-            <a aria-label="Instagram" href="/" className="group" rel="noopener">
+            </Link>
+            <Link aria-label="Instagram" href="/" className="group" rel="noopener">
               <InstagramIcon className={glow}/>
-            </a>
-            <a aria-label="YouTube" href="/" className="group" rel="noopener">
+            </Link>
+            <Link aria-label="YouTube" href="/" className="group" rel="noopener">
               <YouTubeIcon className={glow}/>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -59,10 +60,10 @@ export default function Footer() {
             Legal & Compliance
           </h4>
           <ul className="space-y-2">
-            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener">ONJN Ã¢â‚¬â€œ Oficiul NaÃˆâ€ºional pentru Jocuri de Noroc</a></li>
-            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener">ANPC Ã¢â‚¬â€œ ProtecÃˆâ€ºia Consumatorilor</a></li>
-            <li><a className={link} href="/politica-confidentialitate">GDPR / Politica de confidenÃˆâ€ºialitate</a></li>
-            <li><a className={link} href="/termeni-si-conditii">Termeni Ãˆâ„¢i condiÃˆâ€ºii</a></li>
+            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener">ONJN ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Oficiul NaÃƒË†Ã¢â‚¬Âºional pentru Jocuri de Noroc</Link></li>
+            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener">ANPC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ ProtecÃƒË†Ã¢â‚¬Âºia Consumatorilor</Link></li>
+            <li><Link className={link} href="/politica-confidentialitate">GDPR / Politica de confidenÃƒË†Ã¢â‚¬Âºialitate</Link></li>
+            <li><Link className={link} href="/termeni-si-conditii">Termeni ÃƒË†Ã¢â€žÂ¢i condiÃƒË†Ã¢â‚¬Âºii</Link></li>
           </ul>
         </div>
 
@@ -72,10 +73,10 @@ export default function Footer() {
             Support
           </h4>
           <ul className="space-y-2">
-            <li><a className={link} href="/help">Help Center</a></li>
-            <li><a className={link} href="/contact">Contact</a></li>
-            <li><a className={link} href="/ghiduri">Ghiduri &amp; FAQ</a></li>
-            <li><a className={link} href="/blog">Blog</a></li>
+            <li><Link className={link} href="/help">Help Center</Link></li>
+            <li><Link className={link} href="/contact">Contact</Link></li>
+            <li><Link className={link} href="/ghiduri">Ghiduri &amp; FAQ</Link></li>
+            <li><Link className={link} href="/blog">Blog</Link></li>
           </ul>
         </div>
 
@@ -92,15 +93,15 @@ export default function Footer() {
           </div>
 
           <p className="mt-3 text-xs text-zinc-400 leading-5">
-            ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN.
-            JoacÃ„Æ’ responsabil. Jocurile de noroc implicÃ„Æ’ riscuri financiare.
+            ConÃƒË†Ã¢â‚¬Âºinut comercial. Ofertele sunt doar pentru operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN.
+            JoacÃƒâ€žÃ†â€™ responsabil. Jocurile de noroc implicÃƒâ€žÃ†â€™ riscuri financiare.
           </p>
         </div>
       </div>
 
       <div className="border-t border-zinc-800">
         <div className="mx-auto max-w-7xl px-6 py-6 text-center text-xs text-zinc-500">
-          Ã‚Â© 2025 Bonusmax. Toate drepturile rezervate.
+          Ãƒâ€šÃ‚Â© 2025 Bonusmax. Toate drepturile rezervate.
         </div>
       </div>
     </footer>
@@ -170,7 +171,7 @@ function Badge18Plus() {
         <circle cx="12" cy="12" r="10" fill="currentColor" opacity=".12"/>
         <text x="50%" y="56%" textAnchor="middle" fontSize="11" fill="white" fontWeight="700">18+</text>
       </svg>
-      <span className="text-xs text-zinc-300">JoacÃ„Æ’ responsabil</span>
+      <span className="text-xs text-zinc-300">JoacÃƒâ€žÃ†â€™ responsabil</span>
     </div>
   );
 }

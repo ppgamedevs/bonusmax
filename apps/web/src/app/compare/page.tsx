@@ -10,9 +10,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   if (ids.length === 0) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-2xl font-bold">ComparaÃˆâ€ºie</h1>
-        <p className="mt-2 text-sm opacity-80">SelecteazÃ„Æ’ oferte cu butonul Ã¢â‚¬Å¾ComparaÃ¢â‚¬Â.</p>
-        <a className="mt-4 inline-block text-sm underline" href="/">ÃƒÅ½napoi la homepage</a>
+        <h1 className="text-2xl font-bold">ComparaÃƒË†Ã¢â‚¬Âºie</h1>
+        <p className="mt-2 text-sm opacity-80">SelecteazÃƒâ€žÃ†â€™ oferte cu butonul ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ComparaÃƒÂ¢Ã¢â€šÂ¬Ã‚Â.</p>
+        <Link className="mt-4 inline-block text-sm underline" href="/">ÃƒÆ’Ã…Â½napoi la homepage</Link>
         <PopulateFromLocal />
       </main>
     );
@@ -24,10 +24,10 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   // If some IDs were filtered out, continue with what we have
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">ComparaÃˆâ€ºie oferte</h1>
+      <h1 className="text-2xl font-bold">ComparaÃƒË†Ã¢â‚¬Âºie oferte</h1>
       <div className="mt-2 flex items-center justify-between">
-        <a href="#main" className="text-sm underline">ÃƒÅ½napoi sus</a>
-        <a href="/" className="text-sm underline">ÃƒÅ½napoi la homepage</a>
+        <a href="#main" className="text-sm underline">ÃƒÆ’Ã…Â½napoi sus</Link>
+        <Link href="/" className="text-sm underline">ÃƒÆ’Ã…Â½napoi la homepage</Link>
       </div>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full text-sm">
@@ -40,7 +40,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                   <br />
                   <a className="underline" href={`/bonus/${o.id}`}>
                     {o.title}
-                  </a>
+                  </Link>
                 </th>
               ))}
             </tr>
@@ -91,8 +91,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
               {offers.map((o) => (
                 <td key={o.id} className="p-2">
                   <a className="rounded border px-3 py-1" href={`/go/${o.id}`} rel="nofollow sponsored">
-                    RevendicÃ„Æ’
-                  </a>
+                    RevendicÃƒâ€žÃ†â€™
+                  </Link>
                 </td>
               ))}
             </tr>

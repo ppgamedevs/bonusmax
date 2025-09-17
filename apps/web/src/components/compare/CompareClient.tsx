@@ -1,3 +1,4 @@
+import Link from 'next/link';
 "use client";
 import { useEffect, useState } from "react";
 import CompareTable, { type OfferLite } from "./CompareTable";
@@ -33,7 +34,7 @@ export default function CompareClient({ hasServer }: { hasServer: boolean }) {
   }, [hasServer]);
 
   if (hasServer) return null;
-  if (offers === null) return <p className="text-sm opacity-70">Se ÃƒÂ®ncarcÃ„Æ’ comparaÃˆâ€ºiaÃ¢â‚¬Â¦</p>;
+  if (offers === null) return <p className="text-sm opacity-70">Se ÃƒÆ’Ã‚Â®ncarcÃƒâ€žÃ†â€™ comparaÃƒË†Ã¢â‚¬ÂºiaÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦</p>;
 
   return (
     <div className="mt-6">
@@ -49,11 +50,11 @@ export default function CompareClient({ hasServer }: { hasServer: boolean }) {
           }}
           className="rounded border px-3 py-1.5 text-sm underline"
         >
-          ReseteazÃ„Æ’ comparaÃˆâ€ºia
+          ReseteazÃƒâ€žÃ†â€™ comparaÃƒË†Ã¢â‚¬Âºia
         </button>
-        <a href="/" className="text-sm underline">
-          AdaugÃ„Æ’ mai multe oferte
-        </a>
+        <Link href="/" className="text-sm underline">
+          AdaugÃƒâ€žÃ†â€™ mai multe oferte
+        </Link>
       </div>
     </div>
   );
