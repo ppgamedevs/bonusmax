@@ -28,14 +28,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
 
-      # Ensure pnpm exists on PATH (Corepack manages it)
       - name: Enable corepack & pnpm
         run: |
           corepack enable
           corepack prepare pnpm@9.0.0 --activate || corepack prepare pnpm@8.15.8 --activate
           pnpm -v
+
+      - name: Get pnpm store path
+        id: pnpm-cache
+        run: echo "dir=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
@@ -45,12 +55,10 @@ jobs:
         with:
           static_site_generator: next
 
-      # With output: 'export', next build generates "out/"
       - name: Build
         run: pnpm build
 
-      # Custom domain at root: create CNAME so Pages serves https://bonusmax.ro
-      - name: Write CNAME
+      - name: Write CNAME for custom domain
         run: echo "bonusmax.ro" > CNAME
         working-directory: apps/web/out
 
