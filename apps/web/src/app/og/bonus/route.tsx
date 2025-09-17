@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+import 'server-only';
 import { ImageResponse } from "next/og";
 import { getOfferById } from "@bonusmax/lib";
 
