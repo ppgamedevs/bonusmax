@@ -24,13 +24,13 @@ export default function HelpSearch({
         type="text"
         value={query}
         onChange={(e) => onQueryChange(e.target.value)}
-        placeholder="Caută în Help Center..."
+        placeholder="CautÃ„Æ’ ÃƒÂ®n Help Center..."
         className="w-full px-4 py-3 rounded-full border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       {showDropdown && (
         <div className="absolute top-full mt-2 w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 max-h-80 overflow-y-auto shadow-lg">
           {filteredArticles.length === 0 && filteredCategories.length === 0 ? (
-            <p className="text-zinc-400">Nu am găsit rezultate. Încearcă alt cuvânt sau vezi categoriile.</p>
+            <p className="text-zinc-400">Nu am gÃ„Æ’sit rezultate. ÃƒÅ½ncearcÃ„Æ’ alt cuvÃƒÂ¢nt sau vezi categoriile.</p>
           ) : (
             <>
               {filteredCategories.map(cat => (

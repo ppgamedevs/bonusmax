@@ -17,9 +17,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Dezabonare</h1>
       {ok ? (
-        <p className="mt-2">Ai fost dezabonat(ă). Ne pare rău să te vedem plecând!</p>
+        <p className="mt-2">Ai fost dezabonat(Ã„Æ’). Ne pare rÃ„Æ’u sÃ„Æ’ te vedem plecÃƒÂ¢nd!</p>
       ) : (
-        <p className="mt-2">Email invalid sau lipsă.</p>
+        <p className="mt-2">Email invalid sau lipsÃ„Æ’.</p>
       )}
     </main>
   );

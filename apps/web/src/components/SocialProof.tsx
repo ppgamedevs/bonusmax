@@ -11,8 +11,8 @@ export default async function SocialProof() {
   return (
     <section className="mx-auto mt-6 max-w-5xl px-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Stat label="Clicks urmărite (30 zile)" value={new Intl.NumberFormat("ro-RO").format(t.clicks30d)} />
-        <Stat label="Operatori licențiați" value={String(t.operators)} />
+        <Stat label="Clicks urmÃ„Æ’rite (30 zile)" value={new Intl.NumberFormat("ro-RO").format(t.clicks30d)} />
+        <Stat label="Operatori licenÃˆâ€ºiaÃˆâ€ºi" value={String(t.operators)} />
         <Stat label="Oferte active" value={String(t.offers)} />
       </div>
     </section>

@@ -87,7 +87,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 rounded bg-black px-3 py-2 text-white"
         >
-          Sari la conținut
+          Sari la conÃˆâ€ºinut
         </a>
         <header className="sticky top-0 z-50 border-b border-white/20 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:backdrop-blur-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_20px_rgba(0,0,0,0.06)] dark:border-white/10 dark:bg-neutral-900/55">
           <div className="container flex h-14 items-center justify-between gap-3">

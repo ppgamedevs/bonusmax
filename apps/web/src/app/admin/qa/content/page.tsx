@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 – Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin — Content QA</h1>
+        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€ Content QA</h1>
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
           <a
             className="rounded border px-2 py-1"
@@ -59,7 +59,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
               <th className="p-2 text-left">Mesaj</th>
               <th className="p-2 text-left">Entity</th>
               <th className="p-2 text-left">Creat</th>
-              <th className="p-2">Acțiuni</th>
+              <th className="p-2">AcÃˆâ€ºiuni</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                 <td className="p-2">{i.severity}</td>
                 <td className="p-2">{i.ruleId}</td>
                 <td className="p-2">{i.message}</td>
-                <td className="p-2">{i.entityType} · {i.entityId}</td>
+                <td className="p-2">{i.entityType} Ã‚Â· {i.entityId}</td>
                 <td className="p-2">{new Date(i.createdAt).toLocaleString("ro-RO")}</td>
                 <td className="p-2 text-center">
                   <form action={resolveIssue}>
@@ -83,7 +83,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         </table>
 
         <p className="mt-4 text-xs opacity-60">
-          Reguli: FWD-001/002 (formulări interzise), WR-001, DEP-001, DATE-001, LIC-001, SEO-001/002, DISC-001, H1-001.
+          Reguli: FWD-001/002 (formulÃ„Æ’ri interzise), WR-001, DEP-001, DATE-001, LIC-001, SEO-001/002, DISC-001, H1-001.
         </p>
       </main>
     </Guard>

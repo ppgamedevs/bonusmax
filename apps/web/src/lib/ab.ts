@@ -14,5 +14,5 @@ export function getVariant(key: string, variants: string[] = ["A", "B"]): string
 }
 
 export function ctaLabel(variant: string): string {
-  return variant === "B" ? "Ia bonusul acum" : "Revendică bonusul";
+  return variant === "B" ? "Ia bonusul acum" : "RevendicÃ„Æ’ bonusul";
 }

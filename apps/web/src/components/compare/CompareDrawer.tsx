@@ -35,7 +35,7 @@ export default function CompareDrawer({
       id="compare-drawer"
       role="dialog"
       aria-modal="true"
-      aria-label="Comparație oferte"
+      aria-label="ComparaÃˆâ€ºie oferte"
       className={["fixed inset-0 z-50 transition", open ? "opacity-100" : "pointer-events-none opacity-0"].join(" ")}
     >
       <div ref={ref} className="absolute inset-0 bg-black/40 backdrop-blur-sm" onMouseDown={onOverlayClick} />
@@ -48,14 +48,14 @@ export default function CompareDrawer({
         style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
       >
         <div className="mb-2 flex items-center justify-between">
-          <h3 className="text-base font-semibold">Comparație</h3>
+          <h3 className="text-base font-semibold">ComparaÃˆâ€ºie</h3>
           <button onClick={onClose} className="rounded px-2 py-1 text-sm underline focus-accent">
-            Închide
+            ÃƒÅ½nchide
           </button>
         </div>
 
         {items.length === 0 ? (
-          <p className="text-sm opacity-80">Nu ai oferte în listă.</p>
+          <p className="text-sm opacity-80">Nu ai oferte ÃƒÂ®n listÃ„Æ’.</p>
         ) : (
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
             {items.map((it) => (
@@ -73,10 +73,10 @@ export default function CompareDrawer({
                 </div>
                 <button
                   onClick={() => onRemove(it.id)}
-                  aria-label={`Elimină ${it.brand}`}
+                  aria-label={`EliminÃ„Æ’ ${it.brand}`}
                   className="rounded border px-2 py-1 text-xs underline hover:bg-white/10"
                 >
-                  Elimină
+                  EliminÃ„Æ’
                 </button>
               </li>
             ))}
@@ -84,13 +84,13 @@ export default function CompareDrawer({
         )}
 
         <div className="mt-3 flex items-center justify-between">
-          <p className="text-[11px] opacity-60">Compară maximum 4 oferte odată. 18+ • T&C • Publicitate</p>
+          <p className="text-[11px] opacity-60">ComparÃ„Æ’ maximum 4 oferte odatÃ„Æ’. 18+ Ã¢â‚¬Â¢ T&C Ã¢â‚¬Â¢ Publicitate</p>
           <button
             onClick={onCompare}
             disabled={items.length < 2}
             className="rounded-xl border border-white/15 px-4 py-2 text-sm font-semibold underline disabled:opacity-50 focus-accent"
           >
-            Compară acum
+            ComparÃ„Æ’ acum
           </button>
         </div>
       </div>

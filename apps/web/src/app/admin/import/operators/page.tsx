@@ -38,13 +38,13 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
       body: JSON.stringify({ items }),
     });
     const j = await r.json();
-    alert(j.ok ? `Created: ${j.created} • Updated: ${j.updated}` : "Commit failed");
+    alert(j.ok ? `Created: ${j.created} Ã¢â‚¬Â¢ Updated: ${j.updated}` : "Commit failed");
   }
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Admin — Import operatori</h1>
-      <p className="mt-2 text-sm opacity-80">Încarcă CSV sau indică un URL CSV (Google Sheets „Publish to web”).</p>
+      <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€ Import operatori</h1>
+      <p className="mt-2 text-sm opacity-80">ÃƒÅ½ncarcÃ„Æ’ CSV sau indicÃ„Æ’ un URL CSV (Google Sheets Ã¢â‚¬Å¾Publish to webÃ¢â‚¬Â).</p>
 
       <section className="mt-4 grid gap-4 md:grid-cols-2">
         <form onSubmit={uploadFile} className="rounded border p-3">
@@ -64,7 +64,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <button className="mt-3 rounded border px-3 py-2" onClick={fetchUrl}>
             Preview
           </button>
-          <p className="mt-2 text-xs opacity-70">Sheets: File → Share → Publish to web → CSV; folosește linkul de export.</p>
+          <p className="mt-2 text-xs opacity-70">Sheets: File Ã¢â€ â€™ Share Ã¢â€ â€™ Publish to web Ã¢â€ â€™ CSV; foloseÃˆâ„¢te linkul de export.</p>
         </div>
       </section>
 
@@ -107,9 +107,9 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                       <td className="p-2">CREATE</td>
                       <td className="p-2">{r.name}</td>
                       <td className="p-2">{r.slug}</td>
-                      <td className="p-2">{r.website || "—"}</td>
-                      <td className="p-2">{r.onjnLicenseId || "—"}</td>
-                      <td className="p-2">{r.onjnLicenseExpiry ? new Date(r.onjnLicenseExpiry).toLocaleDateString("ro-RO") : "—"}</td>
+                      <td className="p-2">{r.website || "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{r.onjnLicenseId || "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{r.onjnLicenseExpiry ? new Date(r.onjnLicenseExpiry).toLocaleDateString("ro-RO") : "Ã¢â‚¬â€"}</td>
                       <td className="p-2">{r.isLicensedRO ? "DA" : "NU"}</td>
                     </tr>
                   );
@@ -120,12 +120,12 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                       <td className="p-2">UPDATE</td>
                       <td className="p-2">{p.before.name}</td>
                       <td className="p-2">{p.patch.slug ?? p.before.slug}</td>
-                      <td className="p-2">{p.patch.website ?? p.before.website ?? "—"}</td>
-                      <td className="p-2">{p.patch.onjnLicenseId ?? p.before.onjnLicenseId ?? "—"}</td>
+                      <td className="p-2">{p.patch.website ?? p.before.website ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.patch.onjnLicenseId ?? p.before.onjnLicenseId ?? "Ã¢â‚¬â€"}</td>
                       <td className="p-2">
                         {(p.patch.onjnLicenseExpiry ?? p.before.onjnLicenseExpiry)
                           ? new Date(p.patch.onjnLicenseExpiry ?? p.before.onjnLicenseExpiry).toLocaleDateString("ro-RO")
-                          : "—"}
+                          : "Ã¢â‚¬â€"}
                       </td>
                       <td className="p-2">{(p.patch.isLicensedRO ?? p.before.isLicensedRO) ? "DA" : "NU"}</td>
                     </tr>
@@ -135,19 +135,19 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                   return (
                     <tr key={i} className="border-t opacity-70">
                       <td className="p-2">SKIP</td>
-                      <td className="p-2">{p.row.name ?? "—"}</td>
-                      <td className="p-2">{p.row.slug ?? "—"}</td>
-                      <td className="p-2">{p.row.website ?? "—"}</td>
-                      <td className="p-2">{p.row.onjnLicenseId ?? "—"}</td>
-                      <td className="p-2">{p.row.onjnLicenseExpiry ?? "—"}</td>
-                      <td className="p-2">{p.row.isLicensed ?? "—"}</td>
+                      <td className="p-2">{p.row.name ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.slug ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.website ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.onjnLicenseId ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.onjnLicenseExpiry ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.isLicensed ?? "Ã¢â‚¬â€"}</td>
                     </tr>
                   );
                 }
                 return (
                   <tr key={i} className="border-t bg-rose-50/80">
                     <td className="p-2">INVALID</td>
-                    <td className="p-2">{p.row?.name ?? "—"}</td>
+                    <td className="p-2">{p.row?.name ?? "Ã¢â‚¬â€"}</td>
                     <td className="p-2" colSpan={5}>
                       {p.reason}
                     </td>

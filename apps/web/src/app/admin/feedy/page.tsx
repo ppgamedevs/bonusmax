@@ -24,10 +24,10 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Feedy — Review</h1>
+        <h1 className="text-2xl font-bold">Feedy Ã¢â‚¬â€ Review</h1>
 
         <section className="mt-6">
-          <h2 className="text-lg font-semibold">În așteptare</h2>
+          <h2 className="text-lg font-semibold">ÃƒÅ½n aÃˆâ„¢teptare</h2>
           <ul className="mt-2 space-y-2">
             {pending.map((i: any) => (
               <li key={i.id} className="rounded border p-3">

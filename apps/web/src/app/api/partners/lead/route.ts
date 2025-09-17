@@ -10,7 +10,7 @@ async function notifySlack(payload: any) {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      text: `New B2B lead: ${payload.companyName} • ${payload.email} • budget: ${payload.monthlyBudget || "-"} RON • goal: ${payload.goal}`,
+      text: `New B2B lead: ${payload.companyName} Ã¢â‚¬Â¢ ${payload.email} Ã¢â‚¬Â¢ budget: ${payload.monthlyBudget || "-"} RON Ã¢â‚¬Â¢ goal: ${payload.goal}`,
     }),
   }).catch(() => {});
 }

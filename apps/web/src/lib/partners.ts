@@ -5,7 +5,7 @@ export function hashIp(ip: string, ua?: string | null) {
   return crypto.createHash("sha256").update(`${ip}|${ua || ""}|${salt}`).digest("hex");
 }
 
-// scor simplu: buget + țintă + licență + .ro
+// scor simplu: buget + Ãˆâ€ºintÃ„Æ’ + licenÃˆâ€ºÃ„Æ’ + .ro
 export function scoreLead(input: {
   monthlyBudget?: number | null;
   goal?: string;

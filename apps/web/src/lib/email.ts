@@ -25,24 +25,24 @@ export async function createOrRefreshPending(email: string) {
 export async function sendConfirmEmail(to: string, rawToken: string, subscriberId: string) {
   const url = absoluteUrl(`/alerte-bonusuri/confirm?token=${encodeURIComponent(rawToken)}`);
   const htmlBody = `
-    <p>Confirmă abonarea la <strong>alerte bonusuri</strong> Bonusmax.</p>
-    <p><a href="${url}" style="display:inline-block;padding:10px 14px;border:1px solid #111;border-radius:8px;text-decoration:none">Confirmă abonarea</a></p>
+    <p>ConfirmÃ„Æ’ abonarea la <strong>alerte bonusuri</strong> Bonusmax.</p>
+    <p><a href="${url}" style="display:inline-block;padding:10px 14px;border:1px solid #111;border-radius:8px;text-decoration:none">ConfirmÃ„Æ’ abonarea</a></p>
     <p>Sau deschide: ${url}</p>
     <img src="${absoluteUrl(`/i/email/open?sid=${subscriberId}`)}" width="1" height="1" alt="" />
   `;
-  const html = emailLayout("Confirmă abonarea", htmlBody).replace("__UNSUB__", "");
-  await sendEmail({ to, subject: "Confirmă abonarea la alertele Bonusmax", html, text: plain(html) });
+  const html = emailLayout("ConfirmÃ„Æ’ abonarea", htmlBody).replace("__UNSUB__", "");
+  await sendEmail({ to, subject: "ConfirmÃ„Æ’ abonarea la alertele Bonusmax", html, text: plain(html) });
 }
 
 export async function sendWeeklyDigest(to: string, subscriberId: string, offers: Array<{id:string,title:string,operator:{name:string}}> ) {
-  const items = offers.map(o => `<li><a href="${absoluteUrl(`/e/click?sid=${subscriberId}&oid=${o.id}`)}" rel="nofollow" style="text-decoration:none">${o.operator.name} — ${o.title}</a></li>`).join("");
+  const items = offers.map(o => `<li><a href="${absoluteUrl(`/e/click?sid=${subscriberId}&oid=${o.id}`)}" rel="nofollow" style="text-decoration:none">${o.operator.name} Ã¢â‚¬â€ ${o.title}</a></li>`).join("");
   const htmlBody = `
-    <p>Iată top oferte din această săptămână:</p>
+    <p>IatÃ„Æ’ top oferte din aceastÃ„Æ’ sÃ„Æ’ptÃ„Æ’mÃƒÂ¢nÃ„Æ’:</p>
     <ul>${items}</ul>
     <p>Vezi mai multe pe <a href="${absoluteUrl("/")}">Bonusmax</a>.</p>
     <img src="${absoluteUrl(`/i/email/open?sid=${subscriberId}`)}" width="1" height="1" alt="" />
   `;
-  const html = emailLayout("Top bonusuri – Săptămâna aceasta", htmlBody).replace("__UNSUB__", "__UNSUB__");
+  const html = emailLayout("Top bonusuri Ã¢â‚¬â€œ SÃ„Æ’ptÃ„Æ’mÃƒÂ¢na aceasta", htmlBody).replace("__UNSUB__", "__UNSUB__");
   return { html, text: plain(html) };
 }
 

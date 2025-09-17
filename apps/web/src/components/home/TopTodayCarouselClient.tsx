@@ -66,7 +66,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
                   heroImageUrl={o.heroImageUrl || null}
                 />
                 <div className="mt-2 text-[11px] opacity-80">
-                  <span className="chip-accent">🔥 {claims} revendicări azi</span>
+                  <span className="chip-accent">Ã°Å¸â€Â¥ {claims} revendicÃ„Æ’ri azi</span>
                 </div>
               </motion.div>
             );
@@ -81,7 +81,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
           className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/70 text-black shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/70 dark:text-white"
           onClick={() => { const el = scrollerRef.current; if (!el) return; el.scrollBy({ left: -Math.max(320, el.clientWidth * 0.7), behavior: 'smooth' }); }}
         >
-          ‹
+          Ã¢â‚¬Â¹
         </button>
         <button
           type="button"
@@ -89,7 +89,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
           className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/70 text-black shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/70 dark:text-white"
           onClick={() => { const el = scrollerRef.current; if (!el) return; el.scrollBy({ left: Math.max(320, el.clientWidth * 0.7), behavior: 'smooth' }); }}
         >
-          ›
+          Ã¢â‚¬Âº
         </button>
       </div>
     </div>

@@ -20,7 +20,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         <h1 className="text-2xl font-bold">Backlinks</h1>
         <p className="mt-2 text-sm opacity-70">
           <a className="underline" href={`/api/cron/backlinks?key=${key}&limit=50`}>
-            Rulează verificare (50)
+            RuleazÃ„Æ’ verificare (50)
           </a>
         </p>
         <table className="mt-4 w-full text-sm">
@@ -43,8 +43,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                     {r.url}
                   </a>
                 </td>
-                <td className="p-2">{r.anchor ?? "—"}</td>
-                <td className="p-2">{r.lastSeen ? new Date(r.lastSeen).toLocaleString("ro-RO") : "—"}</td>
+                <td className="p-2">{r.anchor ?? "Ã¢â‚¬â€"}</td>
+                <td className="p-2">{r.lastSeen ? new Date(r.lastSeen).toLocaleString("ro-RO") : "Ã¢â‚¬â€"}</td>
               </tr>
             ))}
           </tbody>

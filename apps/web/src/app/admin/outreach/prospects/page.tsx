@@ -27,7 +27,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Outreach — Prospects</h1>
+      <h1 className="text-2xl font-bold">Outreach Ã¢â‚¬â€ Prospects</h1>
       <form onSubmit={preview} className="mt-4 rounded border p-3">
         <input type="file" name="file" accept=".csv" required />
         <button className="ml-3 rounded border px-3 py-2">Preview</button>
@@ -39,7 +39,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <div className="mt-4 flex flex-wrap gap-2 text-sm">
             <span className="rounded border px-2 py-1">High DR: {high.length}</span>
             <a className="rounded border px-2 py-1" href={`/api/admin/outreach/prospects/export?key=${encodeURIComponent(key)}&minScore=60`}>
-              Export CSV ≥60
+              Export CSV Ã¢â€°Â¥60
             </a>
             <button onClick={commit} className="rounded border px-3 py-2 font-semibold">
               Commit to DB

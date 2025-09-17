@@ -18,10 +18,10 @@ export default function EmailCaptureForm() {
       });
       if (!r.ok) throw new Error("Request failed");
       setStatus("ok");
-      setMsg("Gata! Ți-am trimis un email de confirmare.");
+      setMsg("Gata! ÃˆÅ¡i-am trimis un email de confirmare.");
     } catch {
       setStatus("error");
-      setMsg("Nu am reușit să trimitem emailul. Verifică adresa și încearcă din nou.");
+      setMsg("Nu am reuÃˆâ„¢it sÃ„Æ’ trimitem emailul. VerificÃ„Æ’ adresa Ãˆâ„¢i ÃƒÂ®ncearcÃ„Æ’ din nou.");
     }
   }
 
@@ -35,7 +35,7 @@ export default function EmailCaptureForm() {
         onChange={(e) => setEmail(e.target.value)}
         className="w-full max-w-xs rounded-xl border bg-transparent px-4 py-2"
       />
-      <button className="rounded-xl border px-4 py-2 font-semibold" type="submit">Primește alerte</button>
+      <button className="rounded-xl border px-4 py-2 font-semibold" type="submit">PrimeÃˆâ„¢te alerte</button>
       {msg && <p className={`text-sm ${status === "error" ? "text-red-600" : "text-emerald-600"}`}>{msg}</p>}
     </form>
   );

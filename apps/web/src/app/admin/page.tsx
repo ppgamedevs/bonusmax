@@ -18,8 +18,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 – Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">Adaugă ?key=… (ADMIN_KEY) în URL.</p>
+        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
       </main>
     );
   }
@@ -42,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold">Admin – Performanță</h1>
+      <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ PerformanÃˆâ€ºÃ„Æ’</h1>
 
       <form className="mt-4 flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         </div>
         <input type="hidden" name="key" value={key} />
         <button className="rounded border px-3 py-2 text-sm" type="submit">
-          Aplică
+          AplicÃ„Æ’
         </button>
       </form>
 
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">Ofertă</th>
+              <th className="text-left p-2">OfertÃ„Æ’</th>
               <th className="p-2">Clicks</th>
               <th className="p-2">Impr.</th>
               <th className="p-2">CTR</th>

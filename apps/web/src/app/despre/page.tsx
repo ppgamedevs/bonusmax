@@ -9,13 +9,13 @@ export default function DesprePage() {
     <section className="space-y-4">
       <JsonLd
         data={jsonLdBreadcrumb([
-          { name: 'Acasă', url: absoluteUrl('/') },
+          { name: 'AcasÃ„Æ’', url: absoluteUrl('/') },
           { name: 'Despre', url: absoluteUrl('/despre') }
         ])}
       />
       <h1 className="text-2xl font-semibold">Despre</h1>
-      <p>Bonusmax este un proiect dedicat comparării bonusurilor de casino și pariuri din România.</p>
-      <p>Ne propunem să agregăm oferte, să explicăm condițiile și să te ghidăm către bonusuri potrivite ție.</p>
+      <p>Bonusmax este un proiect dedicat comparÃ„Æ’rii bonusurilor de casino Ãˆâ„¢i pariuri din RomÃƒÂ¢nia.</p>
+      <p>Ne propunem sÃ„Æ’ agregÃ„Æ’m oferte, sÃ„Æ’ explicÃ„Æ’m condiÃˆâ€ºiile Ãˆâ„¢i sÃ„Æ’ te ghidÃ„Æ’m cÃ„Æ’tre bonusuri potrivite Ãˆâ€ºie.</p>
       <p className="text-sm text-muted-foreground">Ultima actualizare: {lastUpdated}</p>
     </section>
   );

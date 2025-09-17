@@ -13,7 +13,7 @@ export default async function PromoStrip({ slot, title = "Sponsored" }: { slot: 
         <SponsoredBadge />
       </div>
       <OffersGrid offers={offers} />
-      <p className="mt-3 text-xs opacity-60">Conținut comercial. 18+ Joacă responsabil.</p>
+      <p className="mt-3 text-xs opacity-60">ConÃˆâ€ºinut comercial. 18+ JoacÃ„Æ’ responsabil.</p>
     </section>
   );
 }

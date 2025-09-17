@@ -15,7 +15,7 @@ function Badge18Plus() {
         <circle cx="12" cy="12" r="10" fill="currentColor" opacity=".12"/>
         <text x="50%" y="56%" textAnchor="middle" fontSize="11" fill="white" fontWeight="700">18+</text>
       </svg>
-      <span className="text-xs text-zinc-300">Joacă responsabil</span>
+      <span className="text-xs text-zinc-300">JoacÃ„Æ’ responsabil</span>
     </div>
   );
 }

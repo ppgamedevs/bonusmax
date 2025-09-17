@@ -1,46 +1,48 @@
-import { prisma } from "@bonusmax/lib";
+"use client";
+import { useState } from "react";
 
-export const revalidate = 600;
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const i = await (prisma as any).feedItem.findUnique({ where: { slug: params.slug } });
-  return {
-    title: i?.title || "Noutate",
-    description: i?.excerpt || "Noutăți iGaming România",
-    openGraph: { locale: "ro_RO" },
-    alternates: { languages: { "ro-RO": `/noutati/${params.slug}` } },
-  } as any;
-}
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const i = await (prisma as any).feedItem.findUnique({ where: { slug: params.slug }, include: { source: true, tags: { include: { tag: true } } } });
-  if (!i || i.status !== "APPROVED")
-    return (
-      <main className="container mx-auto px-4 py-8">
-        <p>Nu s-a găsit.</p>
-      </main>
-    );
-
-  const newsLd = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    inLanguage: "ro-RO",
-    headline: i.title,
-    datePublished: (i.publishedAt || i.createdAt) as any,
-    mainEntityOfPage: i.url,
-    author: { "@type": "Organization", name: i.source?.name || "Sursă" },
-  } as const;
-
+export default function Page() {
+  const [msg, setMsg] = useState<string | null>(null);
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(fd.entries());
+    const r = await fetch("/api/feedy/submit", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const j = await r.json();
+    setMsg(j.ok ? "MulÃˆâ€ºumim! Linkul tÃ„Æ’u a intrat ÃƒÂ®n moderare." : "Eroare Ã¢â‚¬â€œ verificÃ„Æ’ URL-ul.");
+  }
   return (
     <main className="container mx-auto px-4 py-8">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(newsLd) }} />
-      <p className="text-xs opacity-70">Sursă: {i.source?.name || "Contribuție utilizator"}</p>
-      <h1 className="text-2xl font-bold">{i.title}</h1>
-      <p className="mt-2 text-sm opacity-80">{i.excerpt}</p>
-      <a className="mt-3 inline-block rounded border px-3 py-2 underline" href={i.url} rel="nofollow noopener" target="_blank">
-        Deschide sursa ↗
-      </a>
-      <p className="mt-2 text-xs opacity-60">18+ Joacă responsabil • Dacă este promo/advertorial, marcăm “Conținut comercial”.</p>
+      <h1 className="text-2xl font-bold">Trimite un link</h1>
+      <p className="mt-2 text-sm opacity-80">
+        NoutÃ„Æ’Ãˆâ€ºi utile pentru comunitatea iGaming din RomÃƒÂ¢nia (ONJN, responsabilitate, operatori). FÃ„Æ’rÃ„Æ’ promisiuni de cÃƒÂ¢Ãˆâ„¢tig. 18+.
+      </p>
+      <form onSubmit={submit} className="mt-4 grid max-w-xl gap-3">
+        <label className="text-sm">
+          URL*
+          <input name="url" required placeholder="https://..." className="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+        <label className="text-sm">
+          Titlu
+          <input name="title" className="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+        <label className="text-sm">
+          NotÃ„Æ’
+          <textarea name="note" rows={3} className="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+        <label className="text-sm">
+          Email (opÃˆâ€ºional)
+          <input name="email" type="email" className="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+        <button className="rounded border px-3 py-2">Trimite</button>
+        {msg && <p className="text-sm">{msg}</p>}
+      </form>
     </main>
   );
 }

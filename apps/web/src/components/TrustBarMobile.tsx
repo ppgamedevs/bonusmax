@@ -22,10 +22,10 @@ export default function TrustBarMobile() {
       <div className="flex items-center gap-2">
         <span className="text-[11px] whitespace-nowrap rounded bg-emerald-500/20 px-2 py-0.5 font-medium text-emerald-300">ONJN</span>
         <p className="flex-1 text-[12px] leading-tight opacity-90">
-          Doar operatori licențiați. „Sponsored” marcat. 18+ Joacă responsabil.
+          Doar operatori licenÃˆâ€ºiaÃˆâ€ºi. Ã¢â‚¬Å¾SponsoredÃ¢â‚¬Â marcat. 18+ JoacÃ„Æ’ responsabil.
         </p>
-        <a href="/onjn/operatori-licentiati" className="text-[12px] underline">Află mai mult</a>
-        <button onClick={hide} aria-label="Închide" className="ml-1 rounded px-1 text-[12px] opacity-75 hover:opacity-100">×</button>
+        <a href="/onjn/operatori-licentiati" className="text-[12px] underline">AflÃ„Æ’ mai mult</a>
+        <button onClick={hide} aria-label="ÃƒÅ½nchide" className="ml-1 rounded px-1 text-[12px] opacity-75 hover:opacity-100">Ãƒâ€”</button>
       </div>
     </div>
   );

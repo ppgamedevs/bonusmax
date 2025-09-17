@@ -15,13 +15,13 @@ export default function Page() {
       body: JSON.stringify(payload),
     });
     const j = await r.json();
-    setMsg(j.ok ? "Mulțumim! Linkul tău a intrat în moderare." : "Eroare – verifică URL-ul.");
+    setMsg(j.ok ? "MulÃˆâ€ºumim! Linkul tÃ„Æ’u a intrat ÃƒÂ®n moderare." : "Eroare Ã¢â‚¬â€œ verificÃ„Æ’ URL-ul.");
   }
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Trimite un link</h1>
       <p className="mt-2 text-sm opacity-80">
-        Noutăți utile pentru comunitatea iGaming din România (ONJN, responsabilitate, operatori). Fără promisiuni de câștig. 18+.
+        NoutÃ„Æ’Ãˆâ€ºi utile pentru comunitatea iGaming din RomÃƒÂ¢nia (ONJN, responsabilitate, operatori). FÃ„Æ’rÃ„Æ’ promisiuni de cÃƒÂ¢Ãˆâ„¢tig. 18+.
       </p>
       <form onSubmit={submit} className="mt-4 grid max-w-xl gap-3">
         <label className="text-sm">
@@ -33,11 +33,11 @@ export default function Page() {
           <input name="title" className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <label className="text-sm">
-          Notă
+          NotÃ„Æ’
           <textarea name="note" rows={3} className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <label className="text-sm">
-          Email (opțional)
+          Email (opÃˆâ€ºional)
           <input name="email" type="email" className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <button className="rounded border px-3 py-2">Trimite</button>

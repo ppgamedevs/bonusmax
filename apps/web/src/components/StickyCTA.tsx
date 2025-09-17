@@ -31,7 +31,7 @@ export default function StickyCTA({ offerId }: { offerId: string }) {
           className="block w-full rounded-xl border bg-white px-5 py-3 text-center text-base font-semibold shadow-md dark:bg-neutral-900 focus-visible:outline focus-visible:outline-2"
         >
           {label}
-          <span className="ml-2 text-xs opacity-60">18+ · Publicitate</span>
+          <span className="ml-2 text-xs opacity-60">18+ Ã‚Â· Publicitate</span>
         </Link>
       </div>
     </div>

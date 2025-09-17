@@ -97,23 +97,23 @@ export default function HeroOfferMockup({
             <Image src={logoUrl || "/logos/betano.png"} alt={brand} width={40} height={40} />
           </div>
           <div>
-            <div className="text-xs uppercase tracking-wide text-white/80">{brand} • Recomandat</div>
+            <div className="text-xs uppercase tracking-wide text-white/80">{brand} Ã¢â‚¬Â¢ Recomandat</div>
             <h3 className="mt-1 text-3xl font-extrabold text-white">{headline}</h3>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-white/90">
-              {wr && <span>💰 WR {typeof wr === 'number' ? `x${wr}` : wr}</span>}
-              {days && <span>⏳ {days} zile</span>}
-              {minDeposit && <span>💳 Min dep {minDeposit} RON</span>}
+              {wr && <span>Ã°Å¸â€™Â° WR {typeof wr === 'number' ? `x${wr}` : wr}</span>}
+              {days && <span>Ã¢ÂÂ³ {days} zile</span>}
+              {minDeposit && <span>Ã°Å¸â€™Â³ Min dep {minDeposit} RON</span>}
             </div>
           </div>
         </div>
         <div className="relative z-10 mt-4 flex items-center gap-3">
-          <RippleButton href={ctaHref} aria-label={`Revendică bonusul ${brand}`} className="btn-accent h-12 px-6 text-base">
-            Revendică bonusul
+          <RippleButton href={ctaHref} aria-label={`RevendicÃ„Æ’ bonusul ${brand}`} className="btn-accent h-12 px-6 text-base">
+            RevendicÃ„Æ’ bonusul
           </RippleButton>
-          <span className="chip-accent">Licențiat ONJN</span>
+          <span className="chip-accent">LicenÃˆâ€ºiat ONJN</span>
         </div>
       </div>
-      <div className="mt-1 text-[11px] opacity-70">Exemplu ilustrativ pentru prezentare • 18+ Joacă responsabil • Publicitate</div>
+      <div className="mt-1 text-[11px] opacity-70">Exemplu ilustrativ pentru prezentare Ã¢â‚¬Â¢ 18+ JoacÃ„Æ’ responsabil Ã¢â‚¬Â¢ Publicitate</div>
     </motion.section>
   );
 }

@@ -32,7 +32,7 @@ export default function StickyHeader() {
             Bonusmax
           </Link>
           <div className="hidden items-center gap-3 md:flex">
-            <span className="text-xs opacity-75">Operatori licențiați ONJN • 18+</span>
+            <span className="text-xs opacity-75">Operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN Ã¢â‚¬Â¢ 18+</span>
           </div>
           <Link
             href="#topul-de-azi"

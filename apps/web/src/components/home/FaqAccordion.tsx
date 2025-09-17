@@ -25,7 +25,7 @@ function Item({
           <span className="text-lg" aria-hidden>{icon}</span>
           <span className="font-semibold">{q}</span>
         </div>
-        <span className="text-xl" aria-hidden>{open ? "−" : "+"}</span>
+        <span className="text-xl" aria-hidden>{open ? "Ã¢Ë†â€™" : "+"}</span>
       </button>
       <div
         className={
@@ -38,7 +38,7 @@ function Item({
             {a}
             {href && (
               <div className="mt-2">
-                <a href={href} className="text-sm underline">Citește ghidul complet →</a>
+                <a href={href} className="text-sm underline">CiteÃˆâ„¢te ghidul complet Ã¢â€ â€™</a>
               </div>
             )}
           </div>
@@ -52,31 +52,31 @@ export default function FaqAccordion() {
   return (
     <section className="mx-auto mt-8 max-w-6xl px-4">
       <header className="mb-3">
-        <h2 className="text-xl font-bold u-underline-hover">Întrebări frecvente</h2>
-        <p className="mt-1 text-sm opacity-70">Răspunsuri rapide la cele mai comune întrebări despre bonusuri și termeni.</p>
+        <h2 className="text-xl font-bold u-underline-hover">ÃƒÅ½ntrebÃ„Æ’ri frecvente</h2>
+        <p className="mt-1 text-sm opacity-70">RÃ„Æ’spunsuri rapide la cele mai comune ÃƒÂ®ntrebÃ„Æ’ri despre bonusuri Ãˆâ„¢i termeni.</p>
       </header>
       <div className="grid gap-3">
         <Item
-          icon="💰"
+          icon="Ã°Å¸â€™Â°"
           q="Cum revendic un bonus?"
           a={<>
-            Apasă pe „Revendică bonusul”, acceptă termenii și urmează pașii operatorului. Verifică <span className="font-medium">termenii</span> (depunere minimă, WR, valabilitate) înainte de a începe.
+            ApasÃ„Æ’ pe Ã¢â‚¬Å¾RevendicÃ„Æ’ bonusulÃ¢â‚¬Â, acceptÃ„Æ’ termenii Ãˆâ„¢i urmeazÃ„Æ’ paÃˆâ„¢ii operatorului. VerificÃ„Æ’ <span className="font-medium">termenii</span> (depunere minimÃ„Æ’, WR, valabilitate) ÃƒÂ®nainte de a ÃƒÂ®ncepe.
           </>}
           href="/ghiduri"
         />
         <Item
-          icon="⏳"
-          q="Ce înseamnă WR?"
+          icon="Ã¢ÂÂ³"
+          q="Ce ÃƒÂ®nseamnÃ„Æ’ WR?"
           a={<>
-            WR (Wagering Requirement) indică <span className="font-medium">rulajul</span> necesar pentru a transforma bonusul în bani reali. Exemplu: WR x30 înseamnă că valoarea bonusului trebuie rulată de 30 de ori.
+            WR (Wagering Requirement) indicÃ„Æ’ <span className="font-medium">rulajul</span> necesar pentru a transforma bonusul ÃƒÂ®n bani reali. Exemplu: WR x30 ÃƒÂ®nseamnÃ„Æ’ cÃ„Æ’ valoarea bonusului trebuie rulatÃ„Æ’ de 30 de ori.
           </>}
           href="/unelte/calculator-wr"
         />
         <Item
-          icon="🎰"
-          q="Care sunt cele mai bune oferte fără depunere?"
+          icon="Ã°Å¸Å½Â°"
+          q="Care sunt cele mai bune oferte fÃ„Æ’rÃ„Æ’ depunere?"
           a={<>
-            Ofertele fără depunere sunt excelente pentru testare, însă verifică mereu <span className="font-medium">valabilitatea</span>, <span className="font-medium">max cashout</span> și <span className="font-medium">sloturile eligibile</span>.
+            Ofertele fÃ„Æ’rÃ„Æ’ depunere sunt excelente pentru testare, ÃƒÂ®nsÃ„Æ’ verificÃ„Æ’ mereu <span className="font-medium">valabilitatea</span>, <span className="font-medium">max cashout</span> Ãˆâ„¢i <span className="font-medium">sloturile eligibile</span>.
           </>}
           href="/bonusuri-fara-depunere"
         />

@@ -23,14 +23,14 @@ export default function TrustSafety() {
   return (
     <section id="trust" className="mx-auto mt-8 max-w-6xl px-4">
       <header className="mb-3">
-        <h2 className="text-xl font-bold u-underline-hover">De ce poți avea încredere în noi</h2>
-        <p className="mt-1 text-sm opacity-70">Lucrăm doar cu operatori licențați, monitorizăm termenii și păstrăm linkurile sigure.</p>
+        <h2 className="text-xl font-bold u-underline-hover">De ce poÃˆâ€ºi avea ÃƒÂ®ncredere ÃƒÂ®n noi</h2>
+        <p className="mt-1 text-sm opacity-70">LucrÃ„Æ’m doar cu operatori licenÃˆâ€ºaÃˆâ€ºi, monitorizÃ„Æ’m termenii Ãˆâ„¢i pÃ„Æ’strÃ„Æ’m linkurile sigure.</p>
       </header>
       <div className="grid gap-3 md:grid-cols-2">
-        <Card icon={ShieldCheck} title="Licențe ONJN verificate" desc="Listăm operatori validați și marcăm vizibil licența ONJN." />
-        <Card icon={BarChart3} title="Termeni monitorizați zilnic" desc="Actualizăm frecvent WR, depuneri minime și valabilități pentru acuratețe." />
-        <Card icon={Link2} title="Linkuri sigure și actualizate" desc="Toate linkurile sunt verificate periodic și monitorizate pentru redirecționări." />
-        <Card icon={Target} title="Transparență totală" desc="Marcăm clar conținutul sponsorizat și afișăm condițiile pe scurt." />
+        <Card icon={ShieldCheck} title="LicenÃˆâ€ºe ONJN verificate" desc="ListÃ„Æ’m operatori validaÃˆâ€ºi Ãˆâ„¢i marcÃ„Æ’m vizibil licenÃˆâ€ºa ONJN." />
+        <Card icon={BarChart3} title="Termeni monitorizaÃˆâ€ºi zilnic" desc="ActualizÃ„Æ’m frecvent WR, depuneri minime Ãˆâ„¢i valabilitÃ„Æ’Ãˆâ€ºi pentru acurateÃˆâ€ºe." />
+        <Card icon={Link2} title="Linkuri sigure Ãˆâ„¢i actualizate" desc="Toate linkurile sunt verificate periodic Ãˆâ„¢i monitorizate pentru redirecÃˆâ€ºionÃ„Æ’ri." />
+        <Card icon={Target} title="TransparenÃˆâ€ºÃ„Æ’ totalÃ„Æ’" desc="MarcÃ„Æ’m clar conÃˆâ€ºinutul sponsorizat Ãˆâ„¢i afiÃˆâ„¢Ã„Æ’m condiÃˆâ€ºiile pe scurt." />
       </div>
     </section>
   );

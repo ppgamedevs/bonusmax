@@ -23,7 +23,7 @@ export default async function FilterBar({
         <div className="flex flex-col">
           <label className="text-xs opacity-70">Operator</label>
           <select name="operator" defaultValue={currentOperator ?? ""} className="rounded border bg-transparent px-3 py-2 text-sm">
-            <option value="">Toți operatorii</option>
+            <option value="">ToÃˆâ€ºi operatorii</option>
             {ops.map((o) => (
               <option key={o.slug} value={o.slug}>{o.name}</option>
             ))}
@@ -48,7 +48,7 @@ export default async function FilterBar({
           <label className="text-xs opacity-70">Depozit max (RON)</label>
           <input type="number" name="max_min_dep" defaultValue={currentMaxMinDep ?? ""} placeholder="ex: 50" className="w-32 rounded border bg-transparent px-3 py-2 text-sm" />
         </div>
-        <button className="rounded border px-3 py-2 text-sm" type="submit">Aplică</button>
+        <button className="rounded border px-3 py-2 text-sm" type="submit">AplicÃ„Æ’</button>
         <a href={basePath} className="rounded border px-3 py-2 text-sm">Reset</a>
         <a href={`${basePath}?view=table`} className="rounded border px-3 py-2 text-sm">Tabel</a>
       </form>

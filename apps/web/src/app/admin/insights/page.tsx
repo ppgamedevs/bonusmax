@@ -3,7 +3,7 @@ import { overview30, topPagesEpc, utmPerformance } from "@bonusmax/lib";
 export const dynamic = "force-dynamic";
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 – Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
@@ -23,13 +23,13 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
           <div className="rounded-xl border p-4"><div className="text-xs opacity-70">Clicks</div><div className="text-2xl font-bold">{o.clicks.toLocaleString("ro-RO")}</div></div>
           <div className="rounded-xl border p-4"><div className="text-xs opacity-70">Conversii</div><div className="text-2xl font-bold">{o.convs.toLocaleString("ro-RO")}</div></div>
           <div className="rounded-xl border p-4"><div className="text-xs opacity-70">Revenue</div><div className="text-2xl font-bold">{o.revenue.toFixed(2)} RON</div></div>
-          <div className="rounded-xl border p-4"><div className="text-xs opacity-70">EPC / CVR</div><div className="text-2xl font-bold">{o.epc.toFixed(2)} RON <span className="text-sm opacity-70">• {(o.cvr*100).toFixed(2)}%</span></div></div>
+          <div className="rounded-xl border p-4"><div className="text-xs opacity-70">EPC / CVR</div><div className="text-2xl font-bold">{o.epc.toFixed(2)} RON <span className="text-sm opacity-70">Ã¢â‚¬Â¢ {(o.cvr*100).toFixed(2)}%</span></div></div>
         </section>
 
         <section className="mt-8">
-          <h2 className="text-lg font-semibold">Top pages → EPC (min 10 clicks)</h2>
+          <h2 className="text-lg font-semibold">Top pages Ã¢â€ â€™ EPC (min 10 clicks)</h2>
           <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">Pagină</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
+            <thead><tr><th className="p-2 text-left">PaginÃ„Æ’</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
             <tbody>
               {pages.map((r:any)=> (
                 <tr key={r.path} className="border-t">
@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                   <td className="p-2 text-right">{r.epc.toFixed(2)} RON</td>
                 </tr>
               ))}
-              {pages.length===0 && <tr><td className="p-2" colSpan={4}>Nimic încă (ai nevoie de clicks).</td></tr>}
+              {pages.length===0 && <tr><td className="p-2" colSpan={4}>Nimic ÃƒÂ®ncÃ„Æ’ (ai nevoie de clicks).</td></tr>}
             </tbody>
           </table>
         </section>
@@ -59,7 +59,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                   <td className="p-2 text-right">{r.epc.toFixed(2)} RON</td>
                 </tr>
               ))}
-              {utm.length===0 && <tr><td className="p-2" colSpan={6}>Nimic încă.</td></tr>}
+              {utm.length===0 && <tr><td className="p-2" colSpan={6}>Nimic ÃƒÂ®ncÃ„Æ’.</td></tr>}
             </tbody>
           </table>
         </section>

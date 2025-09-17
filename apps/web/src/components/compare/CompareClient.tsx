@@ -33,7 +33,7 @@ export default function CompareClient({ hasServer }: { hasServer: boolean }) {
   }, [hasServer]);
 
   if (hasServer) return null;
-  if (offers === null) return <p className="text-sm opacity-70">Se încarcă comparația…</p>;
+  if (offers === null) return <p className="text-sm opacity-70">Se ÃƒÂ®ncarcÃ„Æ’ comparaÃˆâ€ºiaÃ¢â‚¬Â¦</p>;
 
   return (
     <div className="mt-6">
@@ -49,10 +49,10 @@ export default function CompareClient({ hasServer }: { hasServer: boolean }) {
           }}
           className="rounded border px-3 py-1.5 text-sm underline"
         >
-          Resetează comparația
+          ReseteazÃ„Æ’ comparaÃˆâ€ºia
         </button>
         <a href="/" className="text-sm underline">
-          Adaugă mai multe oferte
+          AdaugÃ„Æ’ mai multe oferte
         </a>
       </div>
     </div>

@@ -46,7 +46,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={0.1} value={(ctr * 100).toFixed(1)} onChange={(e) => setCtr(Number(e.target.value) / 100)} />
         </label>
         <div className="rounded border p-3 text-sm">
-          <div>Clicks așteptate</div>
+          <div>Clicks aÃˆâ„¢teptate</div>
           <div className="mt-2 text-2xl font-bold">{expectedClicks.toLocaleString("ro-RO")}</div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={1} value={cpm} onChange={(e) => setCpm(Number(e.target.value || 0))} />
         </label>
         <label className="rounded border p-3 text-sm">
-          Preț FLAT (RON)
+          PreÃˆâ€º FLAT (RON)
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={1} value={flat} onChange={(e) => setFlat(Number(e.target.value || 0))} />
         </label>
       </div>
@@ -81,7 +81,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
         </div>
       </div>
 
-      <p className="mt-6 text-xs opacity-60">Note: CTR variază în funcție de slot și creativ. Respectă “Publicitate”, 18+, doar operatori licențiați ONJN.</p>
+      <p className="mt-6 text-xs opacity-60">Note: CTR variazÃ„Æ’ ÃƒÂ®n funcÃˆâ€ºie de slot Ãˆâ„¢i creativ. RespectÃ„Æ’ Ã¢â‚¬Å“PublicitateÃ¢â‚¬Â, 18+, doar operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN.</p>
     </main>
   );
 }

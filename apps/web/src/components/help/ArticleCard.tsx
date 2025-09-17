@@ -11,9 +11,9 @@ export default function ArticleCard({ article }: { article: HelpArticle }) {
       <p className="text-zinc-400 mb-2">{article.excerpt}</p>
       <div className="text-sm text-zinc-500 flex items-center gap-2">
         <span>{article.readMins} min</span>
-        <span>•</span>
+        <span>Ã¢â‚¬Â¢</span>
         <span>{article.updatedAt}</span>
-        <span>•</span>
+        <span>Ã¢â‚¬Â¢</span>
         <span className="text-zinc-400">{article.kind}</span>
       </div>
     </div>

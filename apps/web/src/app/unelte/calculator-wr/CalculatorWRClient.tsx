@@ -11,7 +11,7 @@ export default function CalculatorWRClient() {
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Calculator WR (Wagering)</h1>
       <p className="mt-2 text-sm opacity-80">
-        Calculează rulajul necesar pentru a elibera un bonus. Conținut informativ • 18+ Joacă responsabil.
+        CalculeazÃ„Æ’ rulajul necesar pentru a elibera un bonus. ConÃˆâ€ºinut informativ Ã¢â‚¬Â¢ 18+ JoacÃ„Æ’ responsabil.
       </p>
       <div className="mt-4 grid gap-3 md:grid-cols-3">
         <label className="rounded border p-3 text-sm">
@@ -33,7 +33,7 @@ export default function CalculatorWRClient() {
           />
         </label>
         <label className="rounded border p-3 text-sm">
-          % contribuție joc (sloturi=100)
+          % contribuÃˆâ€ºie joc (sloturi=100)
           <input
             type="number"
             value={contrib}

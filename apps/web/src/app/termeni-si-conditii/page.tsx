@@ -1,17 +1,17 @@
-export const metadata = { title: 'Termeni și condiții | Bonusmax' };
+export const metadata = { title: 'Termeni Ãˆâ„¢i condiÃˆâ€ºii | Bonusmax' };
 
 export default function Page() {
   return (
     <section className="prose prose-invert mx-auto max-w-3xl px-4">
-      <h1>Termeni și condiții</h1>
-      <p>Te rugăm să citești cu atenție acești termeni înainte de a utiliza site-ul Bonusmax. Accesarea și folosirea site-ului implică acceptarea acestor termeni.</p>
+      <h1>Termeni Ãˆâ„¢i condiÃˆâ€ºii</h1>
+      <p>Te rugÃ„Æ’m sÃ„Æ’ citeÃˆâ„¢ti cu atenÃˆâ€ºie aceÃˆâ„¢ti termeni ÃƒÂ®nainte de a utiliza site-ul Bonusmax. Accesarea Ãˆâ„¢i folosirea site-ului implicÃ„Æ’ acceptarea acestor termeni.</p>
       <h2>Utilizarea site-ului</h2>
       <ul>
-        <li>Conținut comercial. Unele oferte sunt sponsorizate și marcate corespunzător.</li>
-        <li>Ofertele se adresează exclusiv persoanelor de 18+ și operatorilor licențiați ONJN.</li>
+        <li>ConÃˆâ€ºinut comercial. Unele oferte sunt sponsorizate Ãˆâ„¢i marcate corespunzÃ„Æ’tor.</li>
+        <li>Ofertele se adreseazÃ„Æ’ exclusiv persoanelor de 18+ Ãˆâ„¢i operatorilor licenÃˆâ€ºiaÃˆâ€ºi ONJN.</li>
       </ul>
-      <h2>Răspundere</h2>
-      <p>Bonusmax nu este operator de jocuri de noroc. Nu garantăm rezultatele campaniilor. Verifică întotdeauna termenii operatorului.</p>
+      <h2>RÃ„Æ’spundere</h2>
+      <p>Bonusmax nu este operator de jocuri de noroc. Nu garantÃ„Æ’m rezultatele campaniilor. VerificÃ„Æ’ ÃƒÂ®ntotdeauna termenii operatorului.</p>
     </section>
   );
 }

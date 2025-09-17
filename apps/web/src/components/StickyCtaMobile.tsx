@@ -32,9 +32,9 @@ export default function StickyCtaMobile() {
           type="button"
           onClick={onClick}
           className="btn-accent focus-accent h-12 w-full rounded-2xl"
-          aria-label={hasCompare ? "Compară ofertele selectate" : "Revendică bonusul acum"}
+          aria-label={hasCompare ? "ComparÃ„Æ’ ofertele selectate" : "RevendicÃ„Æ’ bonusul acum"}
         >
-          {hasCompare ? "Compară acum" : "Revendică bonusul acum"}
+          {hasCompare ? "ComparÃ„Æ’ acum" : "RevendicÃ„Æ’ bonusul acum"}
         </button>
       </div>
     </div>

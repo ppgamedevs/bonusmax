@@ -21,19 +21,19 @@ export default function CompareTray() {
       <div className="flex items-start justify-between gap-3">
         <div className="text-sm">Compari {ids.length}/4 oferte</div>
         <button
-          aria-label="Închide bara de comparare"
+          aria-label="ÃƒÅ½nchide bara de comparare"
           className="rounded p-1 text-xs opacity-70 hover:opacity-100 focus-visible:outline focus-visible:outline-2"
           onClick={() => { localStorage.setItem("cmp_tray_hide", "1"); setHidden(true); }}
         >
-          ×
+          Ãƒâ€”
         </button>
       </div>
       <Link
         className="mt-2 block rounded border px-3 py-2 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2"
         href={("/compara" as any)}
-        aria-label={`Deschide comparația pentru ${ids.length} oferte`}
+        aria-label={`Deschide comparaÃˆâ€ºia pentru ${ids.length} oferte`}
       >
-        Deschide comparația
+        Deschide comparaÃˆâ€ºia
       </Link>
     </div>
   );

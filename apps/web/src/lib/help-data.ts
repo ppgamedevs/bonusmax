@@ -62,14 +62,14 @@ const JocIcon = () => (
 export const helpCategories: HelpCategory[] = [
   {
     id: '1',
-    title: 'Cont & Preferințe',
+    title: 'Cont & PreferinÃˆâ€ºe',
     slug: 'cont-preferinte',
     icon: <ContIcon />,
-    description: 'Gestionează contul tău, setările și preferințele.',
+    description: 'GestioneazÃ„Æ’ contul tÃ„Æ’u, setÃ„Æ’rile Ãˆâ„¢i preferinÃˆâ€ºele.',
     topLinks: [
-      { title: 'Cum mă înregistrez?', href: '/help/cont-preferinte/cum-ma-inregistrez' },
-      { title: 'Setări notificări', href: '/help/cont-preferinte/setari-notificari' },
-      { title: 'Ștergere cont', href: '/help/cont-preferinte/stergere-cont' }
+      { title: 'Cum mÃ„Æ’ ÃƒÂ®nregistrez?', href: '/help/cont-preferinte/cum-ma-inregistrez' },
+      { title: 'SetÃ„Æ’ri notificÃ„Æ’ri', href: '/help/cont-preferinte/setari-notificari' },
+      { title: 'ÃˆËœtergere cont', href: '/help/cont-preferinte/stergere-cont' }
     ]
   },
   {
@@ -77,11 +77,11 @@ export const helpCategories: HelpCategory[] = [
     title: 'Bonusuri & WR',
     slug: 'bonusuri-wr',
     icon: <BonusIcon />,
-    description: 'Înțelege bonusurile, WR și cum să le folosești.',
+    description: 'ÃƒÅ½nÃˆâ€ºelege bonusurile, WR Ãˆâ„¢i cum sÃ„Æ’ le foloseÃˆâ„¢ti.',
     topLinks: [
-      { title: 'Ce înseamnă WR?', href: '/help/bonusuri-wr/ce-este-wr' },
+      { title: 'Ce ÃƒÂ®nseamnÃ„Æ’ WR?', href: '/help/bonusuri-wr/ce-este-wr' },
       { title: 'Cum revendic un bonus?', href: '/help/bonusuri-wr/cum-revendic-bonus' },
-      { title: 'Bonusuri fără depunere', href: '/help/bonusuri-wr/bonusuri-fara-depunere' }
+      { title: 'Bonusuri fÃ„Æ’rÃ„Æ’ depunere', href: '/help/bonusuri-wr/bonusuri-fara-depunere' }
     ]
   },
   {
@@ -89,10 +89,10 @@ export const helpCategories: HelpCategory[] = [
     title: 'Depuneri & Retrageri',
     slug: 'depuneri-retrageri',
     icon: <DepuneriIcon />,
-    description: 'Metode de plată, timpi și comisioane.',
+    description: 'Metode de platÃ„Æ’, timpi Ãˆâ„¢i comisioane.',
     topLinks: [
       { title: 'Depuneri cu card', href: '/help/depuneri-retrageri/depuneri-card' },
-      { title: 'Retrageri: timpi și limite', href: '/help/depuneri-retrageri/retrageri-timpi' },
+      { title: 'Retrageri: timpi Ãˆâ„¢i limite', href: '/help/depuneri-retrageri/retrageri-timpi' },
       { title: 'Portofele electronice', href: '/help/depuneri-retrageri/portofele-electronice' }
     ]
   },
@@ -101,7 +101,7 @@ export const helpCategories: HelpCategory[] = [
     title: 'Tehnic & Securitate',
     slug: 'tehnic-securitate',
     icon: <TehnicIcon />,
-    description: 'Securitatea contului și suport tehnic.',
+    description: 'Securitatea contului Ãˆâ„¢i suport tehnic.',
     topLinks: [
       { title: 'Verificarea contului (KYC)', href: '/help/tehnic-securitate/verificare-cont' },
       { title: 'Securitate: 2FA', href: '/help/tehnic-securitate/securitate-2fa' },
@@ -113,11 +113,11 @@ export const helpCategories: HelpCategory[] = [
     title: 'Legal & Conformitate',
     slug: 'legal-conformitate',
     icon: <LegalIcon />,
-    description: 'Condiții legale, ONJN și GDPR.',
+    description: 'CondiÃˆâ€ºii legale, ONJN Ãˆâ„¢i GDPR.',
     topLinks: [
-      { title: 'Condiții ONJN pentru jucători', href: '/help/legal-conformitate/conditii-onjn' },
-      { title: 'GDPR și datele tale', href: '/help/legal-conformitate/gdpr' },
-      { title: 'Termeni și condiții', href: '/help/legal-conformitate/termeni-conditii' }
+      { title: 'CondiÃˆâ€ºii ONJN pentru jucÃ„Æ’tori', href: '/help/legal-conformitate/conditii-onjn' },
+      { title: 'GDPR Ãˆâ„¢i datele tale', href: '/help/legal-conformitate/gdpr' },
+      { title: 'Termeni Ãˆâ„¢i condiÃˆâ€ºii', href: '/help/legal-conformitate/termeni-conditii' }
     ]
   },
   {
@@ -125,7 +125,7 @@ export const helpCategories: HelpCategory[] = [
     title: 'Joc Responsabil',
     slug: 'joc-responsabil',
     icon: <JocIcon />,
-    description: 'Joacă responsabil și resurse de ajutor.',
+    description: 'JoacÃ„Æ’ responsabil Ãˆâ„¢i resurse de ajutor.',
     topLinks: [
       { title: 'Limite de depunere', href: '/help/joc-responsabil/limite-depunere' },
       { title: 'Auto-excludere', href: '/help/joc-responsabil/auto-excludere' },
@@ -140,69 +140,69 @@ export const helpArticles: HelpArticle[] = [
     id: '1',
     category: 'bonusuri-wr',
     slug: 'ce-este-wr',
-    title: 'Ce înseamnă WR și cum se calculează?',
-    excerpt: 'Află ce reprezintă Wagering Requirement și cum îți afectează bonusurile.',
+    title: 'Ce ÃƒÂ®nseamnÃ„Æ’ WR Ãˆâ„¢i cum se calculeazÃ„Æ’?',
+    excerpt: 'AflÃ„Æ’ ce reprezintÃ„Æ’ Wagering Requirement Ãˆâ„¢i cum ÃƒÂ®Ãˆâ€ºi afecteazÃ„Æ’ bonusurile.',
     updatedAt: '2024-09-10',
     readMins: 3,
     kind: 'Ghid',
-    content: `# Ce înseamnă WR și cum se calculează?
+    content: `# Ce ÃƒÂ®nseamnÃ„Æ’ WR Ãˆâ„¢i cum se calculeazÃ„Æ’?
 
 ## Introducere
 
-WR (Wagering Requirement) este un termen important în lumea bonusurilor de jocuri de noroc. El reprezintă numărul de ori pe care trebuie să pariezi bonusul primit pentru a putea retrage câștigurile obținute din acesta.
+WR (Wagering Requirement) este un termen important ÃƒÂ®n lumea bonusurilor de jocuri de noroc. El reprezintÃ„Æ’ numÃ„Æ’rul de ori pe care trebuie sÃ„Æ’ pariezi bonusul primit pentru a putea retrage cÃƒÂ¢Ãˆâ„¢tigurile obÃˆâ€ºinute din acesta.
 
-## Cum se calculează
+## Cum se calculeazÃ„Æ’
 
-Formula de bază este: **WR = Valoarea bonusului × Multiplicatorul WR**
+Formula de bazÃ„Æ’ este: **WR = Valoarea bonusului Ãƒâ€” Multiplicatorul WR**
 
-De exemplu, dacă primești un bonus de 100 RON cu WR 20x, trebuie să pariezi 2000 RON în total pentru a îndeplini condiția.
+De exemplu, dacÃ„Æ’ primeÃˆâ„¢ti un bonus de 100 RON cu WR 20x, trebuie sÃ„Æ’ pariezi 2000 RON ÃƒÂ®n total pentru a ÃƒÂ®ndeplini condiÃˆâ€ºia.
 
 ## Exemplu practic
 
-Să spunem că ai un bonus de 100 RON cu WR 20x. Trebuie să pariezi 2000 RON. Dacă ai o cotă medie de 2.0, ai nevoie de 1000 pariuri pentru a îndeplini WR-ul.
+SÃ„Æ’ spunem cÃ„Æ’ ai un bonus de 100 RON cu WR 20x. Trebuie sÃ„Æ’ pariezi 2000 RON. DacÃ„Æ’ ai o cotÃ„Æ’ medie de 2.0, ai nevoie de 1000 pariuri pentru a ÃƒÂ®ndeplini WR-ul.
 
 ## Note importante
 
-- WR-ul se aplică doar bonusului, nu depunerii inițiale.
-- Citește întotdeauna termenii și condițiile operatorului.
+- WR-ul se aplicÃ„Æ’ doar bonusului, nu depunerii iniÃˆâ€ºiale.
+- CiteÃˆâ„¢te ÃƒÂ®ntotdeauna termenii Ãˆâ„¢i condiÃˆâ€ºiile operatorului.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '2',
     category: 'bonusuri-wr',
     slug: 'cum-revendic-bonus',
-    title: 'Cum revendic un bonus fără depunere?',
-    excerpt: 'Ghid pas cu pas pentru a revendica bonusuri fără depunere.',
+    title: 'Cum revendic un bonus fÃ„Æ’rÃ„Æ’ depunere?',
+    excerpt: 'Ghid pas cu pas pentru a revendica bonusuri fÃ„Æ’rÃ„Æ’ depunere.',
     updatedAt: '2024-09-08',
     readMins: 4,
     kind: 'Ghid',
-    content: `# Cum revendic un bonus fără depunere?
+    content: `# Cum revendic un bonus fÃ„Æ’rÃ„Æ’ depunere?
 
-## Pasul 1: Înregistrează-te
+## Pasul 1: ÃƒÅ½nregistreazÃ„Æ’-te
 
-Înregistrează-te pe site-ul operatorului cu datele tale reale.
+ÃƒÅ½nregistreazÃ„Æ’-te pe site-ul operatorului cu datele tale reale.
 
-## Pasul 2: Confirmă contul
+## Pasul 2: ConfirmÃ„Æ’ contul
 
-Confirmă adresa de email și numărul de telefon.
+ConfirmÃ„Æ’ adresa de email Ãˆâ„¢i numÃ„Æ’rul de telefon.
 
-## Pasul 3: Revendică bonusul
+## Pasul 3: RevendicÃ„Æ’ bonusul
 
-În secțiunea bonusuri, selectează bonusul fără depunere și apasă pe "Revendică".
+ÃƒÅ½n secÃˆâ€ºiunea bonusuri, selecteazÃ„Æ’ bonusul fÃ„Æ’rÃ„Æ’ depunere Ãˆâ„¢i apasÃ„Æ’ pe "RevendicÃ„Æ’".
 
-## Pasul 4: Joacă
+## Pasul 4: JoacÃ„Æ’
 
-Folosește bonusul în jocurile specificate.
+FoloseÃˆâ„¢te bonusul ÃƒÂ®n jocurile specificate.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '3',
     category: 'depuneri-retrageri',
     slug: 'depuneri-card',
     title: 'Depuneri cu card vs. portofel electronic',
-    excerpt: 'Compară metodele de depunere disponibile.',
+    excerpt: 'ComparÃ„Æ’ metodele de depunere disponibile.',
     updatedAt: '2024-09-05',
     readMins: 5,
     kind: 'Ghid',
@@ -211,139 +211,139 @@ Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+.
 ## Card bancar
 
 Avantaje: Rapid, acceptat peste tot.
-Dezavantaje: Comisioane mai mari, verificare suplimentară.
+Dezavantaje: Comisioane mai mari, verificare suplimentarÃ„Æ’.
 
 ## Portofel electronic
 
 Avantaje: Anonim, rapid, securizat.
-Dezavantaje: Necesită înregistrare separată.
+Dezavantaje: NecesitÃ„Æ’ ÃƒÂ®nregistrare separatÃ„Æ’.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '4',
     category: 'depuneri-retrageri',
     slug: 'retrageri-timpi',
-    title: 'Retrageri: timpi și comisioane',
-    excerpt: 'Află cât durează retragerile și ce comisioane sunt.',
+    title: 'Retrageri: timpi Ãˆâ„¢i comisioane',
+    excerpt: 'AflÃ„Æ’ cÃƒÂ¢t dureazÃ„Æ’ retragerile Ãˆâ„¢i ce comisioane sunt.',
     updatedAt: '2024-09-03',
     readMins: 3,
     kind: 'FAQ',
-    content: `# Retrageri: timpi și comisioane
+    content: `# Retrageri: timpi Ãˆâ„¢i comisioane
 
 ## Timi de procesare
 
-Card: 1-3 zile lucrătoare.
+Card: 1-3 zile lucrÃ„Æ’toare.
 Portofel electronic: Instant sau 24h.
 
 ## Comisioane
 
-Majoritatea operatorilor nu percep comisioane pentru retrageri, dar verifică termenii.
+Majoritatea operatorilor nu percep comisioane pentru retrageri, dar verificÃ„Æ’ termenii.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '5',
     category: 'tehnic-securitate',
     slug: 'verificare-cont',
     title: 'Verificarea contului (KYC)',
-    excerpt: 'De ce trebuie să verifici contul și cum faci asta.',
+    excerpt: 'De ce trebuie sÃ„Æ’ verifici contul Ãˆâ„¢i cum faci asta.',
     updatedAt: '2024-09-01',
     readMins: 4,
     kind: 'Ghid',
     content: `# Verificarea contului (KYC)
 
-## De ce este necesară
+## De ce este necesarÃ„Æ’
 
-Pentru a respecta reglementările ONJN și pentru securitatea ta.
+Pentru a respecta reglementÃ„Æ’rile ONJN Ãˆâ„¢i pentru securitatea ta.
 
 ## Cum se face
 
-Încarcă copie după CI, dovadă de adresă, selfie.
+ÃƒÅ½ncarcÃ„Æ’ copie dupÃ„Æ’ CI, dovadÃ„Æ’ de adresÃ„Æ’, selfie.
 
-## Cât durează
+## CÃƒÂ¢t dureazÃ„Æ’
 
 De obicei 24-48h.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '6',
     category: 'cont-preferinte',
     slug: 'setari-notificari',
-    title: 'Setări notificări & alerte bonusuri',
-    excerpt: 'Personalizează notificările pentru bonusuri noi.',
+    title: 'SetÃ„Æ’ri notificÃ„Æ’ri & alerte bonusuri',
+    excerpt: 'PersonalizeazÃ„Æ’ notificÃ„Æ’rile pentru bonusuri noi.',
     updatedAt: '2024-08-30',
     readMins: 2,
     kind: 'FAQ',
-    content: `# Setări notificări & alerte bonusuri
+    content: `# SetÃ„Æ’ri notificÃ„Æ’ri & alerte bonusuri
 
 ## Cum activez
 
-În setările contului, bifează "Alerte bonusuri".
+ÃƒÅ½n setÃ„Æ’rile contului, bifeazÃ„Æ’ "Alerte bonusuri".
 
-## Tipuri de notificări
+## Tipuri de notificÃ„Æ’ri
 
 Email, SMS, push.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '7',
     category: 'legal-conformitate',
     slug: 'conditii-onjn',
-    title: 'Condiții ONJN pentru jucători',
-    excerpt: 'Cerințele legale pentru jocurile de noroc în România.',
+    title: 'CondiÃˆâ€ºii ONJN pentru jucÃ„Æ’tori',
+    excerpt: 'CerinÃˆâ€ºele legale pentru jocurile de noroc ÃƒÂ®n RomÃƒÂ¢nia.',
     updatedAt: '2024-08-28',
     readMins: 6,
     kind: 'Ghid',
-    content: `# Condiții ONJN pentru jucători
+    content: `# CondiÃˆâ€ºii ONJN pentru jucÃ„Æ’tori
 
-## Licențiere
+## LicenÃˆâ€ºiere
 
-Toți operatorii trebuie să aibă licență ONJN.
+ToÃˆâ€ºi operatorii trebuie sÃ„Æ’ aibÃ„Æ’ licenÃˆâ€ºÃ„Æ’ ONJN.
 
-## Vârsta minimă
+## VÃƒÂ¢rsta minimÃ„Æ’
 
 18 ani.
 
 ## Joc responsabil
 
-Operatorii trebuie să ofere instrumente pentru joc responsabil.
+Operatorii trebuie sÃ„Æ’ ofere instrumente pentru joc responsabil.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '8',
     category: 'tehnic-securitate',
     slug: 'securitate-2fa',
-    title: 'Securitate: 2FA și sesiunile active',
-    excerpt: 'Protejează-ți contul cu autentificare în doi pași.',
+    title: 'Securitate: 2FA Ãˆâ„¢i sesiunile active',
+    excerpt: 'ProtejeazÃ„Æ’-Ãˆâ€ºi contul cu autentificare ÃƒÂ®n doi paÃˆâ„¢i.',
     updatedAt: '2024-08-25',
     readMins: 3,
     kind: 'Ghid',
-    content: `# Securitate: 2FA și sesiunile active
+    content: `# Securitate: 2FA Ãˆâ„¢i sesiunile active
 
 ## Ce este 2FA
 
-Autentificare în doi pași pentru securitate suplimentară.
+Autentificare ÃƒÂ®n doi paÃˆâ„¢i pentru securitate suplimentarÃ„Æ’.
 
 ## Cum activez
 
-În setările de securitate, activează 2FA cu app sau SMS.
+ÃƒÅ½n setÃ„Æ’rile de securitate, activeazÃ„Æ’ 2FA cu app sau SMS.
 
 ## Sesiuni active
 
-Poți vedea și închide sesiunile active din setări.
+PoÃˆâ€ºi vedea Ãˆâ„¢i ÃƒÂ®nchide sesiunile active din setÃ„Æ’ri.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '9',
     category: 'joc-responsabil',
     slug: 'limite-depunere',
     title: 'Limite de depunere pentru joc responsabil',
-    excerpt: 'Cum să setezi limite pentru a juca responsabil.',
+    excerpt: 'Cum sÃ„Æ’ setezi limite pentru a juca responsabil.',
     updatedAt: '2024-08-20',
     readMins: 4,
     kind: 'Ghid',
@@ -351,32 +351,32 @@ Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+.
 
 ## De ce limite
 
-Pentru a controla cheltuielile și a evita dependența.
+Pentru a controla cheltuielile Ãˆâ„¢i a evita dependenÃˆâ€ºa.
 
 ## Cum setezi
 
-În setările contului, stabilește limite zilnice/săptămânale/lunare.
+ÃƒÅ½n setÃ„Æ’rile contului, stabileÃˆâ„¢te limite zilnice/sÃ„Æ’ptÃ„Æ’mÃƒÂ¢nale/lunare.
 
 ## Modificare
 
-Poți modifica limitele, dar cu perioadă de răcire.
+PoÃˆâ€ºi modifica limitele, dar cu perioadÃ„Æ’ de rÃ„Æ’cire.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   },
   {
     id: '10',
     category: 'joc-responsabil',
     slug: 'auto-excludere',
-    title: 'Auto-excludere și resurse de ajutor',
-    excerpt: 'Opțiuni pentru auto-excludere și ajutor profesional.',
+    title: 'Auto-excludere Ãˆâ„¢i resurse de ajutor',
+    excerpt: 'OpÃˆâ€ºiuni pentru auto-excludere Ãˆâ„¢i ajutor profesional.',
     updatedAt: '2024-08-15',
     readMins: 5,
     kind: 'Ghid',
-    content: `# Auto-excludere și resurse de ajutor
+    content: `# Auto-excludere Ãˆâ„¢i resurse de ajutor
 
 ## Auto-excludere
 
-Poți solicita auto-excludere temporară sau permanentă.
+PoÃˆâ€ºi solicita auto-excludere temporarÃ„Æ’ sau permanentÃ„Æ’.
 
 ## Resurse de ajutor
 
@@ -384,8 +384,8 @@ JocResponsabil.ro, linie de ajutor 0800 123 456.
 
 ## Suport
 
-Contactează operatorul pentru auto-excludere.
+ContacteazÃ„Æ’ operatorul pentru auto-excludere.
 
-Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN. 18+. Joacă responsabil.`
+ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+. JoacÃ„Æ’ responsabil.`
   }
 ];

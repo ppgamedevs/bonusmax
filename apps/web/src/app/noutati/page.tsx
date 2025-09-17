@@ -1,7 +1,7 @@
 import { prisma } from "@bonusmax/lib";
 
 export const revalidate = 600;
-export const metadata = { title: "Noutăți (România) — iGaming, ONJN, responsabilitate" };
+export const metadata = { title: "NoutÃ„Æ’Ãˆâ€ºi (RomÃƒÂ¢nia) Ã¢â‚¬â€ iGaming, ONJN, responsabilitate" };
 
 export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
   const tag = typeof searchParams?.tag === "string" ? searchParams!.tag : undefined;
@@ -17,8 +17,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Noutăți (RO)</h1>
-      <p className="mt-2 text-sm opacity-80">Știri și resurse din piața din România. 18+ Joacă responsabil. Conținut comercial marcat corespunzător.</p>
+      <h1 className="text-2xl font-bold">NoutÃ„Æ’Ãˆâ€ºi (RO)</h1>
+      <p className="mt-2 text-sm opacity-80">ÃˆËœtiri Ãˆâ„¢i resurse din piaÃˆâ€ºa din RomÃƒÂ¢nia. 18+ JoacÃ„Æ’ responsabil. ConÃˆâ€ºinut comercial marcat corespunzÃ„Æ’tor.</p>
 
       <div className="mt-3 flex flex-wrap gap-2 text-sm">
         <a className={`rounded border px-2 py-1 ${!tag ? "bg-neutral-100" : ""}`} href="/noutati">
@@ -33,7 +33,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
           Trimite link
         </a>
         <a className="underline" href="/newsletter">
-          Abonează-te
+          AboneazÃ„Æ’-te
         </a>
       </div>
 
@@ -41,7 +41,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         {items.map((i: any) => (
           <li key={i.id} className={`rounded border p-3 ${i.featured ? "ring-1 ring-amber-300" : ""}`}>
             <div className="text-xs opacity-70">
-              {i.source?.name || "UGC"} • {i.publishedAt ? new Date(i.publishedAt).toLocaleDateString("ro-RO") : ""}
+              {i.source?.name || "UGC"} Ã¢â‚¬Â¢ {i.publishedAt ? new Date(i.publishedAt).toLocaleDateString("ro-RO") : ""}
             </div>
             <a className="mt-1 block text-base font-semibold underline" href={`/noutati/${i.slug}`}>
               {i.title}

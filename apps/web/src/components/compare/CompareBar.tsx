@@ -31,7 +31,7 @@ export default function CompareBar({
             aria-haspopup="dialog"
             aria-controls="compare-drawer"
           >
-            Deschide comparația
+            Deschide comparaÃˆâ€ºia
           </button>
         </div>
       </div>

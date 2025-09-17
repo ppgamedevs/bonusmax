@@ -17,9 +17,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Verificare abonare</h1>
       {ok ? (
-        <p className="mt-2">Mulțumim! Abonarea ta a fost confirmată.</p>
+        <p className="mt-2">MulÃˆâ€ºumim! Abonarea ta a fost confirmatÃ„Æ’.</p>
       ) : (
-        <p className="mt-2">Token invalid sau lipsă.</p>
+        <p className="mt-2">Token invalid sau lipsÃ„Æ’.</p>
       )}
     </main>
   );

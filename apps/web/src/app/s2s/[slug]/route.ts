@@ -1,81 +1,85 @@
-import { NextResponse } from "next/server";
-import { prisma, toBaseCurrency } from "@bonusmax/lib";
+import { OfferType } from "@prisma/client";
+import { getOffersByType, getActivePromos } from "@bonusmax/lib";
+import FilterBar from "../../components/FilterBar";
+import DisclosureBar from "../../components/DisclosureBar";
+import PromoStrip from "../../components/PromoStrip";
+import OffersGrid from "../../components/offers/OffersGrid";
 
-function ok(u: URL) {
-  return !!process.env.AFF_POSTBACK_KEY && u.searchParams.get("key") === process.env.AFF_POSTBACK_KEY;
+export const dynamic = "force-dynamic";
+
+function parseNumber(v: string | string[] | undefined) {
+  if (!v || Array.isArray(v)) return undefined;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : undefined;
 }
 
-function pick(u: URL) {
-  const sp = u.searchParams;
-  const get = (arr: string[]) => arr.map((k) => sp.get(k)).find(Boolean) || undefined;
-  return {
-    subid: get(["subid", "s2", "aff_sub", "click_id", "clickid", "aff_click_id", "sid"]),
-    amount: Number(get(["amount", "payout", "commission", "value"]) || "0"),
-    currency: get(["currency", "curr"]) || "RON",
-    txid: get(["txid", "transaction_id", "conversion_id", "cid"]) || undefined,
-    event: get(["event", "type", "goal"]) || "OTHER",
-    status: get(["status", "state"]) || "approved",
-  } as const;
-}
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string | string[]>> }) {
+  const sp = (await searchParams) || {} as Record<string, string | string[]>;
+  const operator = typeof sp.operator === "string" ? sp.operator : undefined;
+  const sort = typeof sp.sort === "string" ? (sp.sort as "priority" | "recent") : "priority";
+  const minWr = parseNumber(sp.min_wr);
+  const maxWr = parseNumber(sp.max_wr);
+  const maxMinDep = parseNumber(sp.max_min_dep);
+  const view = typeof sp.view === "string" ? sp.view : undefined;
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
-  const url = new URL(req.url);
-  if (!ok(url)) return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
-
-  const network = await (prisma as any).affiliateNetwork.findUnique({ where: { slug: params.slug } });
-  if (!network) return NextResponse.json({ ok: false, error: "network" }, { status: 404 });
-
-  const p = pick(url);
-
-  const click = p.subid ? await (prisma as any).clickEvent.findUnique({ where: { id: p.subid } }) : null;
-  if (!click) return NextResponse.json({ ok: false, error: "click_not_found" }, { status: 400 });
-
-  const offer = await (prisma as any).offer.findUnique({ where: { id: click.offerId } });
-  if (!offer) return NextResponse.json({ ok: false, error: "offer" }, { status: 404 });
-
-  if (p.txid) {
-    const exists = await (prisma as any).revenueEvent.findFirst({ where: { networkId: network.id, txId: p.txid } });
-    if (exists) return NextResponse.json({ ok: true, duplicated: true });
-  }
-
-  const typeMap: Record<string, any> = {
-    reg: "REG",
-    registration: "REG",
-    ftd: "FTD",
-    deposit: "FTD",
-    cpa: "CPA",
-    rev: "REVSHARE",
-    revshare: "REVSHARE",
-    bonus: "BONUS",
-  };
-  const key = (p.event || "OTHER").toLowerCase();
-  const type = (typeMap[key] ?? "OTHER") as any;
-
-  const amountBase = toBaseCurrency(p.amount || 0, (p.currency || network.currency));
-
-  await (prisma as any).revenueEvent.create({
-    data: {
-      networkId: network.id,
-      offerId: click.offerId,
-      operatorId: click.operatorId,
-      clickId: click.id,
-      subid: p.subid,
-      txId: p.txid,
-      type,
-      status: p.status,
-      amount: amountBase,
-      currency: process.env.BASE_CURRENCY || "RON",
-      meta: JSON.stringify({ rawCurrency: p.currency, rawAmount: p.amount }),
-    },
+  const offers = await getOffersByType(OfferType.ROTIRI, "RO", operator, sort, {
+    minWr,
+    maxWr,
+    maxMinDep
   });
 
-  return NextResponse.json({ ok: true });
-}
+  // Pin/merge sponsored promos at the top (no duplication)
+  const promos = await getActivePromos("HUB_ROTIRI", "RO", 3);
+  const pinCap = 2; // cap number of pinned sponsored items
+  const promoOffers = promos.slice(0, pinCap).map((p: any) => ({ ...p.offer, isSponsored: true }));
+  const merged = [...promoOffers, ...offers.filter((o: any) => !promoOffers.some((p: any) => p.id === o.id))];
 
-export async function POST(req: Request, ctx: any) {
-  const url = new URL(req.url);
-  const body = await req.text();
-  const q = new URLSearchParams(body);
-  q.forEach((v, k) => url.searchParams.set(k, v));
-  return GET(new Request(url.toString()), ctx);
+  return (
+    <main className="container mx-auto px-4 py-8" id="main">
+      <h1 className="text-2xl font-bold mb-4">Rotiri gratuite</h1>
+      <DisclosureBar />
+      {/* Sponsored strip (kept for visibility); the list below is also pinned */}
+      <PromoStrip slot="HUB_ROTIRI" title="Sponsored Ã¢â‚¬â€œ Rotiri gratuite" />
+      <FilterBar
+        basePath="/rotiri-gratuite"
+        currentOperator={operator ?? null}
+        currentSort={sort}
+        currentMinWr={minWr ?? null}
+        currentMaxWr={maxWr ?? null}
+        currentMaxMinDep={maxMinDep ?? null}
+      />
+
+      {view === "table" ? (
+        <table className="w-full text-sm">
+          <thead>
+            <tr>
+              <th className="text-left p-2">Operator</th>
+              <th className="text-left p-2">OfertÃ„Æ’</th>
+              <th className="p-2">WR</th>
+              <th className="p-2">Min Dep</th>
+              <th className="text-left p-2">T&C</th>
+              <th className="p-2">CTA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {merged.map((o: any) => (
+              <tr key={o.id} className="border-t">
+                <td className="p-2">{o.operator.name}</td>
+                <td className="p-2"><a href={`/bonus/${o.id}`} className="underline">{o.title}</a></td>
+                <td className="p-2 text-center">{o.wrMultiplier ?? '-'}</td>
+                <td className="p-2 text-center">{o.minDeposit ?? '-'}</td>
+                <td className="p-2">{o.termsShort}</td>
+                <td className="p-2"><a href={`/go/${o.id}`} rel="nofollow sponsored" className="rounded border px-3 py-1">RevendicÃ„Æ’</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <>
+          <OffersGrid offers={merged} />
+          <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃ„Æ’m clar toate plasÃ„Æ’rile. 18+</p>
+        </>
+      )}
+    </main>
+  );
 }

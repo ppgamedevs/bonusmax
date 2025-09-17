@@ -7,8 +7,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 – Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">Adaugă ?key=… (ADMIN_KEY) în URL.</p>
+        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
       </main>
     );
   }
@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin – QA</h1>
+        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ QA</h1>
         <p className="mt-2 text-sm opacity-80">Link checker & oferte cu probleme.</p>
 
         <section className="mt-6">
@@ -43,11 +43,11 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
             <thead>
               <tr>
                 <th className="p-2 text-left">Operator</th>
-                <th className="p-2 text-left">Ofertă</th>
+                <th className="p-2 text-left">OfertÃ„Æ’</th>
                 <th className="p-2">Ultima verificare</th>
                 <th className="p-2">Status</th>
                 <th className="p-2">HTTP</th>
-                <th className="p-2">Acțiuni</th>
+                <th className="p-2">AcÃˆâ€ºiuni</th>
               </tr>
             </thead>
             <tbody>
@@ -55,9 +55,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                 <tr key={o.id} className="border-t">
                   <td className="p-2">{o.operator.name}</td>
                   <td className="p-2">{o.title}</td>
-                  <td className="p-2 text-center">{o.lastCheckedAt ? new Date(o.lastCheckedAt).toLocaleString("ro-RO") : "—"}</td>
-                  <td className="p-2 text-center">{o.lastCheckStatus ?? "—"}</td>
-                  <td className="p-2 text-center">{o.lastHttpCode ?? "—"}</td>
+                  <td className="p-2 text-center">{o.lastCheckedAt ? new Date(o.lastCheckedAt).toLocaleString("ro-RO") : "Ã¢â‚¬â€"}</td>
+                  <td className="p-2 text-center">{o.lastCheckStatus ?? "Ã¢â‚¬â€"}</td>
+                  <td className="p-2 text-center">{o.lastHttpCode ?? "Ã¢â‚¬â€"}</td>
                   <td className="p-2">
                     <form action={recheckOfferLink} className="inline">
                       <input type="hidden" name="key" defaultValue={keyParam} />

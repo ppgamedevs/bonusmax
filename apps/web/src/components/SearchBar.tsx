@@ -30,9 +30,9 @@ export default function SearchBar({ initialQ = "", className = "" }: { initialQ?
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Caută bonusuri sau operatori…"
+          placeholder="CautÃ„Æ’ bonusuri sau operatoriÃ¢â‚¬Â¦"
           className="w-full rounded-xl border bg-transparent px-4 py-2"
-          aria-label="Căutare"
+          aria-label="CÃ„Æ’utare"
         />
       </form>
       {open && (results.offers.length > 0 || results.operators.length > 0) && (
@@ -55,7 +55,7 @@ export default function SearchBar({ initialQ = "", className = "" }: { initialQ?
               <ul>
                 {results.offers.map((o: any) => (
                   <li key={o.id}>
-                    <Link className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800" href={`/bonus/${o.id}`}>{o.title} — <span className="opacity-70">{o.operator.name}</span></Link>
+                    <Link className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800" href={`/bonus/${o.id}`}>{o.title} Ã¢â‚¬â€ <span className="opacity-70">{o.operator.name}</span></Link>
                   </li>
                 ))}
               </ul>

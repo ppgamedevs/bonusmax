@@ -15,7 +15,7 @@ export default function FeedbackWidget() {
   if (voted) {
     return (
       <div className="text-zinc-400 text-center py-4">
-        Mulțumim pentru feedback!
+        MulÃˆâ€ºumim pentru feedback!
       </div>
     );
   }

@@ -32,7 +32,7 @@ export async function getGuideBySlug(slug: string) {
   const source = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
 
   function slugifyHeading(t: string) {
-    return t.toLowerCase().replace(/[^a-z0-9ăâîșț -]/gi, "").replace(/\s+/g, "-").replace(/-+/g, "-");
+    return t.toLowerCase().replace(/[^a-z0-9Ã„Æ’ÃƒÂ¢ÃƒÂ®Ãˆâ„¢Ãˆâ€º -]/gi, "").replace(/\s+/g, "-").replace(/-+/g, "-");
   }
   function extractHeadings(md: string) {
     const lines = md.split("\n");

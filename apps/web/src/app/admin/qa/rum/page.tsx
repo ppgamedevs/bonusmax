@@ -6,8 +6,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 – Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">Adaugă ?key=… (ADMIN_KEY) în URL.</p>
+        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
       </main>
     );
   }
@@ -66,8 +66,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">RUM – Web Vitals (7 zile)</h1>
-        <p className="mt-2 text-sm opacity-80">Agregat local din {rows.length.toLocaleString("ro-RO")} măsurători LCP/CLS/INP/TTFB.</p>
+        <h1 className="text-2xl font-bold">RUM Ã¢â‚¬â€œ Web Vitals (7 zile)</h1>
+        <p className="mt-2 text-sm opacity-80">Agregat local din {rows.length.toLocaleString("ro-RO")} mÃ„Æ’surÃ„Æ’tori LCP/CLS/INP/TTFB.</p>
 
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">

@@ -15,9 +15,9 @@ export default async function TopTodayHeader() {
       <div className="flex items-end justify-between">
         <div>
           <h2 className="text-xl font-bold u-underline-hover">Top de azi (dinamic)</h2>
-          <p className="text-sm opacity-70">Se actualizează după CTR, clicks și recență — {formatUpdatedRO(updatedAt)}</p>
+          <p className="text-sm opacity-70">Se actualizeazÃ„Æ’ dupÃ„Æ’ CTR, clicks Ãˆâ„¢i recenÃˆâ€ºÃ„Æ’ Ã¢â‚¬â€ {formatUpdatedRO(updatedAt)}</p>
         </div>
-        <p className="hidden text-xs opacity-60 md:block">„Conținut comercial” este marcat. 18+.</p>
+        <p className="hidden text-xs opacity-60 md:block">Ã¢â‚¬Å¾ConÃˆâ€ºinut comercialÃ¢â‚¬Â este marcat. 18+.</p>
       </div>
     </header>
   );

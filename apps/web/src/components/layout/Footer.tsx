@@ -30,7 +30,7 @@ export default function Footer() {
             <span className="text-lg font-semibold">Bonusmax</span>
           </div>
           <p className="mt-3 text-sm text-zinc-400">
-            Comparații de bonusuri, verificate și actualizate.
+            ComparaÃˆâ€ºii de bonusuri, verificate Ãˆâ„¢i actualizate.
           </p>
 
           {/* Social (inline SVG, monochrome + glow on hover) */}
@@ -59,10 +59,10 @@ export default function Footer() {
             Legal & Compliance
           </h4>
           <ul className="space-y-2">
-            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener">ONJN – Oficiul Național pentru Jocuri de Noroc</a></li>
-            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener">ANPC – Protecția Consumatorilor</a></li>
-            <li><a className={link} href="/politica-confidentialitate">GDPR / Politica de confidențialitate</a></li>
-            <li><a className={link} href="/termeni-si-conditii">Termeni și condiții</a></li>
+            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener">ONJN Ã¢â‚¬â€œ Oficiul NaÃˆâ€ºional pentru Jocuri de Noroc</a></li>
+            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener">ANPC Ã¢â‚¬â€œ ProtecÃˆâ€ºia Consumatorilor</a></li>
+            <li><a className={link} href="/politica-confidentialitate">GDPR / Politica de confidenÃˆâ€ºialitate</a></li>
+            <li><a className={link} href="/termeni-si-conditii">Termeni Ãˆâ„¢i condiÃˆâ€ºii</a></li>
           </ul>
         </div>
 
@@ -92,15 +92,15 @@ export default function Footer() {
           </div>
 
           <p className="mt-3 text-xs text-zinc-400 leading-5">
-            Conținut comercial. Ofertele sunt doar pentru operatori licențiați ONJN.
-            Joacă responsabil. Jocurile de noroc implică riscuri financiare.
+            ConÃˆâ€ºinut comercial. Ofertele sunt doar pentru operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN.
+            JoacÃ„Æ’ responsabil. Jocurile de noroc implicÃ„Æ’ riscuri financiare.
           </p>
         </div>
       </div>
 
       <div className="border-t border-zinc-800">
         <div className="mx-auto max-w-7xl px-6 py-6 text-center text-xs text-zinc-500">
-          © 2025 Bonusmax. Toate drepturile rezervate.
+          Ã‚Â© 2025 Bonusmax. Toate drepturile rezervate.
         </div>
       </div>
     </footer>
@@ -170,7 +170,7 @@ function Badge18Plus() {
         <circle cx="12" cy="12" r="10" fill="currentColor" opacity=".12"/>
         <text x="50%" y="56%" textAnchor="middle" fontSize="11" fill="white" fontWeight="700">18+</text>
       </svg>
-      <span className="text-xs text-zinc-300">Joacă responsabil</span>
+      <span className="text-xs text-zinc-300">JoacÃ„Æ’ responsabil</span>
     </div>
   );
 }

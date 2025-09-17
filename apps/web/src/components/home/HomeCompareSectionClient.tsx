@@ -43,12 +43,12 @@ export default function HomeCompareSectionClient() {
   return (
     <section className="mx-auto mt-10 max-w-6xl px-4">
       <header className="mb-3">
-        <h2 className="text-xl font-bold u-underline-hover">Comparație Bonusuri</h2>
-        <p className="mt-1 text-sm opacity-70">Alege 2–3 oferte și compară-le rapid. Caută „Compara” pe carduri pentru a selecta.</p>
+        <h2 className="text-xl font-bold u-underline-hover">ComparaÃˆâ€ºie Bonusuri</h2>
+        <p className="mt-1 text-sm opacity-70">Alege 2Ã¢â‚¬â€œ3 oferte Ãˆâ„¢i comparÃ„Æ’-le rapid. CautÃ„Æ’ Ã¢â‚¬Å¾ComparaÃ¢â‚¬Â pe carduri pentru a selecta.</p>
       </header>
 
       {(!offers || offers.length < 2) ? (
-        <p className="text-sm opacity-80">Adaugă cel puțin 2 oferte pentru a începe comparația.</p>
+        <p className="text-sm opacity-80">AdaugÃ„Æ’ cel puÃˆâ€ºin 2 oferte pentru a ÃƒÂ®ncepe comparaÃˆâ€ºia.</p>
       ) : (
         <>
           {/* Desktop table */}
@@ -79,11 +79,11 @@ export default function HomeCompareSectionClient() {
               </thead>
               <tbody>
                 {[
-                  { label: "Max bonus", val: (o:any)=> o.maxBonus || o.headline || "—" },
-                  { label: "WR", val: (o:any)=> o.wr || (o.wrMultiplier?`x${o.wrMultiplier}`:"—") },
-                  { label: "Depunere minimă", val: (o:any)=> (typeof o.minDeposit==="number"? `${o.minDeposit} RON` : (o.minDeposit || "—")) },
-                  { label: "Rotiri gratuite", val: (o:any)=> o.spins || o.freeSpins || "—" },
-                  { label: "Valabilitate", val: (o:any)=> o.validity || (o.validDays? `${o.validDays} zile` : "—") },
+                  { label: "Max bonus", val: (o:any)=> o.maxBonus || o.headline || "Ã¢â‚¬â€" },
+                  { label: "WR", val: (o:any)=> o.wr || (o.wrMultiplier?`x${o.wrMultiplier}`:"Ã¢â‚¬â€") },
+                  { label: "Depunere minimÃ„Æ’", val: (o:any)=> (typeof o.minDeposit==="number"? `${o.minDeposit} RON` : (o.minDeposit || "Ã¢â‚¬â€")) },
+                  { label: "Rotiri gratuite", val: (o:any)=> o.spins || o.freeSpins || "Ã¢â‚¬â€" },
+                  { label: "Valabilitate", val: (o:any)=> o.validity || (o.validDays? `${o.validDays} zile` : "Ã¢â‚¬â€") },
                 ].map((row, idx) => (
                   <tr key={row.label} className={(idx%2===0?"bg-white/5 dark:bg-white/5":"bg-white/10 dark:bg-black/10")+" border-t border-white/10"}>
                     <td className="w-40 p-3 text-xs opacity-70">{row.label}</td>
@@ -97,12 +97,12 @@ export default function HomeCompareSectionClient() {
                   </tr>
                 ))}
                 <tr className="border-t border-white/10">
-                  <td className="p-3 text-xs opacity-70">Acțiune</td>
+                  <td className="p-3 text-xs opacity-70">AcÃˆâ€ºiune</td>
                   {offers.map((o) => (
                     <td key={o.id} className="min-w-[220px] align-top p-3">
                       <div className={(o.id===bestId?"ring-1 ring-violet-300/40 bg-violet-500/[0.05] ":"")+"rounded-lg p-2"}>
-                        <Link href={`/go/${o.id}` as any} rel="nofollow sponsored noopener" className="btn-accent h-10 w-full">Revendică bonusul</Link>
-                        <div className="mt-1 text-[11px] opacity-60">18+ • T&C • Publicitate</div>
+                        <Link href={`/go/${o.id}` as any} rel="nofollow sponsored noopener" className="btn-accent h-10 w-full">RevendicÃ„Æ’ bonusul</Link>
+                        <div className="mt-1 text-[11px] opacity-60">18+ Ã¢â‚¬Â¢ T&C Ã¢â‚¬Â¢ Publicitate</div>
                       </div>
                     </td>
                   ))}
@@ -127,20 +127,20 @@ export default function HomeCompareSectionClient() {
                     {o.id===bestId && (<span className="ml-auto chip-accent">Best Value</span>)}
                   </div>
                   <ul className="mt-2 space-y-1 text-sm">
-                    <li><span className="opacity-70">Max bonus:</span> {o.maxBonus || o.headline || "—"}</li>
-                    <li><span className="opacity-70">WR:</span> {o.wr || (o.wrMultiplier?`x${o.wrMultiplier}`:"—")}</li>
-                    <li><span className="opacity-70">Min dep:</span> {typeof o.minDeposit==="number"? `${o.minDeposit} RON` : (o.minDeposit || "—")}</li>
-                    <li><span className="opacity-70">Rotiri:</span> {o.spins || o.freeSpins || "—"}</li>
-                    <li><span className="opacity-70">Valabilitate:</span> {o.validity || (o.validDays? `${o.validDays} zile` : "—")}</li>
+                    <li><span className="opacity-70">Max bonus:</span> {o.maxBonus || o.headline || "Ã¢â‚¬â€"}</li>
+                    <li><span className="opacity-70">WR:</span> {o.wr || (o.wrMultiplier?`x${o.wrMultiplier}`:"Ã¢â‚¬â€")}</li>
+                    <li><span className="opacity-70">Min dep:</span> {typeof o.minDeposit==="number"? `${o.minDeposit} RON` : (o.minDeposit || "Ã¢â‚¬â€")}</li>
+                    <li><span className="opacity-70">Rotiri:</span> {o.spins || o.freeSpins || "Ã¢â‚¬â€"}</li>
+                    <li><span className="opacity-70">Valabilitate:</span> {o.validity || (o.validDays? `${o.validDays} zile` : "Ã¢â‚¬â€")}</li>
                   </ul>
-                  <Link href={`/go/${o.id}` as any} rel="nofollow sponsored noopener" className="btn-accent mt-3 h-11 w-full">Revendică bonusul</Link>
+                  <Link href={`/go/${o.id}` as any} rel="nofollow sponsored noopener" className="btn-accent mt-3 h-11 w-full">RevendicÃ„Æ’ bonusul</Link>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="mt-4 flex justify-center">
-            <Link href={("/compara" as any)} className="btn-accent h-11 px-6 focus-accent">Alege bonusul și revendică acum →</Link>
+            <Link href={("/compara" as any)} className="btn-accent h-11 px-6 focus-accent">Alege bonusul Ãˆâ„¢i revendicÃ„Æ’ acum Ã¢â€ â€™</Link>
           </div>
         </>
       )}

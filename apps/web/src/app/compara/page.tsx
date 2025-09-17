@@ -5,8 +5,8 @@ import CompareRecommendation from "../../components/compare/CompareRecommendatio
 
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "Comparație oferte — Bonusmax (RO)",
-  description: "Compară bonusuri și termeni — doar operatori licențiați ONJN. 18+ Joacă responsabil.",
+  title: "ComparaÃˆâ€ºie oferte Ã¢â‚¬â€ Bonusmax (RO)",
+  description: "ComparÃ„Æ’ bonusuri Ãˆâ„¢i termeni Ã¢â‚¬â€ doar operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+ JoacÃ„Æ’ responsabil.",
 };
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
@@ -33,12 +33,12 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
       payments: Array.isArray((o as any).payments) ? (o as any).payments : (o as any).paymentsJson ? JSON.parse((o as any).paymentsJson) : [],
       pros: Array.isArray((o as any).pros) ? (o as any).pros.slice(0, 2) : [],
     }));
-    // păstrăm ordinea cerută
+    // pÃ„Æ’strÃ„Æ’m ordinea cerutÃ„Æ’
     const byId = new Map(offers.map((x) => [x.id, x]));
     offers = ids.map((id) => byId.get(id)).filter(Boolean) as any[];
   }
 
-  // 2) EPC (30 zile) și alegerea recomandării
+  // 2) EPC (30 zile) Ãˆâ„¢i alegerea recomandÃ„Æ’rii
   let highlightOfferId: string | undefined;
   let reco: { offer: any; clicks: number; revenue: number; epc: number } | null = null;
   if (offers.length) {
@@ -54,8 +54,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Comparație oferte</h1>
-      <p className="mt-1 text-sm opacity-80">Doar operatori licențiați ONJN • „Sponsored” marcat • 18+ Joacă responsabil.</p>
+      <h1 className="text-2xl font-bold">ComparaÃˆâ€ºie oferte</h1>
+      <p className="mt-1 text-sm opacity-80">Doar operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN Ã¢â‚¬Â¢ Ã¢â‚¬Å¾SponsoredÃ¢â‚¬Â marcat Ã¢â‚¬Â¢ 18+ JoacÃ„Æ’ responsabil.</p>
 
       <div className="mt-4 overflow-x-auto">
         <CompareTable offers={offers} highlightOfferId={highlightOfferId} />
@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         />
       )}
 
-      {/* Fallback client-side din localStorage dacă nu avem ids în URL */}
+      {/* Fallback client-side din localStorage dacÃ„Æ’ nu avem ids ÃƒÂ®n URL */}
       <CompareClient hasServer={offers.length > 0} />
     </main>
   );

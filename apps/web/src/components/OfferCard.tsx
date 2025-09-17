@@ -21,7 +21,7 @@ type OfferCardProps = {
 };
 
 export default function OfferCard({ offer }: OfferCardProps) {
-  const label = "Revendică bonusul";
+  const label = "RevendicÃ„Æ’ bonusul";
   const [chosen, setChosen] = useState<string[]>([]);
   useEffect(() => { setChosen(getCompareIds()); }, []);
   const inCompare = chosen.includes(offer.id);
@@ -30,7 +30,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
     <div className="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-white/3 p-4 shadow-sm ring-1 ring-white/5 hover:bg-white/5">
       {/* Badge tray */}
       <div className="absolute right-3 top-3 flex items-center gap-2">
-        <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-medium text-emerald-400">Licențiat ONJN</span>
+        <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-medium text-emerald-400">LicenÃˆâ€ºiat ONJN</span>
         {offer.isSponsored ? (
           <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[11px] font-medium text-amber-400">Sponsored</span>
         ) : null}
@@ -77,7 +77,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
         <HydrateOnVisible>
           <CompareButton id={offer.id} initialInCompare={inCompare} />
         </HydrateOnVisible>
-        <p className="mt-1 text-[11px] opacity-60">18+ • T&C • Publicitate</p>
+        <p className="mt-1 text-[11px] opacity-60">18+ Ã¢â‚¬Â¢ T&C Ã¢â‚¬Â¢ Publicitate</p>
       </div>
     </div>
   );

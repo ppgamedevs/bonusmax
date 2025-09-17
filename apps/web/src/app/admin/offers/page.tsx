@@ -8,8 +8,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 – Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">Adaugă ?key=… (ADMIN_KEY) în URL.</p>
+        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
       </main>
     );
   }
@@ -26,9 +26,9 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin – Offers</h1>
+        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ Offers</h1>
         <p className="mt-2 text-sm">
-          <Link href={("/admin/operators?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">→ Manage Operators</Link>
+          <Link href={("/admin/operators?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">Ã¢â€ â€™ Manage Operators</Link>
         </p>
 
         <section className="mt-6">
@@ -51,10 +51,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
               <option>FARA_DEPUNERE</option>
             </select>
             <input className="rounded border px-3 py-2" name="termsShort" placeholder="T&C scurt" required />
-            <input className="rounded border px-3 py-2" name="termsUrl" placeholder="T&C URL (opțional)" />
+            <input className="rounded border px-3 py-2" name="termsUrl" placeholder="T&C URL (opÃˆâ€ºional)" />
             <input className="rounded border px-3 py-2" name="ctaBaseUrl" placeholder="tracker URL" required />
             <select className="rounded border px-3 py-2" name="networkId">
-              <option value="">— Fără rețea —</option>
+              <option value="">Ã¢â‚¬â€ FÃ„Æ’rÃ„Æ’ reÃˆâ€ºea Ã¢â‚¬â€</option>
               {networks.map((n: any) => (
                 <option key={n.id} value={n.id}>{n.name} ({n.slug})</option>
               ))}
@@ -105,7 +105,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                   <input className="rounded border px-3 py-2" name="termsUrl" defaultValue={o.termsUrl ?? ""} />
                   <input className="rounded border px-3 py-2" name="ctaBaseUrl" defaultValue={o.ctaBaseUrl} />
                   <select className="rounded border px-3 py-2" name="networkId" defaultValue={(o as any).networkId ?? ""}>
-                    <option value="">— Fără rețea —</option>
+                    <option value="">Ã¢â‚¬â€ FÃ„Æ’rÃ„Æ’ reÃˆâ€ºea Ã¢â‚¬â€</option>
                     {networks.map((n: any) => (
                       <option key={n.id} value={n.id}>{n.name} ({n.slug})</option>
                     ))}

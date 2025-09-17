@@ -13,10 +13,10 @@ export default function BackButton() {
     <button
       type="button"
       onClick={goBack}
-      aria-label="Înapoi"
+      aria-label="ÃƒÅ½napoi"
       className="inline-flex items-center justify-center rounded-lg border px-2.5 py-1.5 text-sm underline opacity-80 hover:opacity-100 focus-visible:outline focus-visible:outline-2"
     >
-      ← Înapoi
+      Ã¢â€ Â ÃƒÅ½napoi
     </button>
   );
 }

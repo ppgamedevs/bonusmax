@@ -1,65 +1,66 @@
-import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
-import { prisma, hashIp, buildOutUrlSimple } from '@bonusmax/lib';
-import { cookies } from 'next/headers';
+import { getAllGuidesMeta } from "../../lib/guides";
+import Link from "next/link";
 
-function getIp(h: Headers) {
-  const xff = h.get('x-forwarded-for');
-  if (xff) return xff.split(',')[0].trim();
-  return h.get('x-real-ip') || '0.0.0.0';
-}
+export const revalidate = 3600;
+export const metadata = { title: "Ghiduri bonusuri & cazinouri" };
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const h = headers() as any;
-  const ua = h.get('user-agent');
-  const referer = h.get('referer');
-  const ip = getIp(h as unknown as Headers);
-  const url = new URL(req.url);
-  const ab = url.searchParams.get('ab');
-
-  const offer = await (prisma as any).offer.findUnique({
-    where: { id: params.id },
-    include: { operator: true, network: true }
-  });
-  if (!offer) {
-    return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'));
-  }
-
-  const ipHash = hashIp(ip, ua);
-
-  // Persist click to obtain clickId used as subid
-  function pathOnly(u?: string | null) {
-    if (!u) return null;
-    try {
-      return new URL(u).pathname || "/";
-    } catch {
-      return null;
-    }
-  }
-
-  const cAny: any = (cookies as any)();
-  const expCta = cAny?.get?.('exp__CTA_COPY_V1')?.value || 'A';
-  const expOrder = cAny?.get?.('exp__OFFERS_ORDER_V1')?.value || 'A';
-
-  const click = await (prisma as any).clickEvent.create({
-    data: {
-      offerId: offer.id,
-      operatorId: offer.operatorId,
-      ipHash,
-      userAgent: ua ?? undefined,
-      referer: referer ?? undefined,
-      landingPath: pathOnly(referer) ?? undefined,
-      utmSource: url.searchParams.get('utm_source') || 'bonusmax',
-      utmMedium: url.searchParams.get('utm_medium') || 'cta',
-      utmCampaign: url.searchParams.get('utm_campaign') || offer.operator.slug,
-      utmContent: url.searchParams.get('utm_content') || (ab ? `cta-${ab}` : undefined),
-      expCtaCopy: expCta === 'B' ? 'B' : 'A',
-      expOffersOrder: expOrder === 'B' ? 'B' : 'A'
-    },
-    select: { id: true }
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+  const list = getAllGuidesMeta();
+  const sp = (await searchParams) || {} as Record<string, string>;
+  const q = (sp.q || "").toLowerCase().trim();
+  const filtered = (q
+    ? list.filter((g: any) =>
+        [g.title || "", g.description || ""].some((t: string) => t.toLowerCase().includes(q))
+      )
+    : list
+  ).sort((a: any, b: any) => {
+    const ad = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+    const bd = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+    return bd - ad;
   });
 
-  const finalUrl = buildOutUrlSimple(offer.ctaBaseUrl, click.id, url.searchParams);
+  const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const highlight = (text: string, query: string) => {
+    if (!query) return text;
+    const rx = new RegExp(`(${escapeRe(query)})`, "ig");
+    const parts = text.split(rx);
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark key={i} className="bg-yellow-200 px-0.5">{part}</mark>
+      ) : (
+        <span key={i}>{part}</span>
+      )
+    );
+  };
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold">Ghiduri (RomÃƒÂ¢nia)</h1>
+      <p className="mt-2 text-sm opacity-80">ExplicaÃˆâ€ºii clare despre bonusuri, WR Ãˆâ„¢i operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+ JoacÃ„Æ’ responsabil.</p>
 
-  return NextResponse.redirect(finalUrl, { status: 307 });
+      <form className="mt-4 flex gap-2" method="get">
+        <input
+          className="w-full max-w-md rounded border px-3 py-2 text-sm"
+          type="search"
+          name="q"
+          placeholder="CautÃ„Æ’ ÃƒÂ®n titlu/descriere..."
+          defaultValue={q}
+        />
+        <button className="rounded border px-3 py-2 text-sm" type="submit">CautÃ„Æ’</button>
+      </form>
+
+      <ul className="mt-4 grid gap-3 md:grid-cols-2">
+        {filtered.map((g: any) => (
+          <li key={g.slug} className="rounded border p-3">
+            <Link prefetch={false} href={`/ghiduri/${g.slug}`} className="text-base font-semibold underline">
+              {highlight(g.title, q) as any}
+            </Link>
+            <p className="mt-1 text-sm opacity-80">{highlight(g.description || "", q) as any}</p>
+            {g.updatedAt && (
+              <p className="mt-1 text-xs opacity-60">Actualizat: {new Date(g.updatedAt).toLocaleDateString("ro-RO")}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
 }

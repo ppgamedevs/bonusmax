@@ -49,30 +49,30 @@ export default function Page() {
     });
     const j = await r.json().catch(() => null);
     setSubmitting(false);
-    if (j?.ok) setOk("Mulțumim! Te contactăm în scurt timp.");
-    else setOk("Eroare la trimitere. Verifică câmpurile.");
+    if (j?.ok) setOk("MulÃˆâ€ºumim! Te contactÃ„Æ’m ÃƒÂ®n scurt timp.");
+    else setOk("Eroare la trimitere. VerificÃ„Æ’ cÃƒÂ¢mpurile.");
   }
 
   return (
     <main className="container mx-auto px-4 py-8">
       <section className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold">Promovează-te pe Bonusmax</h1>
+        <h1 className="text-3xl font-bold">PromoveazÃ„Æ’-te pe Bonusmax</h1>
         <p className="mt-2 text-sm opacity-80">
-          Sponsored placements pe homepage și hub-uri, listări editoriale și colaborări de conținut. Doar operatori licențiați ONJN și agenții cu mandate valide. 18+ Joacă responsabil.
+          Sponsored placements pe homepage Ãˆâ„¢i hub-uri, listÃ„Æ’ri editoriale Ãˆâ„¢i colaborÃ„Æ’ri de conÃˆâ€ºinut. Doar operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN Ãˆâ„¢i agenÃˆâ€ºii cu mandate valide. 18+ JoacÃ„Æ’ responsabil.
         </p>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="rounded-xl border p-4">
             <h3 className="font-semibold">Sponsored (Homepage)</h3>
-            <p className="text-sm opacity-70">Slot dedicat, vizibilitate maximă. Contracte 7–30 zile.</p>
+            <p className="text-sm opacity-70">Slot dedicat, vizibilitate maximÃ„Æ’. Contracte 7Ã¢â‚¬â€œ30 zile.</p>
           </div>
           <div className="rounded-xl border p-4">
-            <h3 className="font-semibold">Hub-uri (Fără depunere / Rotiri)</h3>
-            <p className="text-sm opacity-70">Targetare pe intenție. Opțiuni pin & sort.</p>
+            <h3 className="font-semibold">Hub-uri (FÃ„Æ’rÃ„Æ’ depunere / Rotiri)</h3>
+            <p className="text-sm opacity-70">Targetare pe intenÃˆâ€ºie. OpÃˆâ€ºiuni pin & sort.</p>
           </div>
           <div className="rounded-xl border p-4">
             <h3 className="font-semibold">CPA/Hybrid</h3>
-            <p className="text-sm opacity-70">Parteneriate performanță (EPC verificat).</p>
+            <p className="text-sm opacity-70">Parteneriate performanÃˆâ€ºÃ„Æ’ (EPC verificat).</p>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function Page() {
           </div>
           <label className="text-sm">
             Mesaj
-            <textarea name="message" rows={4} className="mt-1 w-full rounded border px-3 py-2" placeholder="Perioada dorită, slot, brief, etc." />
+            <textarea name="message" rows={4} className="mt-1 w-full rounded border px-3 py-2" placeholder="Perioada doritÃ„Æ’, slot, brief, etc." />
           </label>
 
           <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
@@ -128,7 +128,7 @@ export default function Page() {
             <button disabled={submitting} className="rounded border px-4 py-2 font-semibold">{submitting ? "Se trimite..." : "Trimite"}</button>
           </div>
           {ok && <p className="text-sm">{ok}</p>}
-          <p className="mt-2 text-xs opacity-60">Prin trimitere confirmi că ești operator/agenție conform(ă) ONJN. „Sponsored” și „Conținut comercial” vor fi marcate în site.</p>
+          <p className="mt-2 text-xs opacity-60">Prin trimitere confirmi cÃ„Æ’ eÃˆâ„¢ti operator/agenÃˆâ€ºie conform(Ã„Æ’) ONJN. Ã¢â‚¬Å¾SponsoredÃ¢â‚¬Â Ãˆâ„¢i Ã¢â‚¬Å¾ConÃˆâ€ºinut comercialÃ¢â‚¬Â vor fi marcate ÃƒÂ®n site.</p>
         </form>
       </section>
     </main>
