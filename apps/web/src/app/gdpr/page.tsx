@@ -9,13 +9,13 @@ export default function GDPRPage() {
     <section className="space-y-4">
       <JsonLd
         data={jsonLdBreadcrumb([
-          { name: 'AcasÃ„Æ’', url: absoluteUrl('/') },
+          { name: 'AcasÃƒâ€žÃ†â€™', url: absoluteUrl('/') },
           { name: 'GDPR', url: absoluteUrl('/gdpr') }
         ])}
       />
       <h1 className="text-2xl font-semibold">GDPR</h1>
-      <p>InformaÃˆâ€ºii privind protecÃˆâ€ºia datelor cu caracter personal vor fi publicate ÃƒÂ®n curÃƒÂ¢nd.</p>
-      <p>Vom explica scopurile prelucrÃ„Æ’rii, temeiurile Ãˆâ„¢i drepturile tale.</p>
+      <p>InformaÃƒË†Ã¢â‚¬Âºii privind protecÃƒË†Ã¢â‚¬Âºia datelor cu caracter personal vor fi publicate ÃƒÆ’Ã‚Â®n curÃƒÆ’Ã‚Â¢nd.</p>
+      <p>Vom explica scopurile prelucrÃƒâ€žÃ†â€™rii, temeiurile ÃƒË†Ã¢â€žÂ¢i drepturile tale.</p>
       <p className="text-sm text-muted-foreground">Ultima actualizare: {lastUpdated}</p>
     </section>
   );

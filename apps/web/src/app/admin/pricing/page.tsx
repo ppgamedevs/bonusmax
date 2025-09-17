@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 type Baseline = { clicks: number; impressions: number; ctr: number };
 
-export default function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const key = searchParams?.key || "";
   const [base, setBase] = useState<Baseline>({ clicks: 0, impressions: 0, ctr: 0 });
   const [imps, setImps] = useState<number>(10000);
@@ -46,7 +46,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={0.1} value={(ctr * 100).toFixed(1)} onChange={(e) => setCtr(Number(e.target.value) / 100)} />
         </label>
         <div className="rounded border p-3 text-sm">
-          <div>Clicks aÃˆâ„¢teptate</div>
+          <div>Clicks aÃƒË†Ã¢â€žÂ¢teptate</div>
           <div className="mt-2 text-2xl font-bold">{expectedClicks.toLocaleString("ro-RO")}</div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={1} value={cpm} onChange={(e) => setCpm(Number(e.target.value || 0))} />
         </label>
         <label className="rounded border p-3 text-sm">
-          PreÃˆâ€º FLAT (RON)
+          PreÃƒË†Ã¢â‚¬Âº FLAT (RON)
           <input className="mt-2 w-full rounded border px-3 py-2" type="number" step={1} value={flat} onChange={(e) => setFlat(Number(e.target.value || 0))} />
         </label>
       </div>
@@ -81,7 +81,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
         </div>
       </div>
 
-      <p className="mt-6 text-xs opacity-60">Note: CTR variazÃ„Æ’ ÃƒÂ®n funcÃˆâ€ºie de slot Ãˆâ„¢i creativ. RespectÃ„Æ’ Ã¢â‚¬Å“PublicitateÃ¢â‚¬Â, 18+, doar operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN.</p>
+      <p className="mt-6 text-xs opacity-60">Note: CTR variazÃƒâ€žÃ†â€™ ÃƒÆ’Ã‚Â®n funcÃƒË†Ã¢â‚¬Âºie de slot ÃƒË†Ã¢â€žÂ¢i creativ. RespectÃƒâ€žÃ†â€™ ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œPublicitateÃƒÂ¢Ã¢â€šÂ¬Ã‚Â, 18+, doar operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN.</p>
     </main>
   );
 }

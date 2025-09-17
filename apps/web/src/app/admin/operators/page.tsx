@@ -8,8 +8,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
       </main>
     );
   }
@@ -24,10 +24,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ Operators</h1>
+        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Operators</h1>
         <p className="mt-2 text-sm">
           <Link href={("/admin/offers?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">
-            Ã¢â€ â€™ Manage Offers
+            ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Manage Offers
           </Link>
         </p>
 
@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
             <input type="hidden" name="key" defaultValue={keyParam} />
             <input className="rounded border px-3 py-2" name="slug" placeholder="slug (ex: betano)" required />
             <input className="rounded border px-3 py-2" name="name" placeholder="name" required />
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isLicensedRO" /> LicenÃˆâ€ºiat RO</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isLicensedRO" /> LicenÃƒË†Ã¢â‚¬Âºiat RO</label>
             <input className="rounded border px-3 py-2" name="logoUrl" placeholder="logoUrl (https://...)" />
             <input className="rounded border px-3 py-2" name="website" placeholder="website (https://...)" />
             <input className="rounded border px-3 py-2" name="rating" placeholder="rating 0..5" />
@@ -60,7 +60,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                   <input className="rounded border px-3 py-2" name="slug" defaultValue={op.slug} />
                   <input className="rounded border px-3 py-2" name="name" defaultValue={op.name} />
                   <label className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" name="isLicensedRO" defaultChecked={op.isLicensedRO} /> LicenÃˆâ€ºiat RO
+                    <input type="checkbox" name="isLicensedRO" defaultChecked={op.isLicensedRO} /> LicenÃƒË†Ã¢â‚¬Âºiat RO
                   </label>
                   <input className="rounded border px-3 py-2" name="logoUrl" defaultValue={op.logoUrl ?? ""} />
                   <input className="rounded border px-3 py-2" name="website" defaultValue={op.website ?? ""} />

@@ -15,13 +15,13 @@ export default function Page() {
       body: JSON.stringify(payload),
     });
     const j = await r.json();
-    setMsg(j.ok ? "MulÃˆâ€ºumim! Linkul tÃ„Æ’u a intrat ÃƒÂ®n moderare." : "Eroare Ã¢â‚¬â€œ verificÃ„Æ’ URL-ul.");
+    setMsg(j.ok ? "MulÃƒË†Ã¢â‚¬Âºumim! Linkul tÃƒâ€žÃ†â€™u a intrat ÃƒÆ’Ã‚Â®n moderare." : "Eroare ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ verificÃƒâ€žÃ†â€™ URL-ul.");
   }
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Trimite un link</h1>
       <p className="mt-2 text-sm opacity-80">
-        NoutÃ„Æ’Ãˆâ€ºi utile pentru comunitatea iGaming din RomÃƒÂ¢nia (ONJN, responsabilitate, operatori). FÃ„Æ’rÃ„Æ’ promisiuni de cÃƒÂ¢Ãˆâ„¢tig. 18+.
+        NoutÃƒâ€žÃ†â€™ÃƒË†Ã¢â‚¬Âºi utile pentru comunitatea iGaming din RomÃƒÆ’Ã‚Â¢nia (ONJN, responsabilitate, operatori). FÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ promisiuni de cÃƒÆ’Ã‚Â¢ÃƒË†Ã¢â€žÂ¢tig. 18+.
       </p>
       <form onSubmit={submit} className="mt-4 grid max-w-xl gap-3">
         <label className="text-sm">
@@ -33,11 +33,11 @@ export default function Page() {
           <input name="title" className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <label className="text-sm">
-          NotÃ„Æ’
+          NotÃƒâ€žÃ†â€™
           <textarea name="note" rows={3} className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <label className="text-sm">
-          Email (opÃˆâ€ºional)
+          Email (opÃƒË†Ã¢â‚¬Âºional)
           <input name="email" type="email" className="mt-1 w-full rounded border px-3 py-2" />
         </label>
         <button className="rounded border px-3 py-2">Trimite</button>

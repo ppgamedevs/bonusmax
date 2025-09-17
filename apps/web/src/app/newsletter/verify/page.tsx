@@ -3,7 +3,7 @@ import { prisma } from "@bonusmax/lib";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Verificare abonare" };
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const token = searchParams?.token || "";
   let ok = false;
   if (token) {
@@ -17,9 +17,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Verificare abonare</h1>
       {ok ? (
-        <p className="mt-2">MulÃˆâ€ºumim! Abonarea ta a fost confirmatÃ„Æ’.</p>
+        <p className="mt-2">MulÃƒË†Ã¢â‚¬Âºumim! Abonarea ta a fost confirmatÃƒâ€žÃ†â€™.</p>
       ) : (
-        <p className="mt-2">Token invalid sau lipsÃ„Æ’.</p>
+        <p className="mt-2">Token invalid sau lipsÃƒâ€žÃ†â€™.</p>
       )}
     </main>
   );

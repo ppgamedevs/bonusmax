@@ -11,7 +11,7 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const key = searchParams?.key;
   const rows = await (prisma as any).backlink.findMany({ include: { domain: true }, orderBy: [{ ok: "asc" }, { lastSeen: "asc" }], take: 300 });
   return (
@@ -20,7 +20,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         <h1 className="text-2xl font-bold">Backlinks</h1>
         <p className="mt-2 text-sm opacity-70">
           <a className="underline" href={`/api/cron/backlinks?key=${key}&limit=50`}>
-            RuleazÃ„Æ’ verificare (50)
+            RuleazÃƒâ€žÃ†â€™ verificare (50)
           </a>
         </p>
         <table className="mt-4 w-full text-sm">
@@ -43,8 +43,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                     {r.url}
                   </a>
                 </td>
-                <td className="p-2">{r.anchor ?? "Ã¢â‚¬â€"}</td>
-                <td className="p-2">{r.lastSeen ? new Date(r.lastSeen).toLocaleString("ro-RO") : "Ã¢â‚¬â€"}</td>
+                <td className="p-2">{r.anchor ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                <td className="p-2">{r.lastSeen ? new Date(r.lastSeen).toLocaleString("ro-RO") : "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
               </tr>
             ))}
           </tbody>

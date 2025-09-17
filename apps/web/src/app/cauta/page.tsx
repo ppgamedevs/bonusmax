@@ -5,13 +5,13 @@ import FilterBar from "@/components/FilterBar";
 export const dynamic = "force-static";
 export const revalidate = 60;
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const q = (searchParams?.q ?? "").trim();
   const data = await searchOffersAndOperators(q);
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">CÃ„Æ’utare</h1>
-      <p className="mt-1 text-sm opacity-80">Rezultate pentru: <span className="font-medium">{q || "Ã¢â‚¬â€"}</span></p>
+      <h1 className="text-2xl font-bold">CÃƒâ€žÃ†â€™utare</h1>
+      <p className="mt-1 text-sm opacity-80">Rezultate pentru: <span className="font-medium">{q || "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</span></p>
 
       {data.operators.length > 0 && (
         <section className="mt-6">
@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         <div className="mt-2">
           <OffersGrid offers={data.offers} />
         </div>
-        {data.offers.length === 0 && <p className="mt-4 text-sm opacity-70">Nicio ofertÃ„Æ’ gÃ„Æ’sitÃ„Æ’.</p>}
+        {data.offers.length === 0 && <p className="mt-4 text-sm opacity-70">Nicio ofertÃƒâ€žÃ†â€™ gÃƒâ€žÃ†â€™sitÃƒâ€žÃ†â€™.</p>}
       </section>
     </main>
   );

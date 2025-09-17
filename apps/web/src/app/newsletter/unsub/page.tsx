@@ -3,7 +3,7 @@ import { prisma } from "@bonusmax/lib";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Dezabonare" };
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const email = (searchParams?.email || "").toLowerCase().trim();
   let ok = false;
   if (email) {
@@ -17,9 +17,9 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold">Dezabonare</h1>
       {ok ? (
-        <p className="mt-2">Ai fost dezabonat(Ã„Æ’). Ne pare rÃ„Æ’u sÃ„Æ’ te vedem plecÃƒÂ¢nd!</p>
+        <p className="mt-2">Ai fost dezabonat(Ãƒâ€žÃ†â€™). Ne pare rÃƒâ€žÃ†â€™u sÃƒâ€žÃ†â€™ te vedem plecÃƒÆ’Ã‚Â¢nd!</p>
       ) : (
-        <p className="mt-2">Email invalid sau lipsÃ„Æ’.</p>
+        <p className="mt-2">Email invalid sau lipsÃƒâ€žÃ†â€™.</p>
       )}
     </main>
   );

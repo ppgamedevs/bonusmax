@@ -7,7 +7,7 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
+        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
       </main>
     );
   }
@@ -56,7 +56,7 @@ async function updateReservationStatus(formData: FormData) {
   revalidatePath("/admin/partners");
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const keyParam = searchParams?.key;
   const leads = await (prisma as any).partnerLead.findMany({
     orderBy: [{ priority: "asc" }, { createdAt: "asc" }],
@@ -69,7 +69,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-3 py-8">
-        <h1 className="text-2xl font-bold">Partners Ã¢â‚¬â€ Pipeline</h1>
+        <h1 className="text-2xl font-bold">Partners ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Pipeline</h1>
         <div className="mt-4 grid gap-3 md:grid-cols-3 lg:grid-cols-6">
           {stages.map((st) => (
             <section key={st} className="rounded-xl border p-2">
@@ -91,10 +91,10 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                       </form>
                     </div>
                     <div className="mt-1 opacity-80">
-                      {l.email} {l.phone ? `Ã¢â‚¬Â¢ ${l.phone}` : ""}
+                      {l.email} {l.phone ? `ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ ${l.phone}` : ""}
                     </div>
                     <div className="mt-1">
-                      Goal: {l.goal} Ã¢â‚¬Â¢ Budget: {l.monthlyBudget?.toLocaleString("ro-RO") ?? "-"} RON
+                      Goal: {l.goal} ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Budget: {l.monthlyBudget?.toLocaleString("ro-RO") ?? "-"} RON
                     </div>
                     <div className="mt-1">
                       Score: <span className="font-semibold">{l.score}</span>
@@ -102,7 +102,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
 
                     {l.reservations.length > 0 && (
                       <div className="mt-2 rounded bg-neutral-50 p-2">
-                        <div className="text-xs font-semibold">RezervÃ„Æ’ri</div>
+                        <div className="text-xs font-semibold">RezervÃƒâ€žÃ†â€™ri</div>
                         {[...l.reservations]
                           .sort((a: any, b: any) => {
                             const rank = (s: string) => (s === "APPROVED" ? 0 : s === "PENDING" ? 1 : 2);
@@ -111,8 +111,8 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                           .map((r) => (
                             <div key={r.id} className="text-xs flex items-center justify-between gap-2">
                               <div>
-                                Ã¢â‚¬Â¢ {r.slot} Ã¢â‚¬â€ {new Date(r.startAt).toLocaleDateString("ro-RO")} Ã¢â€ â€™ {new Date(r.endAt).toLocaleDateString("ro-RO")} (
-                                {r.quotedPrice ? `${r.quotedPrice} RON` : "Ã¢â‚¬â€"})
+                                ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {r.slot} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {new Date(r.startAt).toLocaleDateString("ro-RO")} ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ {new Date(r.endAt).toLocaleDateString("ro-RO")} (
+                                {r.quotedPrice ? `${r.quotedPrice} RON` : "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"})
                               </div>
                               <form action={updateReservationStatus} className="flex items-center gap-1">
                                 <input type="hidden" name="key" defaultValue={keyParam} />
@@ -133,19 +133,19 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                       <summary className="cursor-pointer text-xs opacity-70">Note</summary>
                       {l.notes.map((n) => (
                         <div key={n.id} className="mt-1 text-xs">
-                          Ã¢â‚¬Â¢ {new Date(n.createdAt).toLocaleString("ro-RO")}: {n.body}
+                          ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {new Date(n.createdAt).toLocaleString("ro-RO")}: {n.body}
                         </div>
                       ))}
                       <form action={addNote} className="mt-2 flex items-center gap-1">
                         <input type="hidden" name="key" defaultValue={keyParam} />
                         <input type="hidden" name="id" defaultValue={l.id} />
-                        <input name="body" placeholder="AdaugÃ„Æ’ notÃ„Æ’..." className="w-full rounded border px-2 py-1 text-xs" />
+                        <input name="body" placeholder="AdaugÃƒâ€žÃ†â€™ notÃƒâ€žÃ†â€™..." className="w-full rounded border px-2 py-1 text-xs" />
                         <button className="rounded border px-2 py-1 text-xs">Add</button>
                       </form>
                     </details>
 
                     <details className="mt-2">
-                      <summary className="cursor-pointer text-xs opacity-70">RezervÃ„Æ’ slot</summary>
+                      <summary className="cursor-pointer text-xs opacity-70">RezervÃƒâ€žÃ†â€™ slot</summary>
                       <form action={createReservation} className="mt-1 grid gap-1 text-xs">
                         <input type="hidden" name="key" defaultValue={keyParam} />
                         <input type="hidden" name="id" defaultValue={l.id} />
@@ -157,7 +157,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
                         </select>
                         <input type="date" name="startAt" className="rounded border px-2 py-1" required />
                         <input type="date" name="endAt" className="rounded border px-2 py-1" required />
-                        <input type="number" name="quotedPrice" placeholder="PreÃˆâ€º (RON)" className="rounded border px-2 py-1" />
+                        <input type="number" name="quotedPrice" placeholder="PreÃƒË†Ã¢â‚¬Âº (RON)" className="rounded border px-2 py-1" />
                         <button className="rounded border px-2 py-1">Save</button>
                       </form>
                     </details>

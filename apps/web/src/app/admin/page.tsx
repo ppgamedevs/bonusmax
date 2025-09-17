@@ -18,8 +18,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃ„Æ’ ?key=Ã¢â‚¬Â¦ (ADMIN_KEY) ÃƒÂ®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
       </main>
     );
   }
@@ -42,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ PerformanÃˆâ€ºÃ„Æ’</h1>
+      <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ PerformanÃƒË†Ã¢â‚¬ÂºÃƒâ€žÃ†â€™</h1>
 
       <form className="mt-4 flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         </div>
         <input type="hidden" name="key" value={key} />
         <button className="rounded border px-3 py-2 text-sm" type="submit">
-          AplicÃ„Æ’
+          AplicÃƒâ€žÃ†â€™
         </button>
       </form>
 
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃ„Æ’</th>
+              <th className="text-left p-2">OfertÃƒâ€žÃ†â€™</th>
               <th className="p-2">Clicks</th>
               <th className="p-2">Impr.</th>
               <th className="p-2">CTR</th>

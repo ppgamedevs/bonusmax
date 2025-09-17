@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
@@ -25,29 +25,29 @@ async function createSpend(formData: FormData) {
   });
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string,string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const keyParam = searchParams?.key;
   const latest = await (prisma as any).adSpend.findMany({ orderBy: { day: "desc" }, take: 30 });
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ Ad Spend</h1>
+        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Ad Spend</h1>
         <form action={createSpend} className="mt-4 grid gap-2 md:grid-cols-4">
           <input type="hidden" name="key" defaultValue={keyParam} />
           <input className="rounded border px-3 py-2" type="date" name="day" required />
-          <input className="rounded border px-3 py-2" name="source" placeholder="sursÃ„Æ’ (ex: google)" required />
-          <input className="rounded border px-3 py-2" name="campaign" placeholder="campanie (opÃˆâ€ºional)" />
+          <input className="rounded border px-3 py-2" name="source" placeholder="sursÃƒâ€žÃ†â€™ (ex: google)" required />
+          <input className="rounded border px-3 py-2" name="campaign" placeholder="campanie (opÃƒË†Ã¢â‚¬Âºional)" />
           <input className="rounded border px-3 py-2" type="number" step="0.01" name="amount" placeholder="RON" />
-          <button className="rounded border px-3 py-2 font-semibold md:col-span-4" type="submit">AdaugÃ„Æ’</button>
+          <button className="rounded border px-3 py-2 font-semibold md:col-span-4" type="submit">AdaugÃƒâ€žÃ†â€™</button>
         </form>
         <table className="mt-6 w-full text-sm">
-          <thead><tr><th className="p-2 text-left">Zi</th><th className="p-2">SursÃ„Æ’</th><th className="p-2">Campanie</th><th className="p-2 text-right">SumÃ„Æ’</th></tr></thead>
+          <thead><tr><th className="p-2 text-left">Zi</th><th className="p-2">SursÃƒâ€žÃ†â€™</th><th className="p-2">Campanie</th><th className="p-2 text-right">SumÃƒâ€žÃ†â€™</th></tr></thead>
           <tbody>
             {latest.map((r: any) => (
               <tr key={r.id} className="border-t">
                 <td className="p-2">{new Date(r.day).toLocaleDateString("ro-RO")}</td>
                 <td className="p-2">{r.source}</td>
-                <td className="p-2">{r.campaign ?? "Ã¢â‚¬â€"}</td>
+                <td className="p-2">{r.campaign ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
                 <td className="p-2 text-right">{Number(r.amount).toFixed(2)} {r.currency}</td>
               </tr>
             ))}

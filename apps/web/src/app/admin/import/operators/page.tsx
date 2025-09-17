@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const key = searchParams?.key || "";
   const [summary, setSummary] = useState<any>(null);
   const [preview, setPreview] = useState<any[]>([]);
@@ -38,13 +38,13 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
       body: JSON.stringify({ items }),
     });
     const j = await r.json();
-    alert(j.ok ? `Created: ${j.created} Ã¢â‚¬Â¢ Updated: ${j.updated}` : "Commit failed");
+    alert(j.ok ? `Created: ${j.created} ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Updated: ${j.updated}` : "Commit failed");
   }
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€ Import operatori</h1>
-      <p className="mt-2 text-sm opacity-80">ÃƒÅ½ncarcÃ„Æ’ CSV sau indicÃ„Æ’ un URL CSV (Google Sheets Ã¢â‚¬Å¾Publish to webÃ¢â‚¬Â).</p>
+      <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Import operatori</h1>
+      <p className="mt-2 text-sm opacity-80">ÃƒÆ’Ã…Â½ncarcÃƒâ€žÃ†â€™ CSV sau indicÃƒâ€žÃ†â€™ un URL CSV (Google Sheets ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Publish to webÃƒÂ¢Ã¢â€šÂ¬Ã‚Â).</p>
 
       <section className="mt-4 grid gap-4 md:grid-cols-2">
         <form onSubmit={uploadFile} className="rounded border p-3">
@@ -64,7 +64,7 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
           <button className="mt-3 rounded border px-3 py-2" onClick={fetchUrl}>
             Preview
           </button>
-          <p className="mt-2 text-xs opacity-70">Sheets: File Ã¢â€ â€™ Share Ã¢â€ â€™ Publish to web Ã¢â€ â€™ CSV; foloseÃˆâ„¢te linkul de export.</p>
+          <p className="mt-2 text-xs opacity-70">Sheets: File ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Share ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Publish to web ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ CSV; foloseÃƒË†Ã¢â€žÂ¢te linkul de export.</p>
         </div>
       </section>
 
@@ -107,9 +107,9 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                       <td className="p-2">CREATE</td>
                       <td className="p-2">{r.name}</td>
                       <td className="p-2">{r.slug}</td>
-                      <td className="p-2">{r.website || "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{r.onjnLicenseId || "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{r.onjnLicenseExpiry ? new Date(r.onjnLicenseExpiry).toLocaleDateString("ro-RO") : "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{r.website || "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{r.onjnLicenseId || "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{r.onjnLicenseExpiry ? new Date(r.onjnLicenseExpiry).toLocaleDateString("ro-RO") : "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
                       <td className="p-2">{r.isLicensedRO ? "DA" : "NU"}</td>
                     </tr>
                   );
@@ -120,12 +120,12 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                       <td className="p-2">UPDATE</td>
                       <td className="p-2">{p.before.name}</td>
                       <td className="p-2">{p.patch.slug ?? p.before.slug}</td>
-                      <td className="p-2">{p.patch.website ?? p.before.website ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.patch.onjnLicenseId ?? p.before.onjnLicenseId ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.patch.website ?? p.before.website ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.patch.onjnLicenseId ?? p.before.onjnLicenseId ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
                       <td className="p-2">
                         {(p.patch.onjnLicenseExpiry ?? p.before.onjnLicenseExpiry)
                           ? new Date(p.patch.onjnLicenseExpiry ?? p.before.onjnLicenseExpiry).toLocaleDateString("ro-RO")
-                          : "Ã¢â‚¬â€"}
+                          : "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}
                       </td>
                       <td className="p-2">{(p.patch.isLicensedRO ?? p.before.isLicensedRO) ? "DA" : "NU"}</td>
                     </tr>
@@ -135,19 +135,19 @@ export default function Page({ searchParams }: { searchParams?: Record<string, s
                   return (
                     <tr key={i} className="border-t opacity-70">
                       <td className="p-2">SKIP</td>
-                      <td className="p-2">{p.row.name ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.row.slug ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.row.website ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.row.onjnLicenseId ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.row.onjnLicenseExpiry ?? "Ã¢â‚¬â€"}</td>
-                      <td className="p-2">{p.row.isLicensed ?? "Ã¢â‚¬â€"}</td>
+                      <td className="p-2">{p.row.name ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.row.slug ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.row.website ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.row.onjnLicenseId ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.row.onjnLicenseExpiry ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                      <td className="p-2">{p.row.isLicensed ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
                     </tr>
                   );
                 }
                 return (
                   <tr key={i} className="border-t bg-rose-50/80">
                     <td className="p-2">INVALID</td>
-                    <td className="p-2">{p.row?.name ?? "Ã¢â‚¬â€"}</td>
+                    <td className="p-2">{p.row?.name ?? "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
                     <td className="p-2" colSpan={5}>
                       {p.reason}
                     </td>

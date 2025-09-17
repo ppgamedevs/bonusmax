@@ -72,10 +72,10 @@ export default async function HomePage() {
         <div className="mt-4">
           <OffersGrid offers={offers} />
         </div>
-        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃ„Æ’m clar toate plasÃ„Æ’rile. 18+</p>
+        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒâ€žÃ†â€™m clar toate plasÃƒâ€žÃ†â€™rile. 18+</p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
-      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃ„Æ’rile noastre" />
+      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃƒâ€žÃ†â€™rile noastre" />
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
       <GuidesTeaser />

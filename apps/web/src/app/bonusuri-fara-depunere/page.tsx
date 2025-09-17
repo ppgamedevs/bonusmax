@@ -36,10 +36,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold mb-4">Bonusuri fÃ„Æ’rÃ„Æ’ depunere</h1>
+      <h1 className="text-2xl font-bold mb-4">Bonusuri fÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ depunere</h1>
       <DisclosureBar />
       {/* Sponsored strip (kept for visibility); the list below is also pinned */}
-      <PromoStrip slot="HUB_FARA_DEP" title="Sponsored Ã¢â‚¬â€œ Bonus fÃ„Æ’rÃ„Æ’ depunere" />
+      <PromoStrip slot="HUB_FARA_DEP" title="Sponsored ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Bonus fÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ depunere" />
       <FilterBar
         basePath="/bonusuri-fara-depunere"
         currentOperator={operator ?? null}
@@ -54,7 +54,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃ„Æ’</th>
+              <th className="text-left p-2">OfertÃƒâ€žÃ†â€™</th>
               <th className="p-2">WR</th>
               <th className="p-2">Min Dep</th>
               <th className="text-left p-2">T&C</th>
@@ -69,7 +69,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                 <td className="p-2 text-center">{o.wrMultiplier ?? '-'}</td>
                 <td className="p-2 text-center">{o.minDeposit ?? '-'}</td>
                 <td className="p-2">{o.termsShort}</td>
-                <td className="p-2"><a href={`/go/${o.id}`} rel="nofollow sponsored" className="rounded border px-3 py-1">RevendicÃ„Æ’</a></td>
+                <td className="p-2"><a href={`/go/${o.id}`} rel="nofollow sponsored" className="rounded border px-3 py-1">RevendicÃƒâ€žÃ†â€™</a></td>
               </tr>
             ))}
           </tbody>
@@ -77,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
       ) : (
         <>
           <OffersGrid offers={merged} />
-          <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃ„Æ’m clar toate plasÃ„Æ’rile. 18+</p>
+          <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒâ€žÃ†â€™m clar toate plasÃƒâ€žÃ†â€™rile. 18+</p>
         </>
       )}
     </main>

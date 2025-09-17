@@ -4,14 +4,14 @@ export const dynamic = "force-dynamic";
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
 
 function getParam(sp: any, k: string) { return typeof sp?.[k] === "string" ? sp[k] : undefined; }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const keyParam = searchParams?.key;
   const from = getParam(searchParams, "from");
   const to = getParam(searchParams, "to");
@@ -30,19 +30,19 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ ROAS / EPC</h1>
+        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ ROAS / EPC</h1>
 
         <form className="mt-2 flex flex-wrap items-end gap-2">
           <label className="text-xs">From <input type="date" name="from" defaultValue={from} className="ml-2 rounded border px-2 py-1 text-sm" /></label>
           <label className="text-xs">To <input type="date" name="to" defaultValue={to} className="ml-2 rounded border px-2 py-1 text-sm" /></label>
           <input type="hidden" name="key" value={keyParam} />
-          <button className="rounded border px-3 py-1 text-sm" type="submit">AplicÃ„Æ’</button>
+          <button className="rounded border px-3 py-1 text-sm" type="submit">AplicÃƒâ€žÃ†â€™</button>
         </form>
 
         <section className="mt-6">
           <h2 className="text-lg font-semibold">Pe oferte</h2>
           <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">Operator</th><th className="p-2 text-left">OfertÃ„Æ’</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
+            <thead><tr><th className="p-2 text-left">Operator</th><th className="p-2 text-left">OfertÃƒâ€žÃ†â€™</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
             <tbody>
               {byOffer.map((r: any) => (
                 <tr key={r.offer.id} className="border-top">
@@ -77,22 +77,22 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         <section className="mt-8">
           <h2 className="text-lg font-semibold">ROAS (by source)</h2>
           <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">SursÃ„Æ’</th><th className="p-2 text-right">Spend</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">ROAS</th></tr></thead>
+            <thead><tr><th className="p-2 text-left">SursÃƒâ€žÃ†â€™</th><th className="p-2 text-right">Spend</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">ROAS</th></tr></thead>
             <tbody>
               {spend.map((s: any) => (
                 <tr key={s.source} className="border-t">
                   <td className="p-2">{s.source}</td>
                   <td className="p-2 text-right">{s.spend.toFixed(2)} RON</td>
-                  <td className="p-2 text-right">Ã¢â‚¬â€</td>
-                  <td className="p-2 text-right">Ã¢â‚¬â€</td>
+                  <td className="p-2 text-right">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</td>
+                  <td className="p-2 text-right">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <p className="mt-2 text-xs opacity-70">NotÃ„Æ’: pentru ROAS complet pe surse, extindeÃˆâ€ºi atribuirea cu revenue sum pe UTM source (join RevenueEvent Ã¢â€ â€™ ClickEvent prin clickId).</p>
+          <p className="mt-2 text-xs opacity-70">NotÃƒâ€žÃ†â€™: pentru ROAS complet pe surse, extindeÃƒË†Ã¢â‚¬Âºi atribuirea cu revenue sum pe UTM source (join RevenueEvent ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ ClickEvent prin clickId).</p>
         </section>
 
-        <p className="mt-6 text-xs opacity-60">CTR site-wide: {(ctr * 100).toFixed(2)}% Ã¢â‚¬Â¢ EPC/ROAS ÃƒÂ®n RON</p>
+        <p className="mt-6 text-xs opacity-60">CTR site-wide: {(ctr * 100).toFixed(2)}% ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ EPC/ROAS ÃƒÆ’Ã‚Â®n RON</p>
       </main>
     </Guard>
   );

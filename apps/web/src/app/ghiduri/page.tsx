@@ -34,18 +34,18 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   };
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Ghiduri (RomÃƒÂ¢nia)</h1>
-      <p className="mt-2 text-sm opacity-80">ExplicaÃˆâ€ºii clare despre bonusuri, WR Ãˆâ„¢i operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN. 18+ JoacÃ„Æ’ responsabil.</p>
+      <h1 className="text-2xl font-bold">Ghiduri (RomÃƒÆ’Ã‚Â¢nia)</h1>
+      <p className="mt-2 text-sm opacity-80">ExplicaÃƒË†Ã¢â‚¬Âºii clare despre bonusuri, WR ÃƒË†Ã¢â€žÂ¢i operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN. 18+ JoacÃƒâ€žÃ†â€™ responsabil.</p>
 
       <form className="mt-4 flex gap-2" method="get">
         <input
           className="w-full max-w-md rounded border px-3 py-2 text-sm"
           type="search"
           name="q"
-          placeholder="CautÃ„Æ’ ÃƒÂ®n titlu/descriere..."
+          placeholder="CautÃƒâ€žÃ†â€™ ÃƒÆ’Ã‚Â®n titlu/descriere..."
           defaultValue={q}
         />
-        <button className="rounded border px-3 py-2 text-sm" type="submit">CautÃ„Æ’</button>
+        <button className="rounded border px-3 py-2 text-sm" type="submit">CautÃƒâ€žÃ†â€™</button>
       </form>
 
       <ul className="mt-4 grid gap-3 md:grid-cols-2">

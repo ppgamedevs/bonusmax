@@ -4,12 +4,12 @@ export const dynamic = "force-dynamic";
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 Ã¢â‚¬â€œ Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string,string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
   const keyParam = searchParams?.key;
   const rows = await (prisma as any).revenueEvent.findMany({
     include: { offer: { include: { operator: true } }, network: true },
@@ -22,18 +22,18 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin Ã¢â‚¬â€œ Revenue (ultimele 200)</h1>
-        <p className="mt-1 text-sm opacity-80">Total evenimente: {rows.length} Ã¢â‚¬Â¢ Total sumÃ„Æ’: {total.toFixed(2)} {rows[0]?.currency || "RON"}</p>
+        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Revenue (ultimele 200)</h1>
+        <p className="mt-1 text-sm opacity-80">Total evenimente: {rows.length} ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Total sumÃƒâ€žÃ†â€™: {total.toFixed(2)} {rows[0]?.currency || "RON"}</p>
         <table className="mt-4 w-full text-sm">
           <thead>
             <tr>
               <th className="p-2 text-left">Data</th>
               <th className="p-2">Net</th>
               <th className="p-2">Operator</th>
-              <th className="p-2">OfertÃ„Æ’</th>
+              <th className="p-2">OfertÃƒâ€žÃ†â€™</th>
               <th className="p-2">Tip</th>
               <th className="p-2">Status</th>
-              <th className="p-2 text-right">SumÃ„Æ’</th>
+              <th className="p-2 text-right">SumÃƒâ€žÃ†â€™</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +61,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
             <thead>
               <tr>
                 <th className="p-2 text-left">Operator</th>
-                <th className="p-2 text-left">OfertÃ„Æ’</th>
+                <th className="p-2 text-left">OfertÃƒâ€žÃ†â€™</th>
                 <th className="p-2 text-center">Clicks</th>
                 <th className="p-2 text-right">Revenue</th>
                 <th className="p-2 text-right">EPC</th>

@@ -25,10 +25,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Feedy ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Review</h1>
+        <h1 className="text-2xl font-bold">Feedy ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Review</h1>
 
         <section className="mt-6">
-          <h2 className="text-lg font-semibold">ÃƒÆ’Ã…Â½n aÃƒË†Ã¢â€žÂ¢teptare</h2>
+          <h2 className="text-lg font-semibold">ÃƒÆ’Ã†â€™Ãƒâ€¦Ã‚Â½n aÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢teptare</h2>
           <ul className="mt-2 space-y-2">
             {pending.map((i: any) => (
               <li key={i.id} className="rounded border p-3">

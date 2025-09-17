@@ -9,13 +9,13 @@ export default function ANPCPage() {
     <section className="space-y-4">
       <JsonLd
         data={jsonLdBreadcrumb([
-          { name: 'AcasÃ„Æ’', url: absoluteUrl('/') },
+          { name: 'AcasÃƒâ€žÃ†â€™', url: absoluteUrl('/') },
           { name: 'ANPC', url: absoluteUrl('/anpc') }
         ])}
       />
       <h1 className="text-2xl font-semibold">ANPC</h1>
-      <p>InformaÃˆâ€ºii privind Autoritatea NaÃˆâ€ºionalÃ„Æ’ pentru ProtecÃˆâ€ºia Consumatorilor.</p>
-      <p>Linkuri utile Ãˆâ„¢i proceduri vor fi adÃ„Æ’ugate aici.</p>
+      <p>InformaÃƒË†Ã¢â‚¬Âºii privind Autoritatea NaÃƒË†Ã¢â‚¬ÂºionalÃƒâ€žÃ†â€™ pentru ProtecÃƒË†Ã¢â‚¬Âºia Consumatorilor.</p>
+      <p>Linkuri utile ÃƒË†Ã¢â€žÂ¢i proceduri vor fi adÃƒâ€žÃ†â€™ugate aici.</p>
       <p className="text-sm text-muted-foreground">Ultima actualizare: {lastUpdated}</p>
     </section>
   );
