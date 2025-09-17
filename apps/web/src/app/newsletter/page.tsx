@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-export const metadata = { title: "Newsletter săptămânal (RO)" };
+
 export default function Page() {
   const [msg, setMsg] = useState<string | null>(null);
   async function sub(e: React.FormEvent<HTMLFormElement>) {

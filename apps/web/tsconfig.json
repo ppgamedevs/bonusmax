@@ -3,12 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@bonusmax/ui": [
-        "../../packages/ui"
-      ],
-      "@bonusmax/lib": [
-        "../../packages/lib"
-      ]
+      "@/*": ["src/*"],
+      "@bonusmax/ui": ["../../packages/ui"],
+      "@bonusmax/lib": ["../../packages/lib"]
     },
     "jsx": "preserve",
     "allowJs": false,
@@ -17,9 +14,7 @@
     "incremental": true,
     "isolatedModules": true,
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "next" }
     ]
   },
   "include": [
@@ -28,7 +23,5 @@
     "src",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export const metadata = { title: "Trimite un link — Noutăți" };
+
 
 export default function Page() {
   const [msg, setMsg] = useState<string | null>(null);

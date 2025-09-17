@@ -1,10 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-export const metadata = {
-  title: "Promovează-te pe Bonusmax (RO)",
-  description: "Sponsored placements, listări și colaborări pentru operatori licențiați ONJN și agenții.",
-};
 
 function Captcha({ onChange }: { onChange: (vals: { a: string; b: string; c: string }) => void }) {
   // generate operands once per mount

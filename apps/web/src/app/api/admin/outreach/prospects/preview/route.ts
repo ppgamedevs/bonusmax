@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { parseProspectsCsv } from "@/src/lib/outreach";
+import { parseProspectsCsv } from "@/lib/outreach";
 
 function ok(url: URL) {
   return !!process.env.ADMIN_KEY && url.searchParams.get("key") === process.env.ADMIN_KEY;

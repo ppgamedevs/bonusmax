@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { upsertProspect } from "@/src/lib/outreach";
+import { upsertProspect } from "@/lib/outreach";
 
 function ok(url: URL) {
   return !!process.env.ADMIN_KEY && url.searchParams.get("key") === process.env.ADMIN_KEY;
