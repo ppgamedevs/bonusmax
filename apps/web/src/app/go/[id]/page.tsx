@@ -1,11 +1,8 @@
-export default async function Page({ params }: { params: Promise<{ id: string } }) {
-  const __p = await params as any;
-
-  const { id } = __p;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   return (
     <main className="container mx-auto px-4 py-8">
       <h1>Go: {id}</h1>
-      <p>Temporary stub page.</p>
     </main>
   );
 }
