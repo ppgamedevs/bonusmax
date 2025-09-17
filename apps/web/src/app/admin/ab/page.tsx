@@ -13,7 +13,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+  const resolvedSearchParams = (await searchParams) ?? {};
   const keyParam = searchParams?.key;
   const cta = await abReportCta();
   const ord = await abReportOrder();
