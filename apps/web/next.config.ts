@@ -1,22 +1,18 @@
-import type { NextConfig } from 'next';
-import createMDX from '@next/mdx';
+/** @type {import('next').NextConfig} */
 
-const withMDX = createMDX({ extension: /\.mdx?$/ });
+// If you ever need to publish under a subpath, set NEXT_PUBLIC_BASE_PATH (e.g. "/bonusmax").
+// For custom domain at root (bonusmax.ro), leave it unset -> ''.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    typedRoutes: true
-  },
-  pageExtensions: ['ts', 'tsx', 'mdx'],
+const nextConfig = {
+  output: 'export',
+  basePath,
+  assetPrefix: basePath ? `${basePath}/` : '',
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: '**.cloudinary.com' },
-      { protocol: 'https', hostname: '**.imgur.com' },
-      { protocol: 'https', hostname: '**.supabase.co' }
-    ]
+    unoptimized: true,
   },
-  transpilePackages: ['@bonusmax/ui', '@bonusmax/lib']
+  // Uncomment if you prefer folder-style URLs (…/page/index.html) for static hosting
+  // trailingSlash: true,
 };
 
-export default withMDX(nextConfig);
+module.exports = nextConfig;
