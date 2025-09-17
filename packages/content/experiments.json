@@ -1,0 +1,7 @@
+[
+  { "key": "CTA_COPY_V1", "status":"ACTIVE", "paths":["/","/bonusuri-fara-depunere","/rotiri-gratuite","/operatori"], "variants":[{"name":"A","weight":0.5},{"name":"B","weight":0.5}] },
+  { "key": "OFFERS_ORDER_V1", "status":"ACTIVE", "paths":["/","/bonusuri-fara-depunere","/rotiri-gratuite","/operatori"], "variants":[{"name":"A","weight":0.7},{"name":"B","weight":0.3}] },
+
+  { "key": "STICKY_BAR_V1", "status":"ACTIVE", "paths":["/bonusuri-fara-depunere","/rotiri-gratuite","/operatori*"], "variants":[{"name":"A","weight":0.5},{"name":"B","weight":0.5}] },
+  { "key": "EXIT_INTENT_V1", "status":"ACTIVE", "paths":["/bonusuri-fara-depunere","/rotiri-gratuite","/operatori*"], "variants":[{"name":"A","weight":0.7},{"name":"B","weight":0.3}] }
+]

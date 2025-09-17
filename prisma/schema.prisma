@@ -1,1 +1,597 @@
-// Prisma schema bootstrap (empty for now)
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RevenueEventType {
+  REG
+  FTD
+  CPA
+  REVSHARE
+  BONUS
+  OTHER
+}
+
+model AffiliateNetwork {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  subidParam    String   @default("subid")
+  currency      String   @default("RON")
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  offers        Offer[]
+  revenue       RevenueEvent[]
+}
+
+model RevenueEvent {
+  id           String            @id @default(cuid())
+  networkId    String
+  offerId      String
+  operatorId   String
+  clickId      String?
+  subid        String?
+  txId         String?
+  type         RevenueEventType
+  status       String?
+  amount       Float             @default(0)
+  currency     String            @default("RON")
+  ts           DateTime          @default(now())
+  meta         String?
+
+  network      AffiliateNetwork  @relation(fields: [networkId], references: [id])
+  offer        Offer             @relation(fields: [offerId], references: [id])
+  operator     Operator          @relation(fields: [operatorId], references: [id])
+
+  @@index([offerId, ts])
+  @@index([operatorId, ts])
+  @@index([networkId, ts])
+  @@unique([networkId, txId])
+}
+
+model AdSpend {
+  id         String   @id @default(cuid())
+  day        DateTime
+  source     String
+  campaign   String?
+  amount     Float
+  currency   String   @default("RON")
+  createdAt  DateTime @default(now())
+
+  @@index([day, source])
+}
+
+enum QaEntityType {
+  OFFER
+  GUIDE
+  OPERATOR
+}
+
+enum QaSeverity {
+  ERROR
+  WARN
+  INFO
+}
+
+model ContentQaIssue {
+  id         String       @id @default(cuid())
+  entityType QaEntityType
+  entityId   String
+  ruleId     String
+  severity   QaSeverity
+  message    String
+  meta       String?
+  createdAt  DateTime     @default(now())
+  resolvedAt DateTime?
+
+  @@index([entityType, entityId, resolvedAt])
+  @@index([severity, createdAt])
+}
+
+enum OutreachStatus {
+  NEW
+  QUEUED
+  SENT
+  REPLIED
+  WON
+  LOST
+  BOUNCED
+}
+
+model Domain {
+  id         String   @id @default(cuid())
+  host       String   @unique
+  country    String   @default("RO")
+  dr         Int?
+  spamScore  Int?
+  topics     String[] @default([])
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  prospects  Prospect[]
+  backlinks  Backlink[]
+}
+
+model Prospect {
+  id         String   @id @default(cuid())
+  domainId   String
+  name       String?
+  role       String?
+  email      String?  @unique
+  linkedin   String?
+  notes      String?
+  score      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  domain     Domain   @relation(fields: [domainId], references: [id])
+  attempts   Attempt[]
+}
+
+model Campaign {
+  id         String   @id @default(cuid())
+  name       String
+  assetSlug  String
+  goal       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  attempts   Attempt[]
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  subject   String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attempt {
+  id          String         @id @default(cuid())
+  campaignId  String
+  prospectId  String
+  status      OutreachStatus @default(NEW)
+  subject     String?
+  body        String?
+  sentAt      DateTime?
+  replyAt     DateTime?
+  linkUrl     String?
+  notes       String?
+
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  prospect    Prospect @relation(fields: [prospectId], references: [id])
+
+  @@index([campaignId, status])
+}
+
+model Backlink {
+  id         String   @id @default(cuid())
+  domainId   String
+  url        String   @unique
+  anchor     String?
+  rel        String?
+  firstSeen  DateTime?
+  lastSeen   DateTime?
+  ok         Boolean  @default(false)
+  notes      String?
+
+  domain     Domain   @relation(fields: [domainId], references: [id])
+}
+
+enum LeadStage {
+  NEW
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum LeadGoal {
+  SPONSORED
+  LISTING
+  BRANDING
+  CPA
+}
+
+model PartnerLead {
+  id            String    @id @default(cuid())
+  companyName   String
+  contactName   String?
+  email         String
+  phone         String?
+  website       String?
+  country       String    @default("RO")
+  onjnLicenseId String?
+  monthlyBudget Int?
+  goal          LeadGoal  @default(SPONSORED)
+  message       String?
+  source        String?
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+
+  score         Int       @default(0)
+  stage         LeadStage @default(NEW)
+  priority      Int       @default(100)
+  nextAction    String?
+  nextActionAt  DateTime?
+  lastTouchAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  ipHash        String?
+
+  notes         PartnerNote[]
+  reservations  SlotReservation[]
+}
+
+model PartnerNote {
+  id         String      @id @default(cuid())
+  leadId     String
+  body       String
+  createdAt  DateTime    @default(now())
+  author     String?
+
+  lead       PartnerLead @relation(fields: [leadId], references: [id])
+
+  @@index([leadId, createdAt])
+}
+
+model SlotReservation {
+  id           String     @id @default(cuid())
+  leadId       String
+  slot         PromoSlot
+  country      String     @default("RO")
+  startAt      DateTime
+  endAt        DateTime
+  quotedPrice  Int?
+  status       String     @default("PENDING")
+
+  lead         PartnerLead @relation(fields: [leadId], references: [id])
+
+  @@index([slot, startAt, endAt])
+}
+
+enum SourceType {
+  RSS
+  HTML
+}
+
+enum FeedStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Source {
+  id        String     @id @default(cuid())
+  name      String
+  type      SourceType
+  url       String     @unique
+  selector  String?
+  country   String     @default("RO")
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  items     FeedItem[]
+}
+
+model Tag {
+  id    String  @id @default(cuid())
+  slug  String  @unique
+  name  String
+  items FeedItemTag[]
+}
+
+model FeedItem {
+  id           String      @id @default(cuid())
+  sourceId     String?
+  url          String      @unique
+  slug         String      @unique
+  title        String
+  excerpt      String?
+  image        String?
+  publishedAt  DateTime?
+  status       FeedStatus  @default(PENDING)
+  featured     Boolean     @default(false)
+  clicks       Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  source       Source?     @relation(fields: [sourceId], references: [id])
+  tags         FeedItemTag[]
+  issues       NewsletterIssueItem[]
+}
+
+model FeedItemTag {
+  feedItemId String
+  tagId      String
+  feedItem   FeedItem @relation(fields: [feedItemId], references: [id])
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  @@id([feedItemId, tagId])
+}
+
+model UserSubmission {
+  id        String     @id @default(cuid())
+  url       String
+  title     String?
+  note      String?
+  email     String?
+  status    FeedStatus @default(PENDING)
+  ipHash    String?
+  createdAt DateTime   @default(now())
+}
+
+enum SubStatus {
+  PENDING
+  ACTIVE
+  UNSUB
+}
+
+model NewsletterSubscriber {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  status     SubStatus @default(PENDING)
+  token      String    @unique
+  createdAt  DateTime  @default(now())
+  verifiedAt DateTime?
+  unsubAt    DateTime?
+}
+
+model NewsletterIssue {
+  id        String   @id @default(cuid())
+  number    Int
+  subject   String
+  html      String
+  sentAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  items     NewsletterIssueItem[]
+}
+
+model NewsletterIssueItem {
+  issueId    String
+  feedItemId String
+  order      Int       @default(0)
+  issue      NewsletterIssue @relation(fields: [issueId], references: [id])
+  feedItem   FeedItem  @relation(fields: [feedItemId], references: [id])
+  @@id([issueId, feedItemId])
+}
+
+model UiImpression {
+  id            String   @id @default(cuid())
+  ts            DateTime @default(now())
+  path          String
+  component     String
+  experimentKey String
+  variant       String
+  sessionId     String?
+  ipHash        String?
+  userAgent     String?
+
+  @@index([ts])
+  @@index([component, experimentKey, variant])
+  @@index([path])
+}
+
+// NEW: impressions (list page renders or LP loads via beacon)
+model OfferImpression {
+  id          String   @id @default(cuid())
+  offerId     String
+  operatorId  String
+  ts          DateTime @default(now())
+  ipHash      String
+  userAgent   String?
+  referer     String?
+
+  @@index([offerId, operatorId, ts])
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  UNSUBSCRIBED
+}
+
+enum SubscriptionFrequency {
+  INSTANT
+  DAILY
+  WEEKLY
+}
+
+enum EmailEventType {
+  SENT
+  OPEN
+  CLICK
+  CONFIRMED
+  UNSUB
+}
+
+enum PromoSlot {
+  HOME_TOP
+  HUB_FARA_DEP
+  HUB_ROTIRI
+  OPERATOR_TOP
+}
+
+enum OfferType {
+  CASINO
+  PARIURI
+  ROTIRI
+  FARA_DEPUNERE
+}
+
+model Operator {
+  id           String    @id @default(cuid())
+  slug         String    @unique
+  name         String
+  isLicensedRO Boolean   @default(false)
+  onjnLicenseId     String?
+  onjnLicenseExpiry DateTime?
+  logoUrl      String?
+  website      String?
+  rating       Float     @default(0)
+  pros         String[]  @default([])
+  cons         String[]  @default([])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  offers       Offer[]
+  revenue      RevenueEvent[]
+}
+
+model Offer {
+  id           String     @id @default(cuid())
+  operatorId   String
+  title        String
+  offerType    OfferType
+  termsShort   String
+  termsUrl     String?
+  isActive     Boolean    @default(true)
+  isSponsored  Boolean    @default(false)
+  ctaBaseUrl   String
+  priority     Int        @default(100)
+  country      String     @default("RO")
+  startAt      DateTime?
+  endAt        DateTime?
+
+  // NEW structured fields for filtering
+  wrMultiplier Int?
+  minDeposit   Int?       // RON
+  maxCashout   Int?       // RON
+
+  // QA fields (NEW)
+  lastCheckedAt   DateTime?
+  lastOkAt        DateTime?
+  lastHttpCode    Int?
+  lastCheckStatus String?
+
+  // Tracking (NEW)
+  networkId     String?
+  urlTemplate   String?
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  operator     Operator   @relation(fields: [operatorId], references: [id])
+  network      AffiliateNetwork? @relation(fields: [networkId], references: [id])
+  linkChecks   OfferLinkCheck[]
+  promoPlacements PromoPlacement[]
+  revenue      RevenueEvent[]
+
+  @@index([operatorId])
+  @@index([isActive, country, priority])
+  @@index([lastCheckedAt])
+  @@index([networkId])
+}
+
+model OfferLinkCheck {
+  id         String   @id @default(cuid())
+  offerId    String
+  ts         DateTime @default(now())
+  status     String   // "OK" | "WARN" | "ERROR"
+  httpCode   Int?
+  finalUrl   String?
+  redirects  Int?     @default(0)
+  durationMs Int?
+  error      String?
+
+  offer      Offer    @relation(fields: [offerId], references: [id])
+
+  @@index([offerId, ts])
+}
+
+model ClickEvent {
+  id          String   @id @default(cuid())
+  offerId     String
+  operatorId  String
+  ts          DateTime @default(now())
+  ipHash      String
+  userAgent   String?
+  referer     String?
+  landingPath String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmContent  String?
+
+  // A/B experiments
+  expCtaCopy     String?
+  expOffersOrder String?
+
+  @@index([ts])
+  @@index([landingPath])
+  @@index([utmSource, utmMedium, utmCampaign])
+  @@index([expCtaCopy])
+  @@index([expOffersOrder])
+}
+
+model PromoPlacement {
+  id         String    @id @default(cuid())
+  offerId    String
+  slot       PromoSlot
+  country    String    @default("RO")
+  label      String?
+  isActive   Boolean   @default(true)
+  weight     Int       @default(100)
+  startAt    DateTime?
+  endAt      DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  offer      Offer     @relation(fields: [offerId], references: [id])
+
+  @@index([slot, country, isActive, startAt, endAt, weight])
+}
+
+model Subscriber {
+  id                   String                @id @default(cuid())
+  email                String                @unique
+  status               SubscriptionStatus    @default(PENDING)
+  frequency            SubscriptionFrequency @default(WEEKLY)
+  country              String                @default("RO")
+  confirmTokenHash     String?
+  unsubscribeTokenHash String?
+  digestHourLocal      Int?
+  lastSentAt           DateTime?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  events               EmailEvent[]
+}
+
+model EmailEvent {
+  id           String         @id @default(cuid())
+  subscriberId String
+  offerId      String?
+  ts           DateTime       @default(now())
+  type         EmailEventType
+  meta         String?
+  subscriber   Subscriber     @relation(fields: [subscriberId], references: [id])
+
+  @@index([subscriberId, ts])
+  @@index([type, ts])
+}
+
+model RumEvent {
+  id      String   @id @default(cuid())
+  metric  String
+  value   Float
+  idTag   String?
+  url     String?
+  ts      DateTime @default(now())
+  ua      String?
+  ipHash  String?
+
+  @@index([metric, ts])
+}

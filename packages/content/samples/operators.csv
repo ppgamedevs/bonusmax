@@ -1,0 +1,4 @@
+name,slug,website,logoUrl,onjnLicenseId,onjnLicenseExpiry,isLicensed
+Casino Exemplu A,casino-exemplu-a,https://casino-a.ro,https://cdn/img/a.png,L12345,2027-12-31,da
+Operator Exemplu B,,https://www.b.ro,,L54321,31.12.2026,TRUE
+Brand C,,,,,nu

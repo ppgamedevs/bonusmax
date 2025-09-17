@@ -6,8 +6,13 @@
     "dev": "pnpm -C apps/web dev",
     "build": "pnpm -C apps/web build",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:push": "prisma db push --schema=./prisma/schema.prisma",
+    "db:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma"
   },
+  "prisma": { "seed": "tsx prisma/seed.ts" },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -16,6 +21,13 @@
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "prisma": "^5.19.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.7.6"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "zod": "^3.23.8"
   }
 }

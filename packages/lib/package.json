@@ -4,5 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "main": "index.ts",
-  "types": "index.ts"
+  "types": "index.ts",
+  "dependencies": {
+    "nodemailer": "^6.9.13",
+    "@sendgrid/mail": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.3"
+  }
 }

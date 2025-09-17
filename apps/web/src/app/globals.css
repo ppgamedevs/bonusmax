@@ -3,13 +3,55 @@
 @tailwind utilities;
 
 :root {
-  --bg: 255 255 255;
-  --fg: 17 24 39;
+  --bg: 255 255 255; /* light background rgb */
+  --fg: 17 24 39;    /* light foreground rgb */
+  /* Light accent: gold → crimson */
+  --accent-from: 255 215 0;   /* gold */
+  --accent-to: 220 38 38;     /* crimson-ish (tailwind red-600) */
+  /* Global font family */
+  --font-body: "Gilroy", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
 
 .dark {
-  --bg: 17 24 39;
-  --fg: 226 232 240;
+  --bg: 6 9 17;       /* deep navy */
+  --fg: 226 232 240;  /* slate-200 */
+  /* Dark accent: electric teal → violet */
+  --accent-from: 45 212 191;  /* teal-400 */
+  --accent-to: 139 92 246;    /* violet-500 */
+}
+
+/* Gilroy font family (use provided TTFs; WOFF2 preferred if available) */
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy/Gilroy-Regular.woff2") format("woff2"),
+       url("/fonts/gilroy/Gilroy-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy/Gilroy-Medium.woff2") format("woff2"),
+       url("/fonts/gilroy/Gilroy-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy/Gilroy-SemiBold.woff2") format("woff2"),
+       url("/fonts/gilroy/Gilroy-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy/Gilroy-Bold.woff2") format("woff2"),
+       url("/fonts/gilroy/Gilroy-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 html, body {
@@ -19,8 +61,127 @@ html, body {
 body {
   background-color: rgb(var(--bg));
   color: rgb(var(--fg));
+  font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif);
 }
 
 .container {
   @apply max-w-5xl mx-auto px-4;
 }
+
+/* Core Web Vitals micro-optimizations */
+.grid { content-visibility: auto; contain-intrinsic-size: 600px 1000px; }
+button, a { touch-action: manipulation; }
+img { overflow: hidden; }
+
+/* Premium background gradient + animated bokeh (very subtle) */
+.background-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 800px at 10% -10%, rgba(255,255,255,0.08), transparent 60%),
+    radial-gradient(800px 600px at 110% 10%, rgba(255,255,255,0.06), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.02) 100%);
+}
+
+/* Deep gradient canvas behind page based on theme */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: radial-gradient(1200px 900px at 50% -20%, rgba(255,255,255,0.06), transparent 60%),
+              linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+}
+.dark body::before { /* canvas for dark is handled by body bg + fx */ }
+
+/* Animated bokeh particles (respect reduced motion) */
+@keyframes bokehFloat { to { transform: translateY(-6%) translateX(2%); opacity: 0.9; } }
+@media (prefers-reduced-motion: no-preference) {
+  .background-fx::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120px 120px at 20% 80%, rgba(255,255,255,0.06), transparent 60%),
+      radial-gradient(160px 160px at 80% 30%, rgba(255,255,255,0.05), transparent 65%),
+      radial-gradient(100px 100px at 60% 90%, rgba(255,255,255,0.04), transparent 60%);
+    filter: blur(0.5px);
+    animation: bokehFloat 12s ease-in-out infinite alternate;
+  }
+}
+
+/* Smooth theme transitions */
+.theme-smooth, .theme-smooth * {
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out, border-color 300ms ease-in-out;
+}
+
+/* Accent gradient utilities */
+.u-accent-bg {
+  background-image: linear-gradient(90deg, rgb(var(--accent-from)) 0%, rgb(var(--accent-to)) 100%);
+}
+.u-accent-text {
+  background-image: linear-gradient(90deg, rgb(var(--accent-from)) 0%, rgb(var(--accent-to)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.btn-accent {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold underline;
+  color: white;
+  background-image: linear-gradient(90deg, rgb(var(--accent-from)) 0%, rgb(var(--accent-to)) 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 20px rgba(0,0,0,0.15);
+}
+@keyframes glowPulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(var(--accent-to),0.0), 0 10px 25px rgba(0,0,0,0.15);} 50%{ box-shadow: 0 0 0 4px rgba(var(--accent-to),0.12), 0 14px 30px rgba(0,0,0,0.22);} }
+@media (prefers-reduced-motion: no-preference) {
+  .btn-accent:hover { animation: glowPulse 1200ms ease-in-out both; }
+}
+.chip-accent {
+  @apply inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium;
+  background-image: linear-gradient(90deg, rgb(var(--accent-from)) 0%, rgb(var(--accent-to)) 100%);
+  color: white;
+}
+/* Neon glow + animated border for chips */
+.chip-accent { position: relative; }
+.chip-accent::after {
+  content: "";
+  position: absolute; inset: -1px; border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(var(--accent-from),0.6), rgba(var(--accent-to),0.6));
+  z-index: -1; filter: blur(6px); opacity: .55; transition: opacity 200ms ease;
+}
+.chip-accent:hover::after { opacity: .8; }
+@keyframes chipBorderMove { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@media (prefers-reduced-motion: no-preference) {
+  .chip-accent { background-size: 200% 200%; animation: chipBorderMove 6s linear infinite; }
+}
+
+/* Slide-in underline utility for headings */
+.u-underline-hover { position: relative; display: inline-block; }
+.u-underline-hover::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0%;
+  background-image: linear-gradient(90deg, rgb(var(--accent-from)), rgb(var(--accent-to)));
+  transition: width 240ms ease;
+}
+.u-underline-hover:hover::after { width: 100%; }
+
+/* Large figure utility (big €, RON) */
+.u-figure {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 8px 20px rgba(0,0,0,0.06);
+}
+
+/* Focus ring aligned with accent */
+.focus-accent:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.8), 0 0 0 4px rgba(var(--accent-to), 0.5);
+}
+
+/* Hide scrollbars utility for carousels */
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar { display: none; }

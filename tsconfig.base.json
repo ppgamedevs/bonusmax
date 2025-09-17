@@ -11,6 +11,10 @@
     "noEmit": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "site-config": ["apps/web/src/config/site.ts"]
+    },
+    "types": ["node"]
   }
 }
