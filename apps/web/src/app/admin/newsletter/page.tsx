@@ -9,7 +9,7 @@ function Guard({ children, keyParam }: { children: any; keyParam?: string }) {
 async function createIssue(formData: FormData) {
   "use server";
   if (!process.env.ADMIN_KEY || String(formData.get("key")) !== process.env.ADMIN_KEY) throw new Error("Unauthorized");
-  const subject = String(formData.get("subject") || "NoutÃƒâ€žÃ†â€™ÃƒË†Ã¢â‚¬Âºi Bonusmax ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â sÃƒâ€žÃ†â€™ptÃƒâ€žÃ†â€™mÃƒÆ’Ã‚Â¢na aceasta");
+  const subject = String(formData.get("subject") || "NoutÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi Bonusmax ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â sÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ptÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢na aceasta");
   const ids = String(formData.get("ids") || "")
     .split(",")
     .map((s) => s.trim())
@@ -19,16 +19,16 @@ async function createIssue(formData: FormData) {
   const html = `
   <div style="font-family:Arial,sans-serif">
     <h1>${subject}</h1>
-    <p style="font-size:12px;opacity:.7">18+ JoacÃƒâ€žÃ†â€™ responsabil ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ ConÃƒË†Ã¢â‚¬Âºinut comercial marcat</p>
+    <p style="font-size:12px;opacity:.7">18+ JoacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ responsabil ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ ConÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºinut comercial marcat</p>
     <ul>
       ${items
         .map(
           (i: any) =>
-            `<li><a href="${i.url}" target="_blank" rel="nofollow noopener">${i.title}</a> ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â <span style="opacity:.7">${i.excerpt || ""}</span></li>`
+            `<li><a href="${i.url}" target="_blank" rel="nofollow noopener">${i.title}</a> ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â <span style="opacity:.7">${i.excerpt || ""}</span></li>`
         )
         .join("")}
     </ul>
-    <p style="font-size:12px;opacity:.7">Te poÃƒË†Ã¢â‚¬Âºi dezabona oricÃƒÆ’Ã‚Â¢nd.</p>
+    <p style="font-size:12px;opacity:.7">Te poÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi dezabona oricÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢nd.</p>
   </div>`;
   const issue = await (prisma as any).newsletterIssue.create({ data: { number: num, subject, html } });
   await (prisma as any).newsletterIssueItem.createMany({
@@ -37,7 +37,8 @@ async function createIssue(formData: FormData) {
 }
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const key = searchParams?.key;
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const key = resolvedSearchParams.key;
   const last7 = await (prisma as any).feedItem.findMany({
     where: { status: "APPROVED", publishedAt: { gte: new Date(Date.now() - 7 * 864e5) } },
     orderBy: [{ featured: "desc" }, { publishedAt: "desc" }],
@@ -48,18 +49,18 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Newsletter ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Compose</h1>
+        <h1 className="text-2xl font-bold">Newsletter ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Compose</h1>
         <form action={createIssue} className="mt-3 flex flex-wrap items-end gap-2">
           <input type="hidden" name="key" defaultValue={key} />
           <label className="text-sm">
             Subiect
-            <input name="subject" className="ml-2 rounded border px-2 py-1" defaultValue="NoutÃƒâ€žÃ†â€™ÃƒË†Ã¢â‚¬Âºi Bonusmax ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â sÃƒâ€žÃ†â€™ptÃƒâ€žÃ†â€™mÃƒÆ’Ã‚Â¢na aceasta" />
+            <input name="subject" className="ml-2 rounded border px-2 py-1" defaultValue="NoutÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi Bonusmax ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â sÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ptÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢na aceasta" />
           </label>
           <label className="text-sm">
             Item IDs (virgule)
             <input name="ids" className="ml-2 w-[420px] rounded border px-2 py-1" placeholder={(last7 as any[]).map((i: any) => i.id).slice(0, 6).join(",")} />
           </label>
-          <button className="rounded border px-3 py-1">GenereazÃƒâ€žÃ†â€™</button>
+          <button className="rounded border px-3 py-1">GenereazÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</button>
         </form>
 
         <section className="mt-6">
@@ -76,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
               {(last7 as any[]).map((i: any) => (
                 <tr key={i.id} className="border-t">
                   <td className="p-2">{i.title}</td>
-                  <td className="p-2">{i.publishedAt ? new Date(i.publishedAt).toLocaleDateString("ro-RO") : "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"}</td>
+                  <td className="p-2">{i.publishedAt ? new Date(i.publishedAt).toLocaleDateString("ro-RO") : "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</td>
                   <td className="p-2">{i.id}</td>
                 </tr>
               ))}
@@ -92,7 +93,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                 <a className="underline" href={`/api/admin/newsletter/issues/${i.id}/export?key=${key}`} target="_blank">
                   Export HTML
                 </a>{" "}
-                ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â #{i.number} ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {i.subject}
+                ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â #{i.number} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ {i.subject}
               </li>
             ))}
           </ul>
