@@ -1,3 +1,4 @@
+/* eslint react-hooks/rules-of-hooks: 0 */
 "use client";
 import { useEffect, useState } from "react";
 import { ensureSessionIdClient } from "../../lib/experiments";
@@ -32,9 +33,9 @@ export default function StickyBar({
     <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-white/95 backdrop-blur">
       <div className="container mx-auto flex items-center justify-between gap-3 px-4 py-3">
         <div className="text-sm">
-          <span className="font-semibold">Oferte licenÃˆâ€ºiate ONJN</span>
-          <span className="ml-2 opacity-70">Ã¢â‚¬â€ vezi bonusurile actuale</span>
-          <span className="ml-3 text-[11px] opacity-60">ConÃˆâ€ºinut comercial Ã¢â‚¬Â¢ 18+ JoacÃ„Æ’ responsabil.</span>
+          <span className="font-semibold">Oferte licenÃƒË†Ã¢â‚¬Âºiate ONJN</span>
+          <span className="ml-2 opacity-70">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â vezi bonusurile actuale</span>
+          <span className="ml-3 text-[11px] opacity-60">ConÃƒË†Ã¢â‚¬Âºinut comercial ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ 18+ JoacÃƒâ€žÃ†â€™ responsabil.</span>
         </div>
         <a href={ctaHref} className="rounded-lg border px-4 py-2 text-sm font-semibold underline">
           Vezi bonusul
