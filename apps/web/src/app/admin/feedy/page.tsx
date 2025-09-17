@@ -16,18 +16,19 @@ async function act(formData: FormData) {
   if (action === "feature") await (prisma as any).feedItem.update({ where: { id }, data: { featured: true, status: "APPROVED" } });
 }
 
-export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
-  const key = searchParams?.key;
+export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+  const searchParamsObj = (typeof searchParams === 'object' && 'then' in (searchParams as any)) ? await (searchParams as any) : (searchParams as any);
+  const key = searchParamsObj?.key;
   const pending = await (prisma as any).feedItem.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: "desc" }, take: 100, include: { source: true, tags: { include: { tag: true } } } });
   const recent = await (prisma as any).feedItem.findMany({ where: { status: "APPROVED" }, orderBy: { publishedAt: "desc" }, take: 50, include: { source: true, tags: { include: { tag: true } } } });
 
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Feedy Ã¢â‚¬â€ Review</h1>
+        <h1 className="text-2xl font-bold">Feedy ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Review</h1>
 
         <section className="mt-6">
-          <h2 className="text-lg font-semibold">ÃƒÅ½n aÃˆâ„¢teptare</h2>
+          <h2 className="text-lg font-semibold">ÃƒÆ’Ã…Â½n aÃƒË†Ã¢â€žÂ¢teptare</h2>
           <ul className="mt-2 space-y-2">
             {pending.map((i: any) => (
               <li key={i.id} className="rounded border p-3">
