@@ -1,6 +1,6 @@
 import { searchOffersAndOperators } from "@bonusmax/lib";
-import OffersGrid from "../../components/offers/OffersGrid";
-import FilterBar from "../../components/FilterBar";
+import OffersGrid from "@/components/offers/OffersGrid";
+import FilterBar from "@/components/FilterBar";
 
 export const dynamic = "force-static";
 export const revalidate = 60;

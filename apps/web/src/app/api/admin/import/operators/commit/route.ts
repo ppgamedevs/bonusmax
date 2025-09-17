@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { commitPreview } from "../../../../../../lib/operator-import";
+import { commitPreview } from "@/lib/operator-import";
 
 function ok(url: URL) {
   return !!process.env.ADMIN_KEY && url.searchParams.get("key") === process.env.ADMIN_KEY;

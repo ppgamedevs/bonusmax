@@ -1,7 +1,7 @@
 import { prisma, offerEpcByOffer } from "@bonusmax/lib";
-import CompareTable from "../../components/compare/CompareTable";
-import CompareClient from "../../components/compare/CompareClient";
-import CompareRecommendation from "../../components/compare/CompareRecommendation";
+import CompareTable from "@/components/compare/CompareTable";
+import CompareClient from "@/components/compare/CompareClient";
+import CompareRecommendation from "@/components/compare/CompareRecommendation";
 
 export const dynamic = "force-dynamic";
 export const metadata = {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma, getTopTodayOffers, sendEmail } from "@bonusmax/lib";
-import { sendWeeklyDigest } from "../../../../lib/email";
+import { sendWeeklyDigest } from "@/lib/email";
 
 function assertCron(url: URL) { return !!process.env.CRON_KEY && url.searchParams.get("key") === process.env.CRON_KEY; }
 

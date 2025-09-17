@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@bonusmax/lib";
-import { createOrRefreshPending, sendConfirmEmail } from "../../../../lib/email";
+import { createOrRefreshPending, sendConfirmEmail } from "@/lib/email";
 
 const bodySchema = z.object({ email: z.string().email() });
 

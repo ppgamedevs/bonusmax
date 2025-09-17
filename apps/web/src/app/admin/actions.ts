@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma, checkAffiliateLink, recordLinkCheck } from "@bonusmax/lib";
-import { OperatorInputSchema, OfferInputSchema } from "../../lib/validators";
+import { OperatorInputSchema, OfferInputSchema } from "@/lib/validators";
 import { OfferType } from "@prisma/client";
 
 function assertKey(k?: string | null) {

@@ -1,5 +1,5 @@
 import { defaultMetadata, absoluteUrl, jsonLdBreadcrumb } from '@bonusmax/lib/seo';
-import JsonLd from '../../components/JsonLd';
+import JsonLd from '@/components/JsonLd';
 
 export const metadata = defaultMetadata({ title: 'Despre' });
 

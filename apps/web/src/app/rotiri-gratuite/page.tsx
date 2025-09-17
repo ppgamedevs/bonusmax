@@ -1,9 +1,9 @@
 import { OfferType } from "@prisma/client";
 import { getOffersByType, getActivePromos } from "@bonusmax/lib";
-import FilterBar from "../../components/FilterBar";
-import DisclosureBar from "../../components/DisclosureBar";
-import PromoStrip from "../../components/PromoStrip";
-import OffersGrid from "../../components/offers/OffersGrid";
+import FilterBar from "@/components/FilterBar";
+import DisclosureBar from "@/components/DisclosureBar";
+import PromoStrip from "@/components/PromoStrip";
+import OffersGrid from "@/components/offers/OffersGrid";
 
 export const dynamic = "force-dynamic";
 

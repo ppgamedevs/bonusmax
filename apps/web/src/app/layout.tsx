@@ -2,17 +2,17 @@ import './globals.css';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { defaultMetadata, jsonLdOrganization, jsonLdWebsite } from '@bonusmax/lib/seo';
 import { prisma } from '@bonusmax/lib';
-import JsonLd from '../components/JsonLd';
+import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '../config/site';
 import Link from 'next/link';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '@/components/SearchBar';
 // CompareTray requires client; wrap it in a small client component
-import RumInit from '../components/RumInit';
-import Preconnect from '../components/Preconnect';
-import Footer from '../components/layout/Footer';
-import CompareTrayClient from '../components/CompareTrayClient';
-import BackButton from '../components/BackButton';
-import ThemeToggle from '../components/ThemeToggle';
+import RumInit from '@/components/RumInit';
+import Preconnect from '@/components/Preconnect';
+import Footer from '@/components/layout/Footer';
+import CompareTrayClient from '@/components/CompareTrayClient';
+import BackButton from '@/components/BackButton';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ['latin'], display: 'swap' });
 

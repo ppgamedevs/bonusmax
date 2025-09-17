@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildPreview, parseCsv, Row } from "../../../../../../lib/operator-import";
+import { buildPreview, parseCsv, Row } from "@/lib/operator-import";
 
 function ok(url: URL) {
   return !!process.env.ADMIN_KEY && url.searchParams.get("key") === process.env.ADMIN_KEY;

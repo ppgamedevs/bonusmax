@@ -1,6 +1,6 @@
-import EmailCaptureForm from "../../components/EmailCaptureForm";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 import { absoluteUrl, jsonLdBreadcrumb } from "@bonusmax/lib/seo";
-import JsonLd from "../../components/JsonLd";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = { title: "Alerte bonusuri (email)" } as any;
 

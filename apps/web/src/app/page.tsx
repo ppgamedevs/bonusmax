@@ -1,22 +1,22 @@
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
 import { getActiveOffers, prisma } from '@bonusmax/lib';
-import OffersGrid from '../components/offers/OffersGrid';
-import DisclosureBar from '../components/DisclosureBar';
-import Hero from '../components/home/Hero';
-import TopTodayHeader from '../components/home/TopTodayHeader';
-import HeroOfferMockup from '../components/home/HeroOfferMockup';
-import TrustBarMobile from '../components/TrustBarMobile';
-import StickyCtaMobile from '../components/StickyCtaMobile';
-import StickyHeader from '../components/layout/StickyHeader';
-import CompareUI from '../components/compare/CompareUI';
-import TrustSafety from '../components/home/TrustSafety';
-import GuidesTeaser from '../components/home/GuidesTeaser';
-import FaqAccordion from '../components/home/FaqAccordion';
-import SocialProof from '../components/SocialProof';
-import TopToday from '../components/TopToday';
-import PromoStrip from '../components/PromoStrip';
+import OffersGrid from '@/components/offers/OffersGrid';
+import DisclosureBar from '@/components/DisclosureBar';
+import Hero from '@/components/home/Hero';
+import TopTodayHeader from '@/components/home/TopTodayHeader';
+import HeroOfferMockup from '@/components/home/HeroOfferMockup';
+import TrustBarMobile from '@/components/TrustBarMobile';
+import StickyCtaMobile from '@/components/StickyCtaMobile';
+import StickyHeader from '@/components/layout/StickyHeader';
+import CompareUI from '@/components/compare/CompareUI';
+import TrustSafety from '@/components/home/TrustSafety';
+import GuidesTeaser from '@/components/home/GuidesTeaser';
+import FaqAccordion from '@/components/home/FaqAccordion';
+import SocialProof from '@/components/SocialProof';
+import TopToday from '@/components/TopToday';
+import PromoStrip from '@/components/PromoStrip';
 import { Suspense } from 'react';
-import { SkeletonCards, SkeletonStats } from '../components/Skeletons';
+import { SkeletonCards, SkeletonStats } from '@/components/Skeletons';
 
 export const metadata = defaultMetadata({
   title: 'Top bonusuri',

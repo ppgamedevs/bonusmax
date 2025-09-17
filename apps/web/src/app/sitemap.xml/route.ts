@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
-import { getAllGuidesMeta } from "../../lib/guides";
+import { getAllGuidesMeta } from "@/lib/guides";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://bonusmax.ro";
 

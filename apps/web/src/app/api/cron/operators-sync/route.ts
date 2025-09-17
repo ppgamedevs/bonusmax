@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildPreview, parseCsv, commitPreview } from "../../../../lib/operator-import";
+import { buildPreview, parseCsv, commitPreview } from "@/lib/operator-import";
 
 function ok(url: URL) {
   return !!process.env.CRON_KEY && url.searchParams.get("key") === process.env.CRON_KEY;

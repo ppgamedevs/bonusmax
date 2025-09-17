@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getCompareIds } from "../../lib/compare";
+import { getCompareIds } from "@/lib/compare";
 
 export default function PopulateFromLocal() {
   const router = useRouter();

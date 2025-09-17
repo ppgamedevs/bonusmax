@@ -1,4 +1,4 @@
-import { getAllGuidesMeta } from "../../lib/guides";
+import { getAllGuidesMeta } from "@/lib/guides";
 import Link from "next/link";
 
 export const revalidate = 3600;
