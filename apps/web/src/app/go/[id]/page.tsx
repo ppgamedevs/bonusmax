@@ -1,4 +1,4 @@
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: Promise<{ id: string } }) {
   const __p = await params as any;
 
   const { id } = __p;
