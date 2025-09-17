@@ -1,12 +1,17 @@
-export default async function Page({
-  const { slug } = await params; params }: { params: Promise<{ slug: string } }) {
-  const __p = await params as any;
+import type { Metadata } from "next";
 
-  const { slug } = __p;
+type PageParams = Promise<{ slug: string }>;
+
+export default async function Page({ params }: { params: PageParams }) {
+  const { slug } = await params;
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1>NoutÄƒÈ›i: {slug}</h1>
-      <p>Temporary stub page.</p>
+      <h1>Noutati: {slug}</h1>
     </main>
   );
+}
+
+export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+  const { slug } = await params;
+  return { title: `Noutati: ${slug}` };
 }
