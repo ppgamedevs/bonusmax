@@ -1,7 +1,7 @@
-import { ImageResponse } from "next/og";
-import { getOperatorBySlug } from '@bonusmax/lib/operators';
-
 export const runtime = 'nodejs';
+import 'server-only';
+import { ImageResponse } from "next/og";
+import { getOperatorBySlug } from './../../../../../../packages/lib/db/queries';
 import 'server-only';
 export const alt = "Operator OG";
 export const size = { width: 1200, height: 630 };

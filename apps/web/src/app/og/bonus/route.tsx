@@ -1,8 +1,9 @@
 export const runtime = 'nodejs';
 import 'server-only';
 import 'server-only';
+import 'server-only';
 import { ImageResponse } from "next/og";
-import { getOfferById } from '@bonusmax/lib/offers';
+import { getOfferById } from './../../../../../../packages/lib/db/queries';
 export const alt = "Bonus OG";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
