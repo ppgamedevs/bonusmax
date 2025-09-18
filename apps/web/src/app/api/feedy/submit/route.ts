@@ -4,9 +4,9 @@ import { headers } from "next/headers";
 import { hashIp, makeSlug, cleanExcerpt } from "@/lib/feedy";
 
 export async function POST(req: Request) {
-  const h = headers();
-  const ua = h.get("user-agent");
-  const ip = (h.get("x-forwarded-for") || "").split(",")[0].trim() || h.get("x-real-ip") || "0.0.0.0";
+  const h = await headers();
+  const ua = h.get("user-agent") ?? "";
+  const ip = ((h.get("x-forwarded-for") ?? "")).split(",")[0].trim() || h.get("x-real-ip") ?? "" || "0.0.0.0";
   const body = (await req.json().catch(() => null)) as any;
   const url = String(body?.url || "");
   if (!/^https?:\/\//i.test(url)) return NextResponse.json({ ok: false, error: "invalid_url" }, { status: 400 });
