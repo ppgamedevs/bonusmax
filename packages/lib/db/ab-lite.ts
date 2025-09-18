@@ -73,11 +73,11 @@ export async function abReportCta() {
   const byVar = new Map<string, { clicks: number; ids: string[]; byPath: Map<string, { clicks: number; ids: string[] }> }>();
   for (const c of clicks) {
     const v = (c as any).expCtaCopy || "A";
-    const b = byVar.get(v) || { clicks: 0, ids: [], byPath: new Map() };
+    const b = byVar.get(v) || { clicks: 0, ids: [] as string[], byPath: new Map<string, { clicks: number; ids: string[] }>() };
     b.clicks++;
     b.ids.push((c as any).id);
     const p = (c as any).landingPath || "(direct)";
-    const bp = b.byPath.get(p) || { clicks: 0, ids: [] };
+    const bp = b.byPath.get(p) || { clicks: 0, ids: [] as string[] };
     bp.clicks++;
     bp.ids.push((c as any).id);
     b.byPath.set(p, bp);
@@ -113,7 +113,7 @@ export async function abReportOrder() {
   const byVar = new Map<string, { clicks: number; ids: string[] }>();
   for (const c of clicks) {
     const v = (c as any).expOffersOrder || "A";
-    const b = byVar.get(v) || { clicks: 0, ids: [] };
+    const b = byVar.get(v) || { clicks: 0, ids: [] as string[] };
     b.clicks++;
     b.ids.push((c as any).id);
     byVar.set(v, b);
