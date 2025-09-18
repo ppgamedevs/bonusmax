@@ -7,8 +7,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ ?key=ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL.</p>
       </main>
     );
   }
@@ -68,24 +68,25 @@ async function deletePromo(formData: FormData) {
 }
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const keyParam = searchParams?.key;
+  const resolvedSearchParams = await (searchParams || Promise.resolve({} as Record<string, string | undefined>));
+  const keyParam = resolvedSearchParams.key;
   const offers = await prisma.offer.findMany({ include: { operator: true }, orderBy: [{ createdAt: "desc" }] });
   const promos = await (prisma as any).promoPlacement.findMany({ include: { offer: { include: { operator: true } } }, orderBy: [{ slot: "asc" }, { weight: "asc" }] });
 
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Promos</h1>
+        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Promos</h1>
 
         <section className="mt-6">
           <h2 className="text-lg font-semibold">Create promo</h2>
           <form action={createPromo} className="mt-2 grid gap-2 md:grid-cols-2">
             <input type="hidden" name="key" defaultValue={keyParam} />
             <select className="rounded border px-3 py-2" name="offerId" required>
-              <option value="">Alege ofertÃƒâ€žÃ†â€™</option>
+              <option value="">Alege ofertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</option>
               {offers.map((o) => (
                 <option key={o.id} value={o.id}>
-                  {o.operator.name} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {o.title}
+                  {o.operator.name} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {o.title}
                 </option>
               ))}
             </select>
@@ -110,15 +111,15 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <div className="mt-2 grid gap-4">
             {promos.map((p: any) => (
               <div key={p.id} className="rounded border p-3">
-                <div className="text-xs opacity-60">{p.slot} ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {p.country}</div>
-                <div className="font-semibold">{p.offer.operator.name} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {p.offer.title}</div>
+                <div className="text-xs opacity-60">{p.slot} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ {p.country}</div>
+                <div className="font-semibold">{p.offer.operator.name} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {p.offer.title}</div>
                 <form action={updatePromo} className="mt-2 grid gap-2 md:grid-cols-2">
                   <input type="hidden" name="key" defaultValue={keyParam} />
                   <input type="hidden" name="id" defaultValue={p.id} />
                   <select className="rounded border px-3 py-2" name="offerId" defaultValue={p.offerId}>
                     {offers.map((o) => (
                       <option key={o.id} value={o.id}>
-                        {o.operator.name} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {o.title}
+                        {o.operator.name} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {o.title}
                       </option>
                     ))}
                   </select>
