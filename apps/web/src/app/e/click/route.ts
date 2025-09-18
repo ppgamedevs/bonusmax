@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { prisma } from "@bonusmax/lib";
 import { redirect } from "next/navigation";
 

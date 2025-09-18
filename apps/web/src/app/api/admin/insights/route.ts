@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { overview30, topPagesEpc, utmPerformance } from "@bonusmax/lib";
 

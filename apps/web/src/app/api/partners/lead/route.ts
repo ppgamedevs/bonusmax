@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import { hashIp, scoreLead, verifyForm } from "@/lib/partners";
@@ -11,7 +12,7 @@ async function notifySlack(payload: any) {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      text: `New B2B lead: ${payload.companyName} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ ${payload.email} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ budget: ${payload.monthlyBudget || "-"} RON ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ goal: ${payload.goal}`,
+      text: `New B2B lead: ${payload.companyName} ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ ${payload.email} ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ budget: ${payload.monthlyBudget || "-"} RON ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ goal: ${payload.goal}`,
     }),
   }).catch(() => {});
 }

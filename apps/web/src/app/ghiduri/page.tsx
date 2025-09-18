@@ -1,7 +1,8 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { getAllGuidesMeta } from "@/lib/guides";
 import Link from "next/link";
 
-export const revalidate = 3600;
 export const metadata = { title: "Ghiduri bonusuri & cazinouri" };
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
@@ -34,18 +35,18 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   };
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">Ghiduri (RomÃƒÆ’Ã‚Â¢nia)</h1>
-      <p className="mt-2 text-sm opacity-80">ExplicaÃƒË†Ã¢â‚¬Âºii clare despre bonusuri, WR ÃƒË†Ã¢â€žÂ¢i operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN. 18+ JoacÃƒâ€žÃ†â€™ responsabil.</p>
+      <h1 className="text-2xl font-bold">Ghiduri (RomÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢nia)</h1>
+      <p className="mt-2 text-sm opacity-80">ExplicaÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºii clare despre bonusuri, WR ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i operatori licenÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂºiaÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºi ONJN. 18+ JoacÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ responsabil.</p>
 
       <form className="mt-4 flex gap-2" method="get">
         <input
           className="w-full max-w-md rounded border px-3 py-2 text-sm"
           type="search"
           name="q"
-          placeholder="CautÃƒâ€žÃ†â€™ ÃƒÆ’Ã‚Â®n titlu/descriere..."
+          placeholder="CautÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n titlu/descriere..."
           defaultValue={q}
         />
-        <button className="rounded border px-3 py-2 text-sm" type="submit">CautÃƒâ€žÃ†â€™</button>
+        <button className="rounded border px-3 py-2 text-sm" type="submit">CautÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</button>
       </form>
 
       <ul className="mt-4 grid gap-3 md:grid-cols-2">

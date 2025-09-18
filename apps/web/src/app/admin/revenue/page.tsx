@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 "use client";
 
 import React, { useMemo, useState } from "react";

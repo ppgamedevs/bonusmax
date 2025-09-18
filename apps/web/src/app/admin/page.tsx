@@ -1,11 +1,11 @@
-﻿import Link from "next/link";
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
+import Link from "next/link";
 import {
   analyticsByOperator,
   analyticsClicksByOffer,
   analyticsImpressionsByOffer
 } from "@bonusmax/lib";
-
-export const dynamic = "force-dynamic";
 
 function getParam(sp: Record<string, string> | undefined, key: string) {
   const v = sp?.[key];
@@ -18,8 +18,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ ?key=ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ ?key=ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n URL.</p>
       </main>
     );
   }
@@ -42,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ PerformanÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂºÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</h1>
+      <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ PerformanÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</h1>
 
       <form className="mt-4 flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         </div>
         <input type="hidden" name="key" value={key} />
         <button className="rounded border px-3 py-2 text-sm" type="submit">
-          AplicÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢
+          AplicÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
         </button>
       </form>
 
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
+              <th className="text-left p-2">OfertÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th>
               <th className="p-2">Clicks</th>
               <th className="p-2">Impr.</th>
               <th className="p-2">CTR</th>

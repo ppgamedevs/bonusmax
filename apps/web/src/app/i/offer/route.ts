@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getOfferById, prisma, hashIp } from "@bonusmax/lib";

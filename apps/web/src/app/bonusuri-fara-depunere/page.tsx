@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { OfferType } from "@prisma/client";
 import { getOffersByType, getActivePromos } from "@bonusmax/lib";
 import FilterBar from "@/components/FilterBar";
@@ -5,7 +7,6 @@ import DisclosureBar from "@/components/DisclosureBar";
 import PromoStrip from "@/components/PromoStrip";
 import OffersGrid from "@/components/offers/OffersGrid";
 
-export const dynamic = "force-dynamic";
 function parseNumber(v: string | string[] | undefined) {
   if (!v || Array.isArray(v)) return undefined;
   const n = Number(v);
@@ -35,10 +36,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold mb-4">Bonusuri fÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ depunere</h1>
+      <h1 className="text-2xl font-bold mb-4">Bonusuri fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ depunere</h1>
       <DisclosureBar />
       {/* Sponsored strip (kept for visibility); the list below is also pinned */}
-      <PromoStrip slot="HUB_FARA_DEP" title="Sponsored ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Bonus fÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ depunere" />
+      <PromoStrip slot="HUB_FARA_DEP" title="Sponsored ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Bonus fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ depunere" />
       <FilterBar
         basePath="/bonusuri-fara-depunere"
         currentOperator={operator ?? null}
@@ -53,7 +54,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
+              <th className="text-left p-2">OfertÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢</th>
               <th className="p-2">WR</th>
               <th className="p-2">Min Dep</th>
               <th className="text-left p-2">T&C</th>
@@ -68,7 +69,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                 <td className="p-2 text-center">{o.wrMultiplier ?? '-'}</td>
                 <td className="p-2 text-center">{o.minDeposit ?? '-'}</td>
                 <td className="p-2">{o.termsShort}</td>
-                <td className="p-2"><a href={`/go/${o.id}`} rel="nofollow sponsored" className="rounded border px-3 py-1">RevendicÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</a></td>
+                <td className="p-2"><a href={`/go/${o.id}`} rel="nofollow sponsored" className="rounded border px-3 py-1">RevendicÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢</a></td>
               </tr>
             ))}
           </tbody>
@@ -76,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
       ) : (
         <>
           <OffersGrid offers={merged} />
-          <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢m clar toate plasÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rile. 18+</p>
+          <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢m clar toate plasÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢rile. 18+</p>
         </>
       )}
     </main>

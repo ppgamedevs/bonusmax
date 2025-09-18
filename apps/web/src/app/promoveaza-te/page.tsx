@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
@@ -49,30 +51,30 @@ export default function Page() {
     });
     const j = await r.json().catch(() => null);
     setSubmitting(false);
-    if (j?.ok) setOk("MulÃƒË†Ã¢â‚¬Âºumim! Te contactÃƒâ€žÃ†â€™m ÃƒÆ’Ã‚Â®n scurt timp.");
-    else setOk("Eroare la trimitere. VerificÃƒâ€žÃ†â€™ cÃƒÆ’Ã‚Â¢mpurile.");
+    if (j?.ok) setOk("MulÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºumim! Te contactÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢m ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n scurt timp.");
+    else setOk("Eroare la trimitere. VerificÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢mpurile.");
   }
 
   return (
     <main className="container mx-auto px-4 py-8">
       <section className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold">PromoveazÃƒâ€žÃ†â€™-te pe Bonusmax</h1>
+        <h1 className="text-3xl font-bold">PromoveazÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢-te pe Bonusmax</h1>
         <p className="mt-2 text-sm opacity-80">
-          Sponsored placements pe homepage ÃƒË†Ã¢â€žÂ¢i hub-uri, listÃƒâ€žÃ†â€™ri editoriale ÃƒË†Ã¢â€žÂ¢i colaborÃƒâ€žÃ†â€™ri de conÃƒË†Ã¢â‚¬Âºinut. Doar operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN ÃƒË†Ã¢â€žÂ¢i agenÃƒË†Ã¢â‚¬Âºii cu mandate valide. 18+ JoacÃƒâ€žÃ†â€™ responsabil.
+          Sponsored placements pe homepage ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i hub-uri, listÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ri editoriale ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i colaborÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ri de conÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºinut. Doar operatori licenÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂºiaÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºi ONJN ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i agenÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºii cu mandate valide. 18+ JoacÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ responsabil.
         </p>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="rounded-xl border p-4">
             <h3 className="font-semibold">Sponsored (Homepage)</h3>
-            <p className="text-sm opacity-70">Slot dedicat, vizibilitate maximÃƒâ€žÃ†â€™. Contracte 7ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“30 zile.</p>
+            <p className="text-sm opacity-70">Slot dedicat, vizibilitate maximÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢. Contracte 7ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“30 zile.</p>
           </div>
           <div className="rounded-xl border p-4">
-            <h3 className="font-semibold">Hub-uri (FÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ depunere / Rotiri)</h3>
-            <p className="text-sm opacity-70">Targetare pe intenÃƒË†Ã¢â‚¬Âºie. OpÃƒË†Ã¢â‚¬Âºiuni pin & sort.</p>
+            <h3 className="font-semibold">Hub-uri (FÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢rÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ depunere / Rotiri)</h3>
+            <p className="text-sm opacity-70">Targetare pe intenÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºie. OpÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºiuni pin & sort.</p>
           </div>
           <div className="rounded-xl border p-4">
             <h3 className="font-semibold">CPA/Hybrid</h3>
-            <p className="text-sm opacity-70">Parteneriate performanÃƒË†Ã¢â‚¬ÂºÃƒâ€žÃ†â€™ (EPC verificat).</p>
+            <p className="text-sm opacity-70">Parteneriate performanÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ (EPC verificat).</p>
           </div>
         </div>
 
@@ -120,7 +122,7 @@ export default function Page() {
           </div>
           <label className="text-sm">
             Mesaj
-            <textarea name="message" rows={4} className="mt-1 w-full rounded border px-3 py-2" placeholder="Perioada doritÃƒâ€žÃ†â€™, slot, brief, etc." />
+            <textarea name="message" rows={4} className="mt-1 w-full rounded border px-3 py-2" placeholder="Perioada doritÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢, slot, brief, etc." />
           </label>
 
           <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
@@ -128,7 +130,7 @@ export default function Page() {
             <button disabled={submitting} className="rounded border px-4 py-2 font-semibold">{submitting ? "Se trimite..." : "Trimite"}</button>
           </div>
           {ok && <p className="text-sm">{ok}</p>}
-          <p className="mt-2 text-xs opacity-60">Prin trimitere confirmi cÃƒâ€žÃ†â€™ eÃƒË†Ã¢â€žÂ¢ti operator/agenÃƒË†Ã¢â‚¬Âºie conform(Ãƒâ€žÃ†â€™) ONJN. ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾SponsoredÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒË†Ã¢â€žÂ¢i ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ConÃƒË†Ã¢â‚¬Âºinut comercialÃƒÂ¢Ã¢â€šÂ¬Ã‚Â vor fi marcate ÃƒÆ’Ã‚Â®n site.</p>
+          <p className="mt-2 text-xs opacity-60">Prin trimitere confirmi cÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ eÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ti operator/agenÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºie conform(ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢) ONJN. ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾SponsoredÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ConÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºinut comercialÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â vor fi marcate ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n site.</p>
         </form>
       </section>
     </main>

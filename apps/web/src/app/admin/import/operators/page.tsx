@@ -1,6 +1,8 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 "use client";
 import { Suspense } from "react";
-export const dynamic = "force-dynamic";
+
 // @ts-nocheck
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
