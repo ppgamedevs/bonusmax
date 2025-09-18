@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: apps/web
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,15 +49,52 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
+        # still runs in apps/web due to defaults; pnpm will find the workspace root
         run: pnpm install --frozen-lockfile
+
+      # 🔧 PATCH BEFORE BUILD (note: root is src/app because of working-directory)
+      - name: Patch Prisma pages/handlers to be dynamic (pwsh)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+          function Save-File([string]$Path,[string]$Text){ [IO.File]::WriteAllText($Path, ($Text -replace "`r`n","`n"), $Utf8NoBom) }
+
+          $root = "src/app"
+          $targets = Get-ChildItem -Path $root -Recurse -File | Where-Object { $_.Name -in @('page.tsx','route.ts','sitemap.ts') }
+
+          foreach ($f in $targets) {
+            $t = Get-Content -Raw -LiteralPath $f.FullName
+            if ($f.FullName -match '[\\/](robots\.ts|manifest\.ts)$') { continue }
+            if ($t -match '(?m)^\s*export\s+const\s+dynamic\s*=\s*["'']force-dynamic["'']\s*;') { continue }
+
+            $usesDb =
+              ($t -match '\bprisma\b') -or
+              ($t -match 'from\s+["'']@prisma/client["'']') -or
+              ($t -match 'packages/lib/db/client') -or
+              ($t -match '@bonusmax/lib/prisma') -or
+              ($f.FullName -match '[\\/](sitemap\.xml[\\/]|cauta[\\/])')
+
+            if (-not $usesDb) { continue }
+
+            if ($t -match '(?m)^\s*["'']use client["''];\s*\r?\n') {
+              $t = $t -replace '(?m)^(\s*["'']use client["''];\s*\r?\n)', "`$1export const dynamic = `"force-dynamic`";`n"
+            } else {
+              $t = 'export const dynamic = "force-dynamic";' + "`n" + $t
+            }
+            Save-File $f.FullName $t
+            Write-Host "Marked dynamic: $($f.FullName)"
+          }
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
 
-      - name: Build
-        run: pnpm build
+      - name: Build & Export static site
+        run: |
+          pnpm build
+          pnpm exec next export -o out
 
       - name: Write CNAME for custom domain
         run: echo "bonusmax.ro" > CNAME
