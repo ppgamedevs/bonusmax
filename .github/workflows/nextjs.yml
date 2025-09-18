@@ -115,3 +115,46 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Patch DB-using pages to force-dynamic (pwsh)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $utf8 = [System.Text.UTF8Encoding]::new($false)
+          function Save([string]$p,[string]$s){[IO.File]::WriteAllText($p,($s -replace "`r`n","`n"),$utf8)}
+
+          # IMPORTANT: adjust root to your job's working-directory.
+          # If the job has defaults.run.working-directory: apps/web, use "src/app".
+          $root = "src/app"
+
+          $targets = Get-ChildItem -Path $root -Recurse -File |
+            Where-Object { $_.Name -in @('page.tsx','route.ts','sitemap.ts') }
+
+          $dyn = '(?m)^(?<indent>\s*)export\s+const\s+dynamic\s*=\s*["''].*?["'']\s*;?\s*$'
+          foreach($f in $targets){
+            $t = Get-Content -Raw -LiteralPath $f.FullName
+
+            if ($f.FullName -match '[\\/](robots\.ts|manifest\.ts)$') { continue }
+
+            $usesDb =
+              ($t -match '\bprisma\b') -or
+              ($t -match 'from\s+["'']@prisma/client["'']') -or
+              ($t -match 'packages/lib/db/client') -or
+              ($t -match '@bonusmax/lib/prisma') -or
+              ($f.FullName -match '[\\/](sitemap\.xml[\\/]|cauta[\\/])')
+
+            if (-not $usesDb) { continue }
+
+            if ($t -match $dyn) {
+              $t = [regex]::Replace($t, $dyn, '${indent}export const dynamic = "force-dynamic";')
+            } else {
+              if ($t -match '(?m)^\s*["'']use client["''];\s*\r?\n') {
+                $t = $t -replace '(?m)^(\s*["'']use client["''];\s*\r?\n)', "`$1export const dynamic = `"force-dynamic`";`n"
+              } else {
+                $t = 'export const dynamic = "force-dynamic";' + "`n" + $t
+              }
+            }
+
+            Save $f.FullName $t
+            Write-Host "Normalized dynamic: $($f.FullName)"
+          }
