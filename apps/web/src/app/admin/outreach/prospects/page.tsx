@@ -56,7 +56,7 @@ export default function Page() {
               className="rounded border px-2 py-1"
               href={"/api/admin/outreach/prospects/export?key=" + encodeURIComponent(key) + "&minScore=60"}
             >
-              Export CSV >=60
+              Export CSV &gt;=60
             </a>
             <button onClick={commit} type="button" className="rounded border px-3 py-2 font-semibold">
               Commit to DB
