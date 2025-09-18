@@ -5,7 +5,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@bonusmax/ui": ["../../packages/ui"],
-      "@bonusmax/lib": ["../../packages/lib"]
+      "@bonusmax/lib": ["../../packages/lib"],
+      "@bonusmax/lib/*": ["../../packages/lib/*"],
+      "@bonusmax/lib/prisma": ["../../packages/lib/db/client.ts"]
     },
     "jsx": "preserve",
     "allowJs": false,
