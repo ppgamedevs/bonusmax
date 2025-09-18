@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   analyticsByOperator,
   analyticsClicksByOffer,
@@ -18,8 +18,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ ?key=ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL.</p>
       </main>
     );
   }
@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   const rows: { offer: any; clicks: number; impressions: number; ctr: number }[] = clicks
     .map((c) => {
-      const impressions = Number(impsMap.get(c.offer.id) ?? 0);
+      const impressions = Number((impsMap.get(c.offer.id) as unknown as number) ?? 0);
       const ctr: number = impressions ? Number(c.clicks) / Number(impressions) : 0;
       return { offer: c.offer, clicks: c.clicks, impressions, ctr };
     })
@@ -42,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ PerformanÃƒË†Ã¢â‚¬ÂºÃƒâ€žÃ†â€™</h1>
+      <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ PerformanÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂºÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</h1>
 
       <form className="mt-4 flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         </div>
         <input type="hidden" name="key" value={key} />
         <button className="rounded border px-3 py-2 text-sm" type="submit">
-          AplicÃƒâ€žÃ†â€™
+          AplicÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢
         </button>
       </form>
 
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃƒâ€žÃ†â€™</th>
+              <th className="text-left p-2">OfertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
               <th className="p-2">Clicks</th>
               <th className="p-2">Impr.</th>
               <th className="p-2">CTR</th>
@@ -115,3 +115,4 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
     </main>
   );
 }
+
