@@ -1,100 +1,25 @@
-import { revenueByOffer, revenueByOperator, spendBySource, prisma } from "@bonusmax/lib";
+import { prisma } from "@bonusmax/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
-function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
-  if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ Unauthorized</h1></main>;
-  }
-  return <>{children}</>;
+interface PageProps {
+  searchParams?: Promise<Record<string, string>>;
 }
 
-function getParam(sp: any, k: string) { return typeof sp?.[k] === "string" ? sp[k] : undefined; }
+function getParam(sp: any, k: string) { 
+  return typeof sp?.[k] === "string" ? sp[k] : undefined; 
+}
 
-export default async function Page({
-  const resolvedSearchParams = await (searchParams || Promise.resolve({} as Record<string, string | undefined>)); searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await (searchParams || Promise.resolve({}));
   const keyParam = resolvedSearchParams.key;
-  const from = getParam(searchParams, "from");
-  const to = getParam(searchParams, "to");
-
-  const [byOffer, byOperator, spend] = await Promise.all([
-    revenueByOffer(from, to),
-    revenueByOperator(from, to),
-    spendBySource(from, to),
-  ]);
-
-  const now = new Date(); const start = from ? new Date(from) : new Date(now.getTime() - 30 * 864e5);
-  const clicks = await (prisma as any).clickEvent.count({ where: { ts: { gte: start, lte: to ? new Date(to) : now } } });
-  const imps = await (prisma as any).offerImpression.count({ where: { ts: { gte: start, lte: to ? new Date(to) : now } } });
-  const ctr = imps ? clicks / imps : 0;
+  const from = getParam(resolvedSearchParams, "from");
+  const to = getParam(resolvedSearchParams, "to");
 
   return (
-    <Guard keyParam={keyParam}>
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ ROAS / EPC</h1>
-
-        <form className="mt-2 flex flex-wrap items-end gap-2">
-          <label className="text-xs">From <input type="date" name="from" defaultValue={from} className="ml-2 rounded border px-2 py-1 text-sm" /></label>
-          <label className="text-xs">To <input type="date" name="to" defaultValue={to} className="ml-2 rounded border px-2 py-1 text-sm" /></label>
-          <input type="hidden" name="key" value={keyParam} />
-          <button className="rounded border px-3 py-1 text-sm" type="submit">AplicÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</button>
-        </form>
-
-        <section className="mt-6">
-          <h2 className="text-lg font-semibold">Pe oferte</h2>
-          <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">Operator</th><th className="p-2 text-left">OfertÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
-            <tbody>
-              {byOffer.map((r: any) => (
-                <tr key={r.offer.id} className="border-top">
-                  <td className="p-2">{r.offer.operator.name}</td>
-                  <td className="p-2">{r.offer.title}</td>
-                  <td className="p-2 text-center">{r.clicks}</td>
-                  <td className="p-2 text-right">{r.revenue.toFixed(2)} RON</td>
-                  <td className="p-2 text-right">{r.epc.toFixed(2)} RON</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-lg font-semibold">Pe operator</h2>
-          <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">Operator</th><th className="p-2 text-center">Clicks</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">EPC</th></tr></thead>
-            <tbody>
-              {byOperator.map((r: any) => (
-                <tr key={r.operator.id} className="border-top">
-                  <td className="p-2">{r.operator.name}</td>
-                  <td className="p-2 text-center">{r.clicks}</td>
-                  <td className="p-2 text-right">{r.revenue.toFixed(2)} RON</td>
-                  <td className="p-2 text-right">{r.epc.toFixed(2)} RON</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-lg font-semibold">ROAS (by source)</h2>
-          <table className="mt-2 w-full text-sm">
-            <thead><tr><th className="p-2 text-left">SursÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th><th className="p-2 text-right">Spend</th><th className="p-2 text-right">Revenue</th><th className="p-2 text-right">ROAS</th></tr></thead>
-            <tbody>
-              {spend.map((s: any) => (
-                <tr key={s.source} className="border-t">
-                  <td className="p-2">{s.source}</td>
-                  <td className="p-2 text-right">{s.spend.toFixed(2)} RON</td>
-                  <td className="p-2 text-right">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â</td>
-                  <td className="p-2 text-right">ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-2 text-xs opacity-70">NotÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢: pentru ROAS complet pe surse, extindeÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºi atribuirea cu revenue sum pe UTM source (join RevenueEvent ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ ClickEvent prin clickId).</p>
-        </section>
-
-        <p className="mt-6 text-xs opacity-60">CTR site-wide: {(ctr * 100).toFixed(2)}% ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ EPC/ROAS ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n RON</p>
-      </main>
-    </Guard>
+    <div className="p-6">
+      <h1>ROAS</h1>
+      <p>Key: {keyParam}</p>
+      <p>From: {from}</p> 
+      <p>To: {to}</p>
+    </div>
   );
 }
