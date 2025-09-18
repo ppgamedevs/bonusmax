@@ -1,9 +1,6 @@
 import { prisma } from "@bonusmax/lib/prisma";
 type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
 
-type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
-
-
 interface PageProps {
   searchParams?: Promise<Record<string, string>>;
 }
