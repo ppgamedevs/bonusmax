@@ -1,11 +1,15 @@
 import { prisma } from '../../../../../../packages/lib/db/client';
+type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
+
+type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
+
 
 interface PageProps {
   searchParams?: Promise<Record<string, string>>;
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const resolvedSearchParams = await (searchParams || Promise.resolve({}));
+  const resolvedSearchParams: Record<string, string | undefined> = searchParams ? await searchParams : {};
   const keyParam = resolvedSearchParams.key;
   
   const rows = await (prisma as any).revenueEvent.findMany({

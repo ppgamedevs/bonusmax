@@ -1,4 +1,8 @@
 import { prisma } from "@bonusmax/lib/prisma";
+type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
+
+type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
+
 
 interface PageProps {
   searchParams?: Promise<Record<string, string>>;
@@ -9,7 +13,7 @@ function getParam(sp: any, k: string) {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const resolvedSearchParams = await (searchParams || Promise.resolve({}));
+  const resolvedSearchParams: Record<string, string | undefined> = searchParams ? await searchParams : {};
   const keyParam = resolvedSearchParams.key;
   const from = getParam(resolvedSearchParams, "from");
   const to = getParam(resolvedSearchParams, "to");
