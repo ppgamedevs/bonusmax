@@ -6,6 +6,10 @@ import { hashIp, makeSlug, cleanExcerpt } from "@/lib/feedy";
 export async function POST(req: Request) {
   const h = await headers();
   const ua = h.get("user-agent") ?? "";
+const xff = h.get("x-forwarded-for");
+const realIp = h.get("x-real-ip");
+const ipFromXff = (xff ?? "").split(",")[0]?.trim() ?? "";
+const ip = ipFromXff || realIp || "0.0.0.0";
   const body = (await req.json().catch(() => null)) as any;
   const url = String(body?.url || "");
   if (!/^https?:\/\//i.test(url)) return NextResponse.json({ ok: false, error: "invalid_url" }, { status: 400 });
