@@ -72,11 +72,11 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
       <main className="container mx-auto px-3 py-8">
         <h1 className="text-2xl font-bold">Partners ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Pipeline</h1>
         <div className="mt-4 grid gap-3 md:grid-cols-3 lg:grid-cols-6">
-          {stages.map((st) => (
+          {stages.map((st: any) => (
             <section key={st} className="rounded-xl border p-2">
               <h2 className="px-1 text-sm font-semibold">{st}</h2>
               <div className="mt-2 space-y-2">
-                {map(st).map((l) => (
+                {map(st).map((l: any) => (
                   <div key={l.id} className="rounded border p-2 text-sm">
                     <div className="flex items-center justify-between">
                       <div className="font-semibold">{l.companyName}</div>
@@ -84,7 +84,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                         <input type="hidden" name="key" defaultValue={keyParam} />
                         <input type="hidden" name="id" defaultValue={l.id} />
                         <select name="stage" defaultValue={l.stage} className="rounded border px-1 py-0.5 text-xs">
-                          {stages.map((s) => (
+                          {stages.map((s: any) => (
                             <option key={s}>{s}</option>
                           ))}
                         </select>
@@ -109,7 +109,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                             const rank = (s: string) => (s === "APPROVED" ? 0 : s === "PENDING" ? 1 : 2);
                             return rank(a.status) - rank(b.status) || new Date(a.startAt).getTime() - new Date(b.startAt).getTime();
                           })
-                          .map((r) => (
+                          .map((r: any) => (
                             <div key={r.id} className="text-xs flex items-center justify-between gap-2">
                               <div>
                                 ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {r.slot} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {new Date(r.startAt).toLocaleDateString("ro-RO")} ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ {new Date(r.endAt).toLocaleDateString("ro-RO")} (
@@ -132,7 +132,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
                     <details className="mt-2">
                       <summary className="cursor-pointer text-xs opacity-70">Note</summary>
-                      {l.notes.map((n) => (
+                      {l.notes.map((n: any) => (
                         <div key={n.id} className="mt-1 text-xs">
                           ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {new Date(n.createdAt).toLocaleString("ro-RO")}: {n.body}
                         </div>
