@@ -18,7 +18,7 @@ export function BetanoIcon({ className = "", title = "Betano (placeholder)" }: I
       <title>{title}</title>
       {/* Soft container */}
       <rect x="4" y="4" width="40" height="40" rx="12" fill="currentColor" opacity=".08" />
-      {/* Stylized Ã¢â‚¬Å“BÃ¢â‚¬Â mark */}
+      {/* Stylized ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œBÃƒÂ¢Ã¢â€šÂ¬Ã‚Â mark */}
       <path
         d="M17 14h10.5c4.2 0 7.5 3.3 7.5 7.5S31.7 29 27.5 29H17V14zm6 5v5h4.5a2.5 2.5 0 0 0 0-5H23zm-6 10h10c4 0 7 2.7 7 6s-3 6-7 6H17V29z"
         fill="currentColor"
@@ -38,7 +38,7 @@ export function NetBetIcon({ className = "", title = "NetBet (placeholder)" }: I
       <title>{title}</title>
       {/* Soft container */}
       <rect x="4" y="4" width="40" height="40" rx="12" fill="currentColor" opacity=".08" />
-      {/* Ã¢â‚¬Å“NBÃ¢â‚¬Â monogram */}
+      {/* ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œNBÃƒÂ¢Ã¢â€šÂ¬Ã‚Â monogram */}
       <path
         d="M12 32V16h4l8 9.2V16h4v16h-4l-8-9.2V32h-4z"
         fill="currentColor"
@@ -62,7 +62,7 @@ export function SuperbetIcon({ className = "", title = "Superbet (placeholder)" 
       <title>{title}</title>
       {/* Soft container */}
       <rect x="4" y="4" width="40" height="40" rx="12" fill="currentColor" opacity=".08" />
-      {/* Stylized Ã¢â‚¬Å“SÃ¢â‚¬Â in a ball */}
+      {/* Stylized ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œSÃƒÂ¢Ã¢â€šÂ¬Ã‚Â in a ball */}
       <circle cx="24" cy="24" r="11" fill="none" stroke="currentColor" strokeWidth="2"/>
       <path
         d="M29.5 19.2c-1.2-1-2.7-1.7-4.5-1.7-2.6 0-4.3 1.3-4.3 2.8 0 4 10 1.3 10 7 0 2.8-2.8 4.9-6.5 4.9-2.3 0-4.5-.7-6.2-2"
@@ -106,17 +106,16 @@ export function BonusCardHeader() {
       <OperatorBadge brand="Betano" />
       {/* glow CTA on hover of the whole card */}
       <button
-        className="rounded-full bg-gradient-to-r from-yellow-400/80 to-rose-500/80 px-4 py-2 text-sm font-semibold text-black shadow
-                   transition-all duration-300 group-hover:shadow-[0_0_24px_rgba(255,255,255,0.25)]"
+        className="rounded-full bg-gradient-to-r from-yellow-400/80 to-rose-500/80 px-4 py-2 text-sm font-semibold text-black shadow transition-all duration-300 group-hover:shadow-[0_0_24px_rgba(255,255,255,0.25)]"
       >
-        RevendicÃ„Æ’ bonusul
+        RevendicÃƒâ€žÃ†â€™ bonusul
       </button>
     </div>
   );
 }
 
 Notes for Windsurf (paste in the task)
-Ã¢â‚¬Å“Use the SVG components above as placeholders for operator logos. Keep them monochrome (text-zinc-400) and apply hover glow via parent .group.Ã¢â‚¬Â
-Ã¢â‚¬Å“These are not official marks; replace paths later with provided brand SVGs without changing the API.Ã¢â‚¬Â
-Ã¢â‚¬Å“Icons must respect currentColor. On hover, color becomes white and a soft drop-shadow simulates glow.Ã¢â‚¬Â
+ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œUse the SVG components above as placeholders for operator logos. Keep them monochrome (text-zinc-400) and apply hover glow via parent .group.ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â
+ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œThese are not official marks; replace paths later with provided brand SVGs without changing the API.ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â
+ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œIcons must respect currentColor. On hover, color becomes white and a soft drop-shadow simulates glow.ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â
 */
