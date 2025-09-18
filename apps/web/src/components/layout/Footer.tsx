@@ -31,24 +31,24 @@ export default function Footer() {
             <span className="text-lg font-semibold">Bonusmax</span>
           </div>
           <p className="mt-3 text-sm text-zinc-400">
-            ComparaÃƒË†Ã¢â‚¬Âºii de bonusuri, verificate ÃƒË†Ã¢â€žÂ¢i actualizate.
+            ComparaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºii de bonusuri, verificate ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢i actualizate.
           </p>
 
           {/* Social (inline SVG, monochrome + glow on hover) */}
           <div className="mt-5 flex items-center gap-4">
-            <Link aria-label="X" href="/" className="group" rel="noopener">
+            <Link aria-label="X" href="/" className="group" rel="noopener noreferrer">
               <XIcon className={glow}/>
             </Link>
-            <Link aria-label="Facebook" href="/" className="group" rel="noopener">
+            <Link aria-label="Facebook" href="/" className="group" rel="noopener noreferrer">
               <FacebookIcon className={glow}/>
             </Link>
-            <Link aria-label="LinkedIn" href="/" className="group" rel="noopener">
+            <Link aria-label="LinkedIn" href="/" className="group" rel="noopener noreferrer">
               <LinkedInIcon className={glow}/>
             </Link>
-            <Link aria-label="Instagram" href="/" className="group" rel="noopener">
+            <Link aria-label="Instagram" href="/" className="group" rel="noopener noreferrer">
               <InstagramIcon className={glow}/>
             </Link>
-            <Link aria-label="YouTube" href="/" className="group" rel="noopener">
+            <Link aria-label="YouTube" href="/" className="group" rel="noopener noreferrer">
               <YouTubeIcon className={glow}/>
             </Link>
           </div>
@@ -60,10 +60,10 @@ export default function Footer() {
             Legal & Compliance
           </h4>
           <ul className="space-y-2">
-            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener">ONJN ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Oficiul NaÃƒË†Ã¢â‚¬Âºional pentru Jocuri de Noroc</Link></li>
-            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener">ANPC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ ProtecÃƒË†Ã¢â‚¬Âºia Consumatorilor</Link></li>
-            <li><Link className={link} href="/politica-confidentialitate">GDPR / Politica de confidenÃƒË†Ã¢â‚¬Âºialitate</Link></li>
-            <li><Link className={link} href="/termeni-si-conditii">Termeni ÃƒË†Ã¢â€žÂ¢i condiÃƒË†Ã¢â‚¬Âºii</Link></li>
+            <li><a className={link} href="https://onjn.gov.ro/" target="_blank" rel="noopener noreferrer">ONJN ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Oficiul NaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºional pentru Jocuri de Noroc</a></li>
+            <li><a className={link} href="https://anpc.ro/" target="_blank" rel="noopener noreferrer">ANPC ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ ProtecÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºia Consumatorilor</a></li>
+            <li><Link className={link} href="/politica-confidentialitate">GDPR / Politica de confidenÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºialitate</Link></li>
+            <li><Link className={link} href="/termeni-si-conditii">Termeni ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢i condiÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºii</Link></li>
           </ul>
         </div>
 
@@ -93,15 +93,15 @@ export default function Footer() {
           </div>
 
           <p className="mt-3 text-xs text-zinc-400 leading-5">
-            ConÃƒË†Ã¢â‚¬Âºinut comercial. Ofertele sunt doar pentru operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN.
-            JoacÃƒâ€žÃ†â€™ responsabil. Jocurile de noroc implicÃƒâ€žÃ†â€™ riscuri financiare.
+            ConÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºinut comercial. Ofertele sunt doar pentru operatori licenÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂºiaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi ONJN.
+            JoacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ responsabil. Jocurile de noroc implicÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ riscuri financiare.
           </p>
         </div>
       </div>
 
       <div className="border-t border-zinc-800">
         <div className="mx-auto max-w-7xl px-6 py-6 text-center text-xs text-zinc-500">
-          Ãƒâ€šÃ‚Â© 2025 Bonusmax. Toate drepturile rezervate.
+          ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© 2025 Bonusmax. Toate drepturile rezervate.
         </div>
       </div>
     </footer>
@@ -171,7 +171,7 @@ function Badge18Plus() {
         <circle cx="12" cy="12" r="10" fill="currentColor" opacity=".12"/>
         <text x="50%" y="56%" textAnchor="middle" fontSize="11" fill="white" fontWeight="700">18+</text>
       </svg>
-      <span className="text-xs text-zinc-300">JoacÃƒâ€žÃ†â€™ responsabil</span>
+      <span className="text-xs text-zinc-300">JoacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ responsabil</span>
     </div>
   );
 }
