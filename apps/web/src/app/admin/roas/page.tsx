@@ -1,10 +1,6 @@
 import { prisma } from "@bonusmax/lib/prisma";
 type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
-
-interface PageProps {
-  searchParams?: Promise<Record<string, string>>;
-}
-
+;
 function getParam(sp: any, k: string) { 
   return typeof sp?.[k] === "string" ? sp[k] : undefined; 
 }
