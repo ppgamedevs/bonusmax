@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
 import { getActiveOffers, prisma } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';
@@ -72,10 +73,10 @@ export default async function HomePage() {
         <div className="mt-4">
           <OffersGrid offers={offers} />
         </div>
-        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒâ€žÃ†â€™m clar toate plasÃƒâ€žÃ†â€™rile. 18+</p>
+        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢m clar toate plasÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rile. 18+</p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
-      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃƒâ€žÃ†â€™rile noastre" />
+      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rile noastre" />
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
       <GuidesTeaser />

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { prisma } from '../../../../../../packages/lib/db/client';
 type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
 export default async function Page({ searchParams }: PageProps) {
