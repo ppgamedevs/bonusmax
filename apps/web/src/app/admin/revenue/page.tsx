@@ -1,8 +1,7 @@
 import { prisma } from '../../../../../../packages/lib/db/client';
 type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
 
-interface PageProps {
-  searchParams?: Promise<Record<string, string>>;
+;
 }
 
 export default async function Page({ searchParams }: PageProps) {
