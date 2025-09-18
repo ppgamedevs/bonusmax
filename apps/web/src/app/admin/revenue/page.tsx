@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
-    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1></main>;
+    return <main className="container mx-auto px-4 py-10"><h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ Unauthorized</h1></main>;
   }
   return <>{children}</>;
 }
@@ -23,18 +23,18 @@ export default async function Page({
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Revenue (ultimele 200)</h1>
-        <p className="mt-1 text-sm opacity-80">Total evenimente: {rows.length} ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ Total sumÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢: {total.toFixed(2)} {rows[0]?.currency || "RON"}</p>
+        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ Revenue (ultimele 200)</h1>
+        <p className="mt-1 text-sm opacity-80">Total evenimente: {rows.length} ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ Total sumÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢: {total.toFixed(2)} {rows[0]?.currency || "RON"}</p>
         <table className="mt-4 w-full text-sm">
           <thead>
             <tr>
               <th className="p-2 text-left">Data</th>
               <th className="p-2">Net</th>
               <th className="p-2">Operator</th>
-              <th className="p-2">OfertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
+              <th className="p-2">OfertÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th>
               <th className="p-2">Tip</th>
               <th className="p-2">Status</th>
-              <th className="p-2 text-right">SumÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
+              <th className="p-2 text-right">SumÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th>
             </tr>
           </thead>
           <tbody>
@@ -62,7 +62,7 @@ export default async function Page({
             <thead>
               <tr>
                 <th className="p-2 text-left">Operator</th>
-                <th className="p-2 text-left">OfertÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢</th>
+                <th className="p-2 text-left">OfertÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th>
                 <th className="p-2 text-center">Clicks</th>
                 <th className="p-2 text-right">Revenue</th>
                 <th className="p-2 text-right">EPC</th>
