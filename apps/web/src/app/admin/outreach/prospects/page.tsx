@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 import React, { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Page() {
+function PageContent() {
   const sp = useSearchParams();
   const key = sp.get("key") || "";
 
@@ -91,5 +92,13 @@ export default function Page() {
         </>
       )}
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <PageContent />
+    </Suspense>
   );
 }
