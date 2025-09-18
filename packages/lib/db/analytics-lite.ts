@@ -7,13 +7,13 @@ function lastDays(days = 30): Range {
   return { start, end };
 }
 
-/** Returnează EPC per ofertă: { offerId, clicks, revenue, epc } (doar pentru offerIds cerute) */
+/** ReturneazÄƒ EPC per ofertÄƒ: { offerId, clicks, revenue, epc } (doar pentru offerIds cerute) */
 export async function offerEpcByOffer(offerIds: string[], days = 30) {
   if (!offerIds?.length) return [] as { offerId: string; clicks: number; revenue: number; epc: number }[];
   const end = new Date();
   const start = new Date(end.getTime() - days * 864e5);
 
-  // Clickuri în interval pentru offerIds cerute
+  // Clickuri Ã®n interval pentru offerIds cerute
   const clicks = await (prisma as any).clickEvent.findMany({
     where: { ts: { gte: start, lte: end }, offerId: { in: offerIds } },
     select: { id: true, offerId: true },
@@ -29,7 +29,7 @@ export async function offerEpcByOffer(offerIds: string[], days = 30) {
     idsByOffer.set(k, arr);
   }
 
-  const clickIds = clicks.map((c) => (c as any).id as string);
+  const clickIds = clicks.map((c: { id: string }) => c.id);
   const rev = await (prisma as any).revenueEvent.findMany({
     where: { ts: { gte: start, lte: end }, clickId: { in: clickIds } },
     select: { amount: true, clickId: true },
