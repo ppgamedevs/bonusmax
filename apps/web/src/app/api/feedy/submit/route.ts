@@ -4,8 +4,11 @@ import { headers } from "next/headers";
 import { hashIp, makeSlug, cleanExcerpt } from "@/lib/feedy";
 
 export async function POST(req: Request) {
-  const h = await await headers();
+  const h = await await await headers();
   const ua = h.get("user-agent") ?? "";
+  const xff = h.get("x-forwarded-for");
+  const realIp = h.get("x-real-ip");
+  const ipFromXff = (xff ?? "").split(",")[0]?.trim() ?? "";
   const xff = h.get("x-forwarded-for");
   const realIp = h.get("x-real-ip");
   const ipFromXff = (xff ?? "").split(",")[0]?.trim() ?? "";
