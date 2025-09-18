@@ -28,11 +28,11 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   const to = getParam(sp, "to");
 
   const clicks = await analyticsClicksByOffer(from, to);
-  const impsMap = await analyticsImpressionsByOffer(from, to);
+  const impsMap = await analyticsImpressionsByOffer(from, to) as Map<string, number>;
 
   const rows: { offer: any; clicks: number; impressions: number; ctr: number }[] = clicks
     .map((c) => {
-      const impressions = impsMap.get(c.offer.id) ?? 0;
+      const impressions = Number(impsMap.get(c.offer.id) ?? 0);
       const ctr: number = impressions ? Number(c.clicks) / Number(impressions) : 0;
       return { offer: c.offer, clicks: c.clicks, impressions, ctr };
     })
