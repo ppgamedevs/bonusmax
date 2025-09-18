@@ -6,8 +6,8 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ ?key=ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL.</p>
       </main>
     );
   }
@@ -26,8 +26,9 @@ function quantiles(values: number[], qs: number[]) {
   });
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const keyParam = searchParams?.key;
+export default async function Page({
+  const resolvedSearchParams = await (searchParams || Promise.resolve({} as Record<string, string | undefined>)); searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+  const keyParam = resolvedSearchParams.key;
   const now = new Date();
   const start = new Date(now.getTime() - 7 * 864e5);
 
@@ -66,8 +67,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">RUM ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Web Vitals (7 zile)</h1>
-        <p className="mt-2 text-sm opacity-80">Agregat local din {rows.length.toLocaleString("ro-RO")} mÃƒâ€žÃ†â€™surÃƒâ€žÃ†â€™tori LCP/CLS/INP/TTFB.</p>
+        <h1 className="text-2xl font-bold">RUM ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Web Vitals (7 zile)</h1>
+        <p className="mt-2 text-sm opacity-80">Agregat local din {rows.length.toLocaleString("ro-RO")} mÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢surÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢tori LCP/CLS/INP/TTFB.</p>
 
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">
