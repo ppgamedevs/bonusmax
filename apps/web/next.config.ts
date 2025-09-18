@@ -6,13 +6,13 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
-  output: 'export',
+  output: 'standalone',
   basePath,
   assetPrefix: basePath ? `${basePath}/` : '',
   images: {
     unoptimized: true,
   },
-  // Uncomment if you prefer folder-style URLs (â€¦/page/index.html) for static hosting
+  // Uncomment if you prefer folder-style URLs (Ã¢â‚¬Â¦/page/index.html) for static hosting
   // trailingSlash: true,
 };
 
