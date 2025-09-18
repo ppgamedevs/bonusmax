@@ -24,7 +24,7 @@ export const metadata = defaultMetadata({
   alternates: { canonical: absoluteUrl('/') }
 });
 
-export const dynamic = 'force-static';
+export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
 export default async function HomePage() {
@@ -73,10 +73,10 @@ export default async function HomePage() {
         <div className="mt-4">
           <OffersGrid offers={offers} />
         </div>
-        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢m clar toate plasÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rile. 18+</p>
+        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. MarcÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢m clar toate plasÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢rile. 18+</p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
-      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rile noastre" />
+      <PromoStrip slot="OPERATOR_TOP" title="RecomandÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢rile noastre" />
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
       <GuidesTeaser />

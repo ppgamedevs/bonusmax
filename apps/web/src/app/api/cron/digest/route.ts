@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   let sent = 0;
   for (const s of subs) {
     const { html, text } = await sendWeeklyDigest(s.email, s.id, offers as any);
-    await sendEmail({ to: s.email, subject: "Top bonusuri ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ SÃƒâ€žÃ†â€™ptÃƒâ€žÃ†â€™mÃƒÆ’Ã‚Â¢na aceasta", html, text });
+    await sendEmail({ to: s.email, subject: "Top bonusuri ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ SÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ptÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢na aceasta", html, text });
     await prisma.emailEvent.create({ data: { subscriberId: s.id, type: "SENT" as any, meta: "weekly" } });
     await prisma.subscriber.update({ where: { id: s.id }, data: { lastSentAt: new Date() } });
     sent++;

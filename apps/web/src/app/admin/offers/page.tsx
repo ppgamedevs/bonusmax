@@ -3,13 +3,12 @@ import { createOffer, updateOffer, deleteOffer } from "../actions";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒâ€žÃ†â€™ ?key=ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ ?key=ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL.</p>
       </main>
     );
   }
@@ -26,9 +25,9 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Offers</h1>
+        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Offers</h1>
         <p className="mt-2 text-sm">
-          <Link href={("/admin/operators?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Manage Operators</Link>
+          <Link href={("/admin/operators?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Manage Operators</Link>
         </p>
 
         <section className="mt-6">
@@ -51,10 +50,10 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
               <option>FARA_DEPUNERE</option>
             </select>
             <input className="rounded border px-3 py-2" name="termsShort" placeholder="T&C scurt" required />
-            <input className="rounded border px-3 py-2" name="termsUrl" placeholder="T&C URL (opÃƒË†Ã¢â‚¬Âºional)" />
+            <input className="rounded border px-3 py-2" name="termsUrl" placeholder="T&C URL (opÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºional)" />
             <input className="rounded border px-3 py-2" name="ctaBaseUrl" placeholder="tracker URL" required />
             <select className="rounded border px-3 py-2" name="networkId">
-              <option value="">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â FÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ reÃƒË†Ã¢â‚¬Âºea ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</option>
+              <option value="">ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ reÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºea ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â</option>
               {networks.map((n: any) => (
                 <option key={n.id} value={n.id}>{n.name} ({n.slug})</option>
               ))}
@@ -105,7 +104,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                   <input className="rounded border px-3 py-2" name="termsUrl" defaultValue={o.termsUrl ?? ""} />
                   <input className="rounded border px-3 py-2" name="ctaBaseUrl" defaultValue={o.ctaBaseUrl} />
                   <select className="rounded border px-3 py-2" name="networkId" defaultValue={(o as any).networkId ?? ""}>
-                    <option value="">ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â FÃƒâ€žÃ†â€™rÃƒâ€žÃ†â€™ reÃƒË†Ã¢â‚¬Âºea ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â</option>
+                    <option value="">ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â FÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ reÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºea ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â</option>
                     {networks.map((n: any) => (
                       <option key={n.id} value={n.id}>{n.name} ({n.slug})</option>
                     ))}

@@ -5,8 +5,8 @@ import CompareRecommendation from "@/components/compare/CompareRecommendation";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "ComparaÃƒË†Ã¢â‚¬Âºie oferte ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Bonusmax (RO)",
-  description: "ComparÃƒâ€žÃ†â€™ bonusuri ÃƒË†Ã¢â€žÂ¢i termeni ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â doar operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN. 18+ JoacÃƒâ€žÃ†â€™ responsabil.",
+  title: "ComparaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºie oferte ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Bonusmax (RO)",
+  description: "ComparÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ bonusuri ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢i termeni ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â doar operatori licenÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂºiaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi ONJN. 18+ JoacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ responsabil.",
 };
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
@@ -33,12 +33,12 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
       payments: Array.isArray((o as any).payments) ? (o as any).payments : (o as any).paymentsJson ? JSON.parse((o as any).paymentsJson) : [],
       pros: Array.isArray((o as any).pros) ? (o as any).pros.slice(0, 2) : [],
     }));
-    // pÃƒâ€žÃ†â€™strÃƒâ€žÃ†â€™m ordinea cerutÃƒâ€žÃ†â€™
+    // pÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢strÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢m ordinea cerutÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢
     const byId = new Map(offers.map((x) => [x.id, x]));
     offers = ids.map((id) => byId.get(id)).filter(Boolean) as any[];
   }
 
-  // 2) EPC (30 zile) ÃƒË†Ã¢â€žÂ¢i alegerea recomandÃƒâ€žÃ†â€™rii
+  // 2) EPC (30 zile) ÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢i alegerea recomandÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢rii
   let highlightOfferId: string | undefined;
   let reco: { offer: any; clicks: number; revenue: number; epc: number } | null = null;
   if (offers.length) {
@@ -54,8 +54,8 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold">ComparaÃƒË†Ã¢â‚¬Âºie oferte</h1>
-      <p className="mt-1 text-sm opacity-80">Doar operatori licenÃƒË†Ã¢â‚¬ÂºiaÃƒË†Ã¢â‚¬Âºi ONJN ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾SponsoredÃƒÂ¢Ã¢â€šÂ¬Ã‚Â marcat ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ 18+ JoacÃƒâ€žÃ†â€™ responsabil.</p>
+      <h1 className="text-2xl font-bold">ComparaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºie oferte</h1>
+      <p className="mt-1 text-sm opacity-80">Doar operatori licenÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂºiaÃƒÆ’Ã‹â€ ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âºi ONJN ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾SponsoredÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â marcat ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ 18+ JoacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ responsabil.</p>
 
       <div className="mt-4 overflow-x-auto">
         <CompareTable offers={offers} highlightOfferId={highlightOfferId} />
@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
         />
       )}
 
-      {/* Fallback client-side din localStorage dacÃƒâ€žÃ†â€™ nu avem ids ÃƒÆ’Ã‚Â®n URL */}
+      {/* Fallback client-side din localStorage dacÃƒÆ’Ã¢â‚¬Å¾Ãƒâ€ Ã¢â‚¬â„¢ nu avem ids ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®n URL */}
       <CompareClient hasServer={offers.length > 0} />
     </main>
   );
