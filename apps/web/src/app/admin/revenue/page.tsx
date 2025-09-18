@@ -1,4 +1,4 @@
-import { prisma } from "@bonusmax/lib/prisma";
+import { prisma } from '../../../../../../packages/lib/db/client ../../../../../../packages/lib/db/client.ts';
 
 interface PageProps {
   searchParams?: Promise<Record<string, string>>;
