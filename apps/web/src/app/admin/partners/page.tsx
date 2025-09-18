@@ -57,7 +57,8 @@ async function updateReservationStatus(formData: FormData) {
 }
 
 export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const keyParam = searchParams?.key;
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const keyParam = resolvedSearchParams.key;
   const leads = await (prisma as any).partnerLead.findMany({
     orderBy: [{ priority: "asc" }, { createdAt: "asc" }],
     include: { reservations: true, notes: { orderBy: { createdAt: "desc" }, take: 3 } },
