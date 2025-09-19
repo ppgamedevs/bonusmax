@@ -94,7 +94,7 @@ jobs:
       - name: Build & Export static site
         run: |
           pnpm build
-          pnpm exec next export --outdir out
+          pnpm exec next export
 
       - name: Write CNAME for custom domain
         run: echo "bonusmax.ro" > CNAME
