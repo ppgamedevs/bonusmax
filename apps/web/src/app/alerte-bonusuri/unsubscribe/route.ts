@@ -1,5 +1,5 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = false;
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import crypto from "node:crypto";
@@ -10,15 +10,22 @@ function sha256(s: string) {
 }
 
 export async function GET(req: Request) {
+  // During static export (build), return a placeholder response
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.redirect(new URL('/alerte-bonusuri?status=missing-unsub', 'https://bonusmax.ro'));
+  }
+
   const url = new URL(req.url);
   const token = url.searchParams.get("token");
-  if (!token) return NextResponse.redirect("/alerte-bonusuri?status=missing-unsub");
+  const baseUrl = url.origin;
+  
+  if (!token) return NextResponse.redirect(new URL('/alerte-bonusuri?status=missing-unsub', baseUrl));
   const hash = sha256(token);
   const sub = await prisma.subscriber.findFirst({ where: { unsubscribeTokenHash: hash } });
-  if (!sub) return NextResponse.redirect("/alerte-bonusuri?status=invalid-unsub");
+  if (!sub) return NextResponse.redirect(new URL('/alerte-bonusuri?status=invalid-unsub', baseUrl));
 
   await prisma.subscriber.update({ where: { id: sub.id }, data: { status: "UNSUBSCRIBED" as any } });
   await prisma.emailEvent.create({ data: { subscriberId: sub.id, type: "UNSUB" as any } });
 
-  return NextResponse.redirect("/alerte-bonusuri?status=unsubscribed");
+  return NextResponse.redirect(new URL('/alerte-bonusuri?status=unsubscribed', baseUrl));
 }

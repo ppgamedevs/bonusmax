@@ -1,5 +1,5 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = false;
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
 import { getActiveOffers, prisma } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';

@@ -1,5 +1,5 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = false;
 import { prisma } from "@bonusmax/lib";
 import { NextResponse } from "next/server";
 
@@ -10,6 +10,15 @@ function ok(url: URL) {
 export async function GET(req: Request) {
   const url = new URL(req.url);
   if (!ok(url)) return new NextResponse("Unauthorized", { status: 401 });
+  // During static export (build), avoid DB access and return an empty CSV.
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return new NextResponse("email,first_name,site,subject,body,asset_url,notes\n", {
+      headers: {
+        "content-type": "text/csv",
+        "content-disposition": "attachment; filename=prospects.csv",
+      },
+    });
+  }
   const minScore = Number(url.searchParams.get("minScore") || 60);
   const rows = await (prisma as any).prospect.findMany({
     where: { score: { gte: minScore } },

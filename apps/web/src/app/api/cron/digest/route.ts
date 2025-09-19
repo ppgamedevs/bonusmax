@@ -1,5 +1,5 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = false;
 import { NextResponse } from "next/server";
 import { prisma, getTopTodayOffers, sendEmail } from "@bonusmax/lib";
 import { sendWeeklyDigest } from "@/lib/email";

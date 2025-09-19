@@ -1,5 +1,5 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
+export const dynamic = "force-static";
+export const revalidate = false;
 import { prisma } from "@bonusmax/lib";
 
 const GIF_1x1 = Buffer.from(
