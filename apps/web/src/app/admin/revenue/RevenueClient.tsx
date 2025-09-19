@@ -1,13 +1,8 @@
 "use client";
-export const dynamic = "force-dynamic";
-export const revalidate = 60;
-
-import { Suspense } from "react";
-
 import React, { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-function PageContent() {
+export default function RevenueClient() {
   const sp = useSearchParams();
   const key = sp.get("key") || "";
 
@@ -94,13 +89,5 @@ function PageContent() {
         </>
       )}
     </main>
-  );
-}
-
-export default function Page() {
-  return (
-    <Suspense fallback={null}>
-      <PageContent />
-    </Suspense>
   );
 }

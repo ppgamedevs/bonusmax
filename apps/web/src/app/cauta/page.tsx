@@ -5,8 +5,8 @@ import OffersGrid from "@/components/offers/OffersGrid";
 import FilterBar from "@/components/FilterBar";
 
 export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
-  const resolvedSearchParams: Record<string, string | undefined> = searchParams ? await searchParams : {};
-  const q = (resolvedSearchParams.q ?? "").trim();
+  const sp: Record<string, string | undefined> = searchParams || {};
+  const q = (sp.q ?? "").trim();
   const data = await searchOffersAndOperators(q);
   return (
     <main className="container mx-auto px-4 py-8">

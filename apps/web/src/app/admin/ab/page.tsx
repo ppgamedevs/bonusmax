@@ -13,9 +13,9 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const resolvedSearchParams = (await searchParams) ?? {};
-  const keyParam = resolvedSearchParams.key;
+export default async function Page({ searchParams }: { searchParams?: Record<string, string> }) {
+  const sp = searchParams ?? {};
+  const keyParam = sp.key;
   const cta = await abReportCta();
   const ord = await abReportOrder();
   const sticky = await uiCtrReport("sticky_bar");
