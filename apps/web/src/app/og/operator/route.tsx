@@ -1,9 +1,8 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 export const runtime = 'nodejs';
-import 'server-only';
-import 'server-only';
 import { ImageResponse } from "next/og";
 import { getOperatorBySlug } from './../../../../../../packages/lib/db/queries';
-import 'server-only';
 const size = { width: 1200, height: 630 };
 const contentType = "image/png";
 

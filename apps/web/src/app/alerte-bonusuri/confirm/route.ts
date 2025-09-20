@@ -10,11 +10,6 @@ function sha256(s: string) {
 }
 
 export async function GET(req: Request) {
-  // During static export (build), return a placeholder response
-  if (process.env.NEXT_PHASE === 'phase-production-build') {
-    return NextResponse.redirect(new URL('/alerte-bonusuri?status=missing-token', 'https://bonusmax.ro'));
-  }
-
   const url = new URL(req.url);
   const token = url.searchParams.get("token");
   const baseUrl = url.origin;

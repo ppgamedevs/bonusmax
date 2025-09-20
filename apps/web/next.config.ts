@@ -6,7 +6,6 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
-  output: 'export',
   typescript: { ignoreBuildErrors: true },
 
   basePath,

@@ -1,8 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 export const runtime = 'nodejs';
-import 'server-only';
-import 'server-only';
-import 'server-only';
-import 'server-only';
 import { ImageResponse } from "next/og";
 import { getOfferById } from './../../../../../../packages/lib/db/queries';
 const size = { width: 1200, height: 630 };
