@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
+    "postinstall": "prisma generate",
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
