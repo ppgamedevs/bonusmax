@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { runOfferQaBatch } from "@bonusmax/lib";
 
@@ -13,3 +13,4 @@ export async function GET(req: Request) {
   const res = await runOfferQaBatch(100);
   return NextResponse.json({ ok: true, ...res });
 }
+

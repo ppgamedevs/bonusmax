@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { overview30, topPagesEpc, utmPerformance } from "@bonusmax/lib";
 
@@ -12,3 +12,4 @@ export async function GET(req: Request) {
   const utm = await utmPerformance(30, 5, 50);
   return NextResponse.json({ ok: true, o, pages, utm });
 }
+

@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import { headers } from "next/headers";
@@ -40,3 +40,4 @@ const ip = ipFromXff || realIp || "0.0.0.0";
 
   return NextResponse.json({ ok: true });
 }
+

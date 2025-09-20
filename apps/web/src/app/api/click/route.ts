@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { getOfferById, logClick, hashIp } from '@bonusmax/lib';
@@ -37,3 +37,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
   }
 }
+

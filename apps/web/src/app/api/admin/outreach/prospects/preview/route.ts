@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { parseProspectsCsv } from "@/lib/outreach";
 
@@ -17,3 +17,4 @@ export async function POST(req: Request) {
   const items = parseProspectsCsv(text);
   return NextResponse.json({ ok: true, items, count: items.length });
 }
+

@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import crypto from "node:crypto";
@@ -16,3 +16,4 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ ok: true, verifyUrl: `/newsletter/verify?token=${token}` });
 }
+

@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { buildPreview, parseCsv, commitPreview } from "@/lib/operator-import";
 
@@ -22,3 +22,4 @@ export async function GET(req: Request) {
   const result = await commitPreview(items as any);
   return NextResponse.json({ ok: true, ...result, totalRows: rows.length });
 }
+

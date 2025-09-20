@@ -1,5 +1,5 @@
-﻿import type { MetadataRoute } from "next";
-export const dynamic = "force-static";
+import type { MetadataRoute } from "next";
+export const dynamic = "force-dynamic";
 export default function manifest(): MetadataRoute.Manifest {
   return { name: "Bonusmax", short_name: "Bonusmax", start_url: "/", display: "standalone",
            background_color: "#ffffff", theme_color: "#ffffff",

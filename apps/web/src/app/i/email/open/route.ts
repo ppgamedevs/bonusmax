@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { prisma } from "@bonusmax/lib";
 
 const GIF_1x1 = Buffer.from(
@@ -17,3 +17,4 @@ export async function GET(req: Request) {
     headers: { "content-type": "image/gif", "cache-control": "no-store" },
   });
 }
+

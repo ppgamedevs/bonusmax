@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { commitPreview } from "@/lib/operator-import";
 
@@ -18,3 +18,4 @@ export async function POST(req: Request) {
   const result = await commitPreview(sanitized);
   return NextResponse.json({ ok: true, ...result });
 }
+

@@ -1,5 +1,5 @@
-export const dynamic = "force-static";
-export const revalidate = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 import { NextResponse } from "next/server";
 import { prisma } from "@bonusmax/lib";
 import Parser from "rss-parser";
@@ -87,3 +87,4 @@ export async function GET(req: Request) {
   }
   return NextResponse.json({ ok: true, created });
 }
+
