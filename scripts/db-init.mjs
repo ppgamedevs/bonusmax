@@ -27,8 +27,8 @@ process.env.DATABASE_URL = selected;
 console.log('db-init: Using UNPOOLED DATABASE_URL for schema operations.');
 
 try {
-  // Run the existing prisma db push script in apps/web
-  execSync('pnpm -C apps/web run db:push', { stdio: 'inherit' });
+  // Run the existing prisma db push script from current cwd (apps/web)
+  execSync('pnpm run db:push', { stdio: 'inherit' });
   console.log('db-init: prisma db push completed.');
 } catch (err) {
   console.error('db-init: prisma db push failed.');
