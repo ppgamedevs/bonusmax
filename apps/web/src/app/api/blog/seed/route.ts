@@ -149,7 +149,7 @@ export async function GET(req: Request) {
 
   for (const s of samples) {
     // Upsert by slug; set status APPROVED to show up on the blog list
-    await (prisma as any).feedItem.upsert({
+    const item = await (prisma as any).feedItem.upsert({
       where: { slug: s.slug },
       create: {
         slug: s.slug,
@@ -157,7 +157,6 @@ export async function GET(req: Request) {
         excerpt: s.excerpt,
         html: s.html,
         image: s.image || null,
-        tags: (s as any).tags || [],
         status: 'APPROVED',
         publishedAt: s.publishedAt,
         updatedAt: s.publishedAt,
@@ -168,13 +167,27 @@ export async function GET(req: Request) {
         excerpt: s.excerpt,
         html: s.html,
         image: s.image || null,
-        tags: (s as any).tags || [],
         status: 'APPROVED',
         publishedAt: s.publishedAt,
         updatedAt: s.publishedAt,
         url: `/blog/${s.slug}`,
       },
     });
+    // Associate tags via Tag and FeedItemTag relations
+    const tagNames: string[] = ((s as any).tags || []) as string[];
+    for (const tagName of tagNames) {
+      const slug = tagName.toString().trim().toLowerCase().replace(/\s+/g, '-');
+      const tag = await (prisma as any).tag.upsert({
+        where: { slug },
+        create: { slug, name: tagName },
+        update: {},
+      });
+      await (prisma as any).feedItemTag.upsert({
+        where: { feedItemId_tagId: { feedItemId: item.id, tagId: tag.id } },
+        create: { feedItemId: item.id, tagId: tag.id },
+        update: {},
+      });
+    }
     created.push(s.slug);
   }
 
