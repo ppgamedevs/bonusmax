@@ -161,6 +161,7 @@ export async function GET(req: Request) {
         status: 'APPROVED',
         publishedAt: s.publishedAt,
         updatedAt: s.publishedAt,
+        url: `/blog/${s.slug}`,
       },
       update: {
         title: s.title,
@@ -171,6 +172,7 @@ export async function GET(req: Request) {
         status: 'APPROVED',
         publishedAt: s.publishedAt,
         updatedAt: s.publishedAt,
+        url: `/blog/${s.slug}`,
       },
     });
     created.push(s.slug);
