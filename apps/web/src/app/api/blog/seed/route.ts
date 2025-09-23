@@ -155,7 +155,6 @@ export async function GET(req: Request) {
         slug: s.slug,
         title: s.title,
         excerpt: s.excerpt,
-        html: s.html,
         image: s.image || null,
         status: 'APPROVED',
         publishedAt: s.publishedAt,
@@ -165,7 +164,6 @@ export async function GET(req: Request) {
       update: {
         title: s.title,
         excerpt: s.excerpt,
-        html: s.html,
         image: s.image || null,
         status: 'APPROVED',
         publishedAt: s.publishedAt,

@@ -56,43 +56,69 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await (prisma as any).feedItem.findUnique({
+  const postRaw = await (prisma as any).feedItem.findUnique({
     where: { slug },
     select: {
       title: true,
       excerpt: true,
-      content: true,
-      html: true,
-      body: true,
       image: true,
-      author: true,
-      tags: true,
+      tags: { select: { tag: { select: { name: true } } } },
       publishedAt: true,
       updatedAt: true,
     },
   });
-  if (!post) return notFound();
+  if (!postRaw) return notFound();
 
-  const content = pick<string>(post, ['html', 'content', 'body']) || '';
+  const post = {
+    ...postRaw,
+    tags: Array.isArray(postRaw.tags) ? postRaw.tags.map((t: any) => t?.tag?.name).filter(Boolean) : [],
+  } as any;
+
+  // No content/body/html field in schema; leave empty for now
+  const content = '';
   const date = post.publishedAt || post.updatedAt;
 
   // Related posts (server-side)
-  let related = [] as any[];
+  let related: any[] = [];
   if (Array.isArray(post.tags) && post.tags.length) {
-    related = await (prisma as any).feedItem.findMany({
-      where: { status: 'APPROVED', slug: { not: slug }, tags: { hasSome: post.tags } },
+    const relatedRaw = await (prisma as any).feedItem.findMany({
+      where: {
+        status: 'APPROVED',
+        slug: { not: slug },
+        tags: { some: { tag: { name: { in: post.tags } } } },
+      },
       orderBy: { publishedAt: 'desc' },
-      select: { slug: true, title: true, excerpt: true, publishedAt: true, tags: true },
+      select: {
+        slug: true,
+        title: true,
+        excerpt: true,
+        publishedAt: true,
+        tags: { select: { tag: { select: { name: true } } } },
+      },
       take: 4,
     });
+    related = relatedRaw.map((r: any) => ({
+      ...r,
+      tags: Array.isArray(r.tags) ? r.tags.map((t: any) => t?.tag?.name).filter(Boolean) : [],
+    }));
   }
   if (!related.length) {
-    related = await (prisma as any).feedItem.findMany({
+    const relatedRaw = await (prisma as any).feedItem.findMany({
       where: { status: 'APPROVED', slug: { not: slug } },
       orderBy: { publishedAt: 'desc' },
-      select: { slug: true, title: true, excerpt: true, publishedAt: true, tags: true },
+      select: {
+        slug: true,
+        title: true,
+        excerpt: true,
+        publishedAt: true,
+        tags: { select: { tag: { select: { name: true } } } },
+      },
       take: 4,
     });
+    related = relatedRaw.map((r: any) => ({
+      ...r,
+      tags: Array.isArray(r.tags) ? r.tags.map((t: any) => t?.tag?.name).filter(Boolean) : [],
+    }));
   }
 
   const breadcrumbLd = jsonLdBreadcrumb([

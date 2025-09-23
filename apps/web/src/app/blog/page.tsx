@@ -24,8 +24,8 @@ export default async function Page({ searchParams }: { searchParams?: SearchPara
 
   // Fetch posts
   const where = tag
-    ? { status: 'APPROVED', tags: { has: tag } }
-    : { status: 'APPROVED' };
+    ? { status: 'APPROVED', tags: { some: { tag: { name: { equals: tag } } } } }
+    : { status: 'APPROVED' } as any;
 
   const [total, postsRaw] = await Promise.all([
     (prisma as any).feedItem.count({ where }),
@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: { searchParams?: SearchPara
         image: true,
         publishedAt: true,
         updatedAt: true,
-        tags: true,
+        tags: { select: { tag: { select: { name: true } } } },
       },
       skip,
       take: pageSize,
@@ -47,8 +47,12 @@ export default async function Page({ searchParams }: { searchParams?: SearchPara
   ]);
 
   // On first page without tag, feature the most recent post
-  const featured = !tag && page === 1 ? postsRaw[0] : null;
-  const posts = featured ? postsRaw.slice(1) : postsRaw;
+  const postsRawMapped = postsRaw.map((p: any) => ({
+    ...p,
+    tags: Array.isArray(p.tags) ? p.tags.map((t: any) => t?.tag?.name).filter(Boolean) : [],
+  }));
+  const featured = !tag && page === 1 ? postsRawMapped[0] : null;
+  const posts = featured ? postsRawMapped.slice(1) : postsRawMapped;
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
