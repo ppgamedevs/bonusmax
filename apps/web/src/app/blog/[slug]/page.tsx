@@ -61,6 +61,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     select: {
       title: true,
       excerpt: true,
+      html: true,
       image: true,
       tags: { select: { tag: { select: { name: true } } } },
       publishedAt: true,
@@ -74,8 +75,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     tags: Array.isArray(postRaw.tags) ? postRaw.tags.map((t: any) => t?.tag?.name).filter(Boolean) : [],
   } as any;
 
-  // No content/body/html field in schema; leave empty for now
-  const content = '';
+  // Render HTML content if available
+  const content = post.html || '';
   const date = post.publishedAt || post.updatedAt;
 
   // Related posts (server-side)

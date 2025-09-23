@@ -296,6 +296,7 @@ model FeedItem {
   slug         String      @unique
   title        String
   excerpt      String?
+  html         String?
   image        String?
   publishedAt  DateTime?
   status       FeedStatus  @default(PENDING)
