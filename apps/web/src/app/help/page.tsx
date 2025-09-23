@@ -41,7 +41,10 @@ export default function Page() {
       <BackHome />
 
       {/* Search */}
-      <HelpSearchWidget articles={helpArticles} categories={helpCategories} />
+      <HelpSearchWidget
+        articles={helpArticles}
+        categories={helpCategories.map(({ id, slug, title, description }) => ({ id, slug, title, description }))}
+      />
 
       {/* Continue where you left off */}
       <HelpContinue />

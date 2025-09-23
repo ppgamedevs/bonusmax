@@ -13,7 +13,7 @@ export default function HelpSearchWidget({
   categories,
 }: {
   articles: HelpArticle[];
-  categories: HelpCategory[];
+  categories: Pick<HelpCategory, 'id' | 'slug' | 'title' | 'description'>[];
 }) {
   const [q, setQ] = useState("");
 

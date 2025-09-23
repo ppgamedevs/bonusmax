@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { HelpArticle, HelpCategory } from '../../lib/help-data';
+import { HelpArticle } from '../../lib/help-data';
+
+type CategoryLite = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+};
 
 function highlight(text: string, query: string) {
   if (!query) return text;
@@ -29,7 +36,7 @@ export default function HelpSearch({
   query: string;
   onQueryChange: (q: string) => void;
   filteredArticles: HelpArticle[];
-  filteredCategories: HelpCategory[];
+  filteredCategories: CategoryLite[];
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
