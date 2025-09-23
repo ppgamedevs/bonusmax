@@ -1,6 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
-import { getCompareIds } from "../lib/compare";
+'use client';
+import { useEffect, useState } from 'react';
+import { getCompareIds } from '../lib/compare';
 
 export default function StickyCtaMobile() {
   const [ids, setIds] = useState<string[]>([]);
@@ -8,20 +8,23 @@ export default function StickyCtaMobile() {
   useEffect(() => {
     const load = () => setIds(getCompareIds());
     load();
-    window.addEventListener("storage", load);
+    window.addEventListener('storage', load);
     const i = setInterval(load, 1000);
-    return () => { window.removeEventListener("storage", load); clearInterval(i); };
+    return () => {
+      window.removeEventListener('storage', load);
+      clearInterval(i);
+    };
   }, []);
 
   const hasCompare = ids.length >= 2;
 
   function onClick() {
     if (hasCompare) {
-      location.href = "/compara";
+      location.href = '/compara';
     } else {
-      const el = document.getElementById("hero-offer") || document.getElementById("topul-de-azi");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      else location.href = "#topul-de-azi";
+      const el = document.getElementById('hero-offer') || document.getElementById('topul-de-azi');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else location.href = '#topul-de-azi';
     }
   }
 
@@ -32,9 +35,9 @@ export default function StickyCtaMobile() {
           type="button"
           onClick={onClick}
           className="btn-accent focus-accent h-12 w-full rounded-2xl"
-          aria-label={hasCompare ? "ComparÃ„Æ’ ofertele selectate" : "RevendicÃ„Æ’ bonusul acum"}
+          aria-label={hasCompare ? 'Compară ofertele selectate' : 'Revendică bonusul acum'}
         >
-          {hasCompare ? "ComparÃ„Æ’ acum" : "RevendicÃ„Æ’ bonusul acum"}
+          {hasCompare ? 'Compară acum' : 'Revendică bonusul acum'}
         </button>
       </div>
     </div>

@@ -1,11 +1,21 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
 function slugify(text: string) {
-  return String(text).toLowerCase().replace(/[^a-z0-9Ã„Æ’ÃƒÂ¢ÃƒÂ®Ãˆâ„¢Ãˆâ€º -]/gi, "").replace(/\s+/g, "-").replace(/-+/g, "-");
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9ăâîșțĂÂÎȘȚ -]/gi, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 }
-export function H2(props: any) { const id = slugify(props?.children); return <h2 id={id} {...props} />; }
-export function H3(props: any) { const id = slugify(props?.children); return <h3 id={id} {...props} />; }
+export function H2(props: any) {
+  const id = slugify(props?.children);
+  return <h2 id={id} {...props} />;
+}
+export function H3(props: any) {
+  const id = slugify(props?.children);
+  return <h3 id={id} {...props} />;
+}
 
 export function Callout({ children }: { children: React.ReactNode }) {
   return (

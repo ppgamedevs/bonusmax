@@ -1,16 +1,17 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { NextResponse } from "next/server";
-import { prisma } from "@bonusmax/lib";
-import { revalidatePath } from "next/cache";
+import { NextResponse } from 'next/server';
+import { prisma } from '@bonusmax/lib';
+import { revalidatePath } from 'next/cache';
 
 function assertCronKey(url: URL) {
-  return process.env.CRON_KEY && url.searchParams.get("key") === process.env.CRON_KEY;
+  return process.env.CRON_KEY && url.searchParams.get('key') === process.env.CRON_KEY;
 }
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  if (!assertCronKey(url)) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!assertCronKey(url))
+    return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
   const now = new Date();
 
@@ -19,10 +20,9 @@ export async function GET(req: Request) {
     data: { isActive: false },
   });
 
-  revalidatePath("/");
-  revalidatePath("/bonusuri-fara-depunere");
-  revalidatePath("/rotiri-gratuite");
+  revalidatePath('/');
+  revalidatePath('/bonusuri-fara-depunere');
+  revalidatePath('/rotiri-gratuite');
 
   return NextResponse.json({ ok: true, expired: expired.count });
 }
-

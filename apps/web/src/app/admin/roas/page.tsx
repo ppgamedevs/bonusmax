@@ -1,23 +1,24 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { prisma } from "@bonusmax/lib/prisma";
+import { prisma } from '@bonusmax/lib/prisma';
 type PageProps = { searchParams?: Promise<Record<string, string | undefined>> };
-;
-function getParam(sp: any, k: string) { 
-  return typeof sp?.[k] === "string" ? sp[k] : undefined; 
+function getParam(sp: any, k: string) {
+  return typeof sp?.[k] === 'string' ? sp[k] : undefined;
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const resolvedSearchParams: Record<string, string | undefined> = searchParams ? await searchParams : {};
+  const resolvedSearchParams: Record<string, string | undefined> = searchParams
+    ? await searchParams
+    : {};
   const keyParam = resolvedSearchParams.key;
-  const from = getParam(resolvedSearchParams, "from");
-  const to = getParam(resolvedSearchParams, "to");
+  const from = getParam(resolvedSearchParams, 'from');
+  const to = getParam(resolvedSearchParams, 'to');
 
   return (
     <div className="p-6">
       <h1>ROAS</h1>
       <p>Key: {keyParam}</p>
-      <p>From: {from}</p> 
+      <p>From: {from}</p>
       <p>To: {to}</p>
     </div>
   );

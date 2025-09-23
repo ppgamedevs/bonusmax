@@ -9,11 +9,11 @@ export async function getActiveOffers(country = 'RO') {
       operator: { isLicensedRO: true },
       AND: [
         { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] }
-      ]
+        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+      ],
     },
     include: { operator: true },
-    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }]
+    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
   });
 }
 
@@ -29,16 +29,16 @@ export async function searchOffersAndOperators(q: string) {
       OR: [
         { title: { contains: query, mode: 'insensitive' } },
         { termsShort: { contains: query, mode: 'insensitive' } },
-        { operator: { name: { contains: query, mode: 'insensitive' } } }
+        { operator: { name: { contains: query, mode: 'insensitive' } } },
       ],
       AND: [
         { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] }
-      ]
+        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+      ],
     },
     include: { operator: true },
     take: 10,
-    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }]
+    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
   });
 
   const operators = await prisma.operator.findMany({
@@ -46,11 +46,11 @@ export async function searchOffersAndOperators(q: string) {
       isLicensedRO: true,
       OR: [
         { name: { contains: query, mode: 'insensitive' } },
-        { slug: { contains: query, mode: 'insensitive' } }
-      ]
+        { slug: { contains: query, mode: 'insensitive' } },
+      ],
     },
     take: 5,
-    orderBy: { name: 'asc' }
+    orderBy: { name: 'asc' },
   });
 
   return { offers, operators } as const;
@@ -93,24 +93,26 @@ export async function getOffersByType(
 ) {
   const and: Prisma.OfferWhereInput[] = [
     { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-    { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] }
+    { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
   ];
   if (typeof filters?.minWr === 'number') and.push({ wrMultiplier: { gte: filters.minWr } } as any);
   if (typeof filters?.maxWr === 'number') and.push({ wrMultiplier: { lte: filters.maxWr } } as any);
-  if (typeof filters?.maxMinDep === 'number') and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
+  if (typeof filters?.maxMinDep === 'number')
+    and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
 
   const where: Prisma.OfferWhereInput = {
     isActive: true,
     country,
     offerType: type,
     operator: { isLicensedRO: true, ...(operatorSlug ? { slug: operatorSlug } : {}) } as any,
-    AND: and
+    AND: and,
   };
 
   return prisma.offer.findMany({
     where,
     include: { operator: true },
-    orderBy: sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }]
+    orderBy:
+      sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
   });
 }
 
@@ -126,10 +128,13 @@ export async function analyticsClicksByOffer(from?: string | null, to?: string |
   const grouped = await prisma.clickEvent.groupBy({
     by: ['offerId'],
     where: { ts: { gte: start, lte: end } },
-    _count: { offerId: true }
+    _count: { offerId: true },
   });
   const ids = grouped.map((g) => g.offerId);
-  const offers = await prisma.offer.findMany({ where: { id: { in: ids } }, include: { operator: true } });
+  const offers = await prisma.offer.findMany({
+    where: { id: { in: ids } },
+    include: { operator: true },
+  });
   const map = new Map(offers.map((o) => [o.id, o] as const));
   return grouped.map((g) => ({ offer: map.get(g.offerId)!, clicks: g._count.offerId }));
 }
@@ -139,7 +144,7 @@ export async function analyticsImpressionsByOffer(from?: string | null, to?: str
   const grouped = await (prisma as any).offerImpression.groupBy({
     by: ['offerId'],
     where: { ts: { gte: start, lte: end } },
-    _count: { offerId: true }
+    _count: { offerId: true },
   });
   return new Map(grouped.map((g: any) => [g.offerId, g._count.offerId] as const));
 }
@@ -149,14 +154,16 @@ export async function analyticsByOperator(from?: string | null, to?: string | nu
   const clicks = await prisma.clickEvent.groupBy({
     by: ['operatorId'],
     where: { ts: { gte: start, lte: end } },
-    _count: { operatorId: true }
+    _count: { operatorId: true },
   });
   const imps: any[] = await (prisma as any).offerImpression.groupBy({
     by: ['operatorId'],
     where: { ts: { gte: start, lte: end } },
-    _count: { operatorId: true }
+    _count: { operatorId: true },
   });
-  const opIds = Array.from(new Set([...clicks.map((c) => c.operatorId), ...imps.map((i) => i.operatorId)]));
+  const opIds = Array.from(
+    new Set([...clicks.map((c) => c.operatorId), ...imps.map((i) => i.operatorId)])
+  );
   const ops = await prisma.operator.findMany({ where: { id: { in: opIds } } });
   const impMap = new Map(imps.map((i: any) => [i.operatorId, i._count.operatorId] as const));
   const opMap = new Map(ops.map((o) => [o.id, o] as const));
@@ -182,12 +189,12 @@ export async function getActivePromos(
       offer: { isActive: true, country, operator: { isLicensedRO: true } },
       AND: [
         { OR: [{ startAt: null }, { startAt: { lte: now } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: now } }] }
-      ]
+        { OR: [{ endAt: null }, { endAt: { gte: now } }] },
+      ],
     },
     include: { offer: { include: { operator: true } } },
     orderBy: [{ weight: 'asc' }, { createdAt: 'desc' }],
-    take: limit
+    take: limit,
   });
 }
 
@@ -204,10 +211,10 @@ export async function getPromotedOrFallbackOffers(
       isActive: true,
       country,
       offerType: type,
-      operator: { isLicensedRO: true }
+      operator: { isLicensedRO: true },
     },
     include: { operator: true },
     orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-    take: fallbackLimit
+    take: fallbackLimit,
   });
 }

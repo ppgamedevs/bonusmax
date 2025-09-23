@@ -1,18 +1,31 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
-export default function SearchBar({ initialQ = "", className = "" }: { initialQ?: string; className?: string }) {
+export default function SearchBar({
+  initialQ = '',
+  className = '',
+}: {
+  initialQ?: string;
+  className?: string;
+}) {
   const [q, setQ] = useState(initialQ);
   const [open, setOpen] = useState(false);
-  const [results, setResults] = useState<{ offers: any[]; operators: any[] }>({ offers: [], operators: [] });
+  const [results, setResults] = useState<{ offers: any[]; operators: any[] }>({
+    offers: [],
+    operators: [],
+  });
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
-    if (!q) { setResults({ offers: [], operators: [] }); setOpen(false); return; }
+    if (!q) {
+      setResults({ offers: [], operators: [] });
+      setOpen(false);
+      return;
+    }
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(async () => {
-      const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`).then(res => res.json());
+      const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`).then((res) => res.json());
       setResults(r);
       setOpen(true);
     }, 180);
@@ -30,9 +43,9 @@ export default function SearchBar({ initialQ = "", className = "" }: { initialQ?
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="CautÃ„Æ’ bonusuri sau operatoriÃ¢â‚¬Â¦"
+          placeholder="Caută bonusuri sau operatori…"
           className="w-full rounded-xl border bg-transparent px-4 py-2"
-          aria-label="CÃ„Æ’utare"
+          aria-label="Căutare"
         />
       </form>
       {open && (results.offers.length > 0 || results.operators.length > 0) && (
@@ -43,7 +56,12 @@ export default function SearchBar({ initialQ = "", className = "" }: { initialQ?
               <ul>
                 {results.operators.map((o: any) => (
                   <li key={o.slug}>
-                    <Link className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800" href={`/casino/${o.slug}`}>{o.name}</Link>
+                    <Link
+                      className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                      href={`/casino/${o.slug}`}
+                    >
+                      {o.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -55,14 +73,21 @@ export default function SearchBar({ initialQ = "", className = "" }: { initialQ?
               <ul>
                 {results.offers.map((o: any) => (
                   <li key={o.id}>
-                    <Link className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800" href={`/bonus/${o.id}`}>{o.title} Ã¢â‚¬â€ <span className="opacity-70">{o.operator.name}</span></Link>
+                    <Link
+                      className="block rounded px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                      href={`/bonus/${o.id}`}
+                    >
+                      {o.title} — <span className="opacity-70">{o.operator.name}</span>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </>
           )}
           <div className="mt-2 border-t pt-2 text-right">
-            <Link className="text-xs underline" href={`/cauta?q=${encodeURIComponent(q)}`}>Vezi toate rezultatele</Link>
+            <Link className="text-xs underline" href={`/cauta?q=${encodeURIComponent(q)}`}>
+              Vezi toate rezultatele
+            </Link>
           </div>
         </div>
       )}

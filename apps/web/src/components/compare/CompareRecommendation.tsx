@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function CompareRecommendation({
   offer,
@@ -20,7 +20,7 @@ export default function CompareRecommendation({
   return (
     <section className="mt-8 rounded-2xl border border-white/10 p-4">
       <div className="flex items-start justify-between gap-3">
-        <h2 className="text-lg font-bold">Recomandarea noastrÃ„Æ’</h2>
+        <h2 className="text-lg font-bold">Recomandarea noastră</h2>
         <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-medium text-emerald-400">
           Bazat pe EPC {days}z
         </span>
@@ -38,18 +38,15 @@ export default function CompareRecommendation({
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <div className="text-base font-semibold">{offer.brand}</div>
-            {offer.isLicensedRO && (
-              <span className="chip-accent">LicenÃˆâ€ºiat ONJN</span>
-            )}
-            {offer.isSponsored && (
-              <span className="chip-accent">Sponsored</span>
-            )}
+            {offer.isLicensedRO && <span className="chip-accent">Licențiat ONJN</span>}
+            {offer.isSponsored && <span className="chip-accent">Sponsored</span>}
           </div>
           {offer.headline && <div className="mt-1 text-sm">{offer.headline}</div>}
           {offer.terms && <div className="text-xs opacity-70">{offer.terms}</div>}
 
           <div className="mt-2 text-xs opacity-70">
-            EPC: {metrics.epc.toFixed(2)} RON Ã¢â‚¬Â¢ Clickuri: {metrics.clicks} Ã¢â‚¬Â¢ Venit: {metrics.revenue.toFixed(2)} RON
+            EPC: {metrics.epc.toFixed(2)} RON • Clickuri: {metrics.clicks} • Venit:{' '}
+            {metrics.revenue.toFixed(2)} RON
           </div>
         </div>
 
@@ -58,11 +55,11 @@ export default function CompareRecommendation({
             href={`/go/${offer.id}?utm_content=reco_widget&utm_campaign=compara_reco` as any}
             rel="nofollow sponsored noopener"
             className="btn-accent h-11 w-full"
-            aria-label={`RevendicÃ„Æ’ bonusul la ${offer.brand}`}
+            aria-label={`Revendică bonusul la ${offer.brand}`}
           >
-            RevendicÃ„Æ’ bonusul
+            Revendică bonusul
           </Link>
-          <div className="mt-1 text-[11px] opacity-60">18+ Ã¢â‚¬Â¢ T&C Ã¢â‚¬Â¢ Publicitate</div>
+          <div className="mt-1 text-[11px] opacity-60">18+ • T&C • Publicitate</div>
         </div>
       </div>
     </section>

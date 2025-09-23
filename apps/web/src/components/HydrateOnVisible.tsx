@@ -1,5 +1,5 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
+'use client';
+import { useEffect, useRef, useState } from 'react';
 
 export default function HydrateOnVisible({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -14,7 +14,7 @@ export default function HydrateOnVisible({ children }: { children: React.ReactNo
           obs.disconnect();
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: '200px' }
     );
     obs.observe(el);
     return () => obs.disconnect();

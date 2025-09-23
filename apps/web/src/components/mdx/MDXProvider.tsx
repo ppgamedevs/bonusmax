@@ -1,8 +1,8 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
-import dynamic from "next/dynamic";
-import { WarningBox, InfoBox } from "./Boxes";
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import dynamic from 'next/dynamic';
+import { WarningBox, InfoBox } from './Boxes';
 
-const CtaOffer = dynamic(() => import("./CtaOffer"), { ssr: true });
+const CtaOffer = dynamic(() => import('./CtaOffer'), { ssr: true });
 
 const components = { WarningBox, InfoBox, CtaOffer } as const;
 

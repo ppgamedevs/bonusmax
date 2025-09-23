@@ -1,37 +1,39 @@
-"use client";
-import React, { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+'use client';
+import React, { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function RevenueClient() {
   const sp = useSearchParams();
-  const key = sp.get("key") || "";
+  const key = sp.get('key') || '';
 
   const [items, setItems] = useState<any[]>([]);
-  const [summary, setSummary] = useState<string>("");
+  const [summary, setSummary] = useState<string>('');
 
   async function preview(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget as HTMLFormElement);
-    const url = new URL("/api/admin/outreach/prospects/preview", window.location.origin);
-    if (key) url.searchParams.set("key", key);
-    const r = await fetch(url.toString(), { method: "POST", body: fd });
+    const url = new URL('/api/admin/outreach/prospects/preview', window.location.origin);
+    if (key) url.searchParams.set('key', key);
+    const r = await fetch(url.toString(), { method: 'POST', body: fd });
     const j = await r.json();
     setItems(j.items || []);
-    setSummary(j.summary || "");
+    setSummary(j.summary || '');
   }
 
   async function commit() {
-    const url = new URL("/api/admin/outreach/prospects/commit", window.location.origin);
-    if (key) url.searchParams.set("key", key);
-    const toCommit = items.filter((p: any) => p && (p.kind === "CREATE" || p.kind === "UPDATE"));
+    const url = new URL('/api/admin/outreach/prospects/commit', window.location.origin);
+    if (key) url.searchParams.set('key', key);
+    const toCommit = items.filter((p: any) => p && (p.kind === 'CREATE' || p.kind === 'UPDATE'));
     const r = await fetch(url.toString(), {
-      method: "POST",
-      headers: { "content-type": "application/json" },
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ items: toCommit }),
     });
     const j = await r.json();
     // eslint-disable-next-line no-alert
-    alert(j && j.ok ? ("Created: " + (j.created || 0) + " Updated: " + (j.updated || 0)) : "Commit failed");
+    alert(
+      j && j.ok ? 'Created: ' + (j.created || 0) + ' Updated: ' + (j.updated || 0) : 'Commit failed'
+    );
   }
 
   const high = useMemo(() => items.filter((x: any) => (x.dr || 0) >= 50), [items]);
@@ -53,11 +55,19 @@ export default function RevenueClient() {
             <span className="rounded border px-2 py-1">High DR: {high.length}</span>
             <a
               className="rounded border px-2 py-1"
-              href={"/api/admin/outreach/prospects/export?key=" + encodeURIComponent(key) + "&minScore=60"}
+              href={
+                '/api/admin/outreach/prospects/export?key=' +
+                encodeURIComponent(key) +
+                '&minScore=60'
+              }
             >
               Export CSV &gt;=60
             </a>
-            <button onClick={commit} type="button" className="rounded border px-3 py-2 font-semibold">
+            <button
+              onClick={commit}
+              type="button"
+              className="rounded border px-3 py-2 font-semibold"
+            >
               Commit to DB
             </button>
           </div>
@@ -79,7 +89,7 @@ export default function RevenueClient() {
                   <td className="p-2">{r.email}</td>
                   <td className="p-2">{r.name}</td>
                   <td className="p-2">{r.site}</td>
-                  <td className="p-2 text-center">{r.dr || "-"}</td>
+                  <td className="p-2 text-center">{r.dr || '-'}</td>
                   <td className="p-2">{r.topic}</td>
                   <td className="p-2">{r.notes}</td>
                 </tr>

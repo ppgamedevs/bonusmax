@@ -1,33 +1,42 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { prisma } from "@bonusmax/lib";
-import { createOperator, updateOperator, deleteOperator } from "../actions";
-import Link from "next/link";
+import { prisma } from '@bonusmax/lib';
+import { createOperator, updateOperator, deleteOperator } from '../actions';
+import Link from 'next/link';
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ ?key=ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 — Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">
+          Adaugă ?key=<strong>ADMIN_KEY</strong> în URL.
+        </p>
       </main>
     );
   }
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string>>;
+}) {
   const sp = (await searchParams) || ({} as Record<string, string>);
   const keyParam = sp.key;
-  const operators = await prisma.operator.findMany({ orderBy: { name: "asc" } });
+  const operators = await prisma.operator.findMany({ orderBy: { name: 'asc' } });
 
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Operators</h1>
+        <h1 className="text-2xl font-bold">Admin — Operators</h1>
         <p className="mt-2 text-sm">
-          <Link href={("/admin/offers?key=" + encodeURIComponent(keyParam ?? "")) as any} className="underline">
-            ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ Manage Offers
+          <Link
+            href={('/admin/offers?key=' + encodeURIComponent(keyParam ?? '')) as any}
+            className="underline"
+          >
+            → Manage Offers
           </Link>
         </p>
 
@@ -35,15 +44,40 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <h2 className="text-lg font-semibold">Create</h2>
           <form action={createOperator} className="mt-2 grid gap-2 md:grid-cols-2">
             <input type="hidden" name="key" defaultValue={keyParam} />
-            <input className="rounded border px-3 py-2" name="slug" placeholder="slug (ex: betano)" required />
+            <input
+              className="rounded border px-3 py-2"
+              name="slug"
+              placeholder="slug (ex: betano)"
+              required
+            />
             <input className="rounded border px-3 py-2" name="name" placeholder="name" required />
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isLicensedRO" /> LicenÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¹ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âºiat RO</label>
-            <input className="rounded border px-3 py-2" name="logoUrl" placeholder="logoUrl (https://...)" />
-            <input className="rounded border px-3 py-2" name="website" placeholder="website (https://...)" />
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" name="isLicensedRO" /> Licențiat RO
+            </label>
+            <input
+              className="rounded border px-3 py-2"
+              name="logoUrl"
+              placeholder="logoUrl (https://...)"
+            />
+            <input
+              className="rounded border px-3 py-2"
+              name="website"
+              placeholder="website (https://...)"
+            />
             <input className="rounded border px-3 py-2" name="rating" placeholder="rating 0..5" />
-            <input className="rounded border px-3 py-2 md:col-span-2" name="pros" placeholder="pros separate cu |" />
-            <input className="rounded border px-3 py-2 md:col-span-2" name="cons" placeholder="cons separate cu |" />
-            <button className="rounded border px-3 py-2 font-semibold md:col-span-2" type="submit">Create</button>
+            <input
+              className="rounded border px-3 py-2 md:col-span-2"
+              name="pros"
+              placeholder="pros separate cu |"
+            />
+            <input
+              className="rounded border px-3 py-2 md:col-span-2"
+              name="cons"
+              placeholder="cons separate cu |"
+            />
+            <button className="rounded border px-3 py-2 font-semibold md:col-span-2" type="submit">
+              Create
+            </button>
           </form>
         </section>
 
@@ -60,19 +94,44 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
                   <input className="rounded border px-3 py-2" name="slug" defaultValue={op.slug} />
                   <input className="rounded border px-3 py-2" name="name" defaultValue={op.name} />
                   <label className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" name="isLicensedRO" defaultChecked={op.isLicensedRO} /> LicenÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¹ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âºiat RO
+                    <input type="checkbox" name="isLicensedRO" defaultChecked={op.isLicensedRO} />{' '}
+                    Licențiat RO
                   </label>
-                  <input className="rounded border px-3 py-2" name="logoUrl" defaultValue={op.logoUrl ?? ""} />
-                  <input className="rounded border px-3 py-2" name="website" defaultValue={op.website ?? ""} />
-                  <input className="rounded border px-3 py-2" name="rating" defaultValue={String(op.rating ?? 0)} />
-                  <input className="rounded border px-3 py-2 md:col-span-2" name="pros" defaultValue={(op.pros ?? []).join("|")} />
-                  <input className="rounded border px-3 py-2 md:col-span-2" name="cons" defaultValue={(op.cons ?? []).join("|")} />
+                  <input
+                    className="rounded border px-3 py-2"
+                    name="logoUrl"
+                    defaultValue={op.logoUrl ?? ''}
+                  />
+                  <input
+                    className="rounded border px-3 py-2"
+                    name="website"
+                    defaultValue={op.website ?? ''}
+                  />
+                  <input
+                    className="rounded border px-3 py-2"
+                    name="rating"
+                    defaultValue={String(op.rating ?? 0)}
+                  />
+                  <input
+                    className="rounded border px-3 py-2 md:col-span-2"
+                    name="pros"
+                    defaultValue={(op.pros ?? []).join('|')}
+                  />
+                  <input
+                    className="rounded border px-3 py-2 md:col-span-2"
+                    name="cons"
+                    defaultValue={(op.cons ?? []).join('|')}
+                  />
                   <div className="flex items-center gap-2 md:col-span-2">
-                    <button className="rounded border px-3 py-2 font-semibold" type="submit">Save</button>
+                    <button className="rounded border px-3 py-2 font-semibold" type="submit">
+                      Save
+                    </button>
                     <form action={deleteOperator} className="inline">
                       <input type="hidden" name="key" defaultValue={keyParam} />
                       <input type="hidden" name="id" defaultValue={op.id} />
-                      <button className="rounded border px-3 py-2 text-red-600" type="submit">Delete</button>
+                      <button className="rounded border px-3 py-2 text-red-600" type="submit">
+                        Delete
+                      </button>
                     </form>
                   </div>
                 </form>

@@ -13,16 +13,16 @@ Componente UI de bază (stil shadcn/ui) pentru monorepo.
 {
   "compilerOptions": {
     "paths": {
-      "@bonusmax/ui": ["../../packages/ui"]
-    }
-  }
+      "@bonusmax/ui": ["../../packages/ui"],
+    },
+  },
 }
 ```
 
 2. Include pachetul în `transpilePackages` din `next.config.ts`:
 
 ```ts
-transpilePackages: ['@bonusmax/ui']
+transpilePackages: ['@bonusmax/ui'];
 ```
 
 3. Opțional, importă presetul Tailwind în `tailwind.config.ts` al aplicației:

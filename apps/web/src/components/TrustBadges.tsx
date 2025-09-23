@@ -1,4 +1,4 @@
-import { ShieldCheck, Lock, BadgeCheck } from "lucide-react";
+import { ShieldCheck, Lock, BadgeCheck } from 'lucide-react';
 
 export default function TrustBadges() {
   const Item = ({ icon: Icon, label }: { icon: any; label: string }) => (
@@ -10,9 +10,9 @@ export default function TrustBadges() {
   return (
     <div className="mx-auto mt-2 max-w-5xl px-4">
       <div className="grid gap-2 sm:grid-cols-3">
-        <Item icon={ShieldCheck} label="Operatori licenÃˆâ€ºiaÃˆâ€ºi ONJN" />
+        <Item icon={ShieldCheck} label="Operatori licențiați ONJN" />
         <Item icon={Lock} label="Linkuri sigure & monitorizate" />
-        <Item icon={BadgeCheck} label="Termeni clari & transparenÃˆâ€ºÃ„Æ’" />
+        <Item icon={BadgeCheck} label="Termeni clari & transparență" />
       </div>
     </div>
   );

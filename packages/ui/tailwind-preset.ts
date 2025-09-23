@@ -5,10 +5,10 @@ const preset: Partial<Config> = {
     extend: {
       colors: {
         background: 'rgb(var(--bg))',
-        foreground: 'rgb(var(--fg))'
-      }
-    }
-  }
+        foreground: 'rgb(var(--fg))',
+      },
+    },
+  },
 };
 
 export default preset as Config;

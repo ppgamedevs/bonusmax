@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const OfferSchema = z.object({
   id: z.string(),
@@ -8,7 +8,7 @@ export const OfferSchema = z.object({
   offerType: z.string(),
   ctaBaseUrl: z.string().url(),
   isActive: z.boolean(),
-  country: z.string().default("RO"),
+  country: z.string().default('RO'),
   priority: z.number().int().nonnegative(),
   wrMultiplier: z.number().int().positive().max(200).nullable().optional(),
   minDeposit: z.number().int().nonnegative().nullable().optional(),

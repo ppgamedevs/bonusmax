@@ -1,7 +1,7 @@
-"use client";
+'use client';
 export default function Hero({ updated }: { updated: string }) {
   const title = `Top oferte licenÃˆâ€ºiate ONJN Ã¢â‚¬â€ actualizat azi, ${updated}`;
-  const subtitle = "ComparaÃˆâ€ºi bonusuri verificate, cu termeni clari. 18+ JoacÃ„Æ’ responsabil.";
+  const subtitle = 'ComparaÃˆâ€ºi bonusuri verificate, cu termeni clari. 18+ JoacÃ„Æ’ responsabil.';
   return (
     <section className="mx-auto max-w-5xl px-4 pt-10 pb-6 text-center">
       <p className="text-xs uppercase tracking-wide opacity-60">ConÃˆâ€ºinut comercial</p>
@@ -14,8 +14,18 @@ export default function Hero({ updated }: { updated: string }) {
         >
           Vezi Topul de azi
         </a>
-        <a href="/bonusuri-fara-depunere" className="inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm">Bonus fÃ„Æ’rÃ„Æ’ depunere</a>
-        <a href="/rotiri-gratuite" className="inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm">Rotiri gratuite</a>
+        <a
+          href="/bonusuri-fara-depunere"
+          className="inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm"
+        >
+          Bonus fÃ„Æ’rÃ„Æ’ depunere
+        </a>
+        <a
+          href="/rotiri-gratuite"
+          className="inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm"
+        >
+          Rotiri gratuite
+        </a>
       </div>
     </section>
   );

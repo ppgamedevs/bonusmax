@@ -7,20 +7,39 @@ async function main() {
   await prisma.affiliateNetwork.createMany({
     data: [
       { slug: 'generic', name: 'Generic', subidParam: 'subid', currency: 'RON' },
-      { slug: 'impact', name: 'Impact (custom)', subidParam: 'subId', currency: 'RON' }
+      { slug: 'impact', name: 'Impact (custom)', subidParam: 'subId', currency: 'RON' },
     ],
-    skipDuplicates: true
+    skipDuplicates: true,
   });
   // Operators demo
   await prisma.operator.createMany({
     data: [
-      { slug: 'betano', name: 'Betano', isLicensedRO: true, website: 'https://betano.ro', onjnLicenseId: 'L12345', onjnLicenseExpiry: new Date(new Date().getFullYear()+1,0,1) as any },
-      { slug: 'superbet', name: 'Superbet', isLicensedRO: true, website: 'https://superbet.ro', onjnLicenseId: 'L67890', onjnLicenseExpiry: new Date(new Date().getFullYear()+1,6,1) as any },
+      {
+        slug: 'betano',
+        name: 'Betano',
+        isLicensedRO: true,
+        website: 'https://betano.ro',
+        onjnLicenseId: 'L12345',
+        onjnLicenseExpiry: new Date(new Date().getFullYear() + 1, 0, 1) as any,
+      },
+      {
+        slug: 'superbet',
+        name: 'Superbet',
+        isLicensedRO: true,
+        website: 'https://superbet.ro',
+        onjnLicenseId: 'L67890',
+        onjnLicenseExpiry: new Date(new Date().getFullYear() + 1, 6, 1) as any,
+      },
       { slug: 'netbet', name: 'NetBet', isLicensedRO: true, website: 'https://netbet.ro' },
       { slug: 'unibet', name: 'Unibet', isLicensedRO: true, website: 'https://unibet.ro' },
-      { slug: 'vlad-cazino', name: 'Vlad Cazino', isLicensedRO: true, website: 'https://vladcazino.ro' }
+      {
+        slug: 'vlad-cazino',
+        name: 'Vlad Cazino',
+        isLicensedRO: true,
+        website: 'https://vladcazino.ro',
+      },
     ],
-    skipDuplicates: true
+    skipDuplicates: true,
   });
 
   const betano = await prisma.operator.findUnique({ where: { slug: 'betano' } });
@@ -43,7 +62,7 @@ async function main() {
         isSponsored: true,
         wrMultiplier: 30,
         minDeposit: 20,
-        maxCashout: 1000
+        maxCashout: 1000,
       },
       {
         operatorId: superbet.id,
@@ -56,7 +75,7 @@ async function main() {
         priority: 20,
         wrMultiplier: 6,
         minDeposit: 25,
-        maxCashout: 2500
+        maxCashout: 2500,
       },
       {
         operatorId: netbet.id,
@@ -68,9 +87,9 @@ async function main() {
         urlTemplate: 'https://example-tracker.com/track?oid=789&subid={subid}',
         priority: 30,
         wrMultiplier: 40,
-        maxCashout: 100
-      }
-    ] as any
+        maxCashout: 100,
+      },
+    ] as any,
   });
 }
 

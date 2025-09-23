@@ -1,4 +1,4 @@
-import { prisma } from "../index";
+import { prisma } from '../index';
 
 type RankInput = {
   offerId: string;
@@ -23,11 +23,15 @@ export function scoreOffer(i: RankInput, opts?: { halfLifeH?: number }) {
   const halfLifeH = opts?.halfLifeH ?? 24;
   const ctr = bayesCtr(i.clicks, i.impressions);
   const clicksTerm = Math.log1p(i.clicks);
-  const recencyTerm = Math.exp(-hoursSince(i.createdAt) * Math.log(2) / halfLifeH);
+  const recencyTerm = Math.exp((-hoursSince(i.createdAt) * Math.log(2)) / halfLifeH);
   const priorityTerm = 1 - Math.min(1, i.priority / 1000);
 
-  const wCtr = 0.55, wClicks = 0.15, wRecency = 0.20, wPriority = 0.10;
-  const score = wCtr * ctr + wClicks * (clicksTerm / 5) + wRecency * recencyTerm + wPriority * priorityTerm;
+  const wCtr = 0.55,
+    wClicks = 0.15,
+    wRecency = 0.2,
+    wPriority = 0.1;
+  const score =
+    wCtr * ctr + wClicks * (clicksTerm / 5) + wRecency * recencyTerm + wPriority * priorityTerm;
   return { score, ctr, clicks: i.clicks, impressions: i.impressions, recency: recencyTerm };
 }
 
@@ -36,22 +40,26 @@ export async function getTopTodayOffers(limit = 6, windowHours = 72) {
   const start = new Date(now.getTime() - windowHours * 36e5);
 
   const clicks = await prisma.clickEvent.groupBy({
-    by: ["offerId"],
+    by: ['offerId'],
     where: { ts: { gte: start, lte: now } },
     _count: { offerId: true },
   });
   const imps = await (prisma as any).offerImpression.groupBy({
-    by: ["offerId"],
+    by: ['offerId'],
     where: { ts: { gte: start, lte: now } },
     _count: { offerId: true },
   });
-  const impMap: Map<string, number> = new Map(imps.map((i: any) => [i.offerId as string, i._count.offerId as number]));
-  const clkMap: Map<string, number> = new Map(clicks.map((c: any) => [c.offerId as string, c._count.offerId as number]));
+  const impMap: Map<string, number> = new Map(
+    imps.map((i: any) => [i.offerId as string, i._count.offerId as number])
+  );
+  const clkMap: Map<string, number> = new Map(
+    clicks.map((c: any) => [c.offerId as string, c._count.offerId as number])
+  );
 
   const offers = await prisma.offer.findMany({
     where: {
       isActive: true,
-      country: "RO",
+      country: 'RO',
       operator: { isLicensedRO: true },
       AND: [
         { OR: [{ startAt: null }, { startAt: { lte: now } }] },
@@ -59,7 +67,7 @@ export async function getTopTodayOffers(limit = 6, windowHours = 72) {
       ],
     },
     include: { operator: true },
-    orderBy: [{ priority: "asc" }, { createdAt: "desc" }],
+    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
     take: 100,
   });
 

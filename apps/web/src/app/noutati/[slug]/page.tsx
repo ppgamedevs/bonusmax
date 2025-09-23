@@ -1,6 +1,6 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
 type PageParams = { slug: string };
 

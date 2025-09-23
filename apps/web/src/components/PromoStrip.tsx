@@ -1,9 +1,15 @@
-import { getActivePromos } from "@bonusmax/lib";
-import OffersGrid from "./offers/OffersGrid";
-import { SponsoredBadge } from "./Badges";
+import { getActivePromos } from '@bonusmax/lib';
+import OffersGrid from './offers/OffersGrid';
+import { SponsoredBadge } from './Badges';
 
-export default async function PromoStrip({ slot, title = "Sponsored" }: { slot: "HOME_TOP"|"HUB_FARA_DEP"|"HUB_ROTIRI"|"OPERATOR_TOP"; title?: string }) {
-  const promos = await getActivePromos(slot, "RO", 3);
+export default async function PromoStrip({
+  slot,
+  title = 'Sponsored',
+}: {
+  slot: 'HOME_TOP' | 'HUB_FARA_DEP' | 'HUB_ROTIRI' | 'OPERATOR_TOP';
+  title?: string;
+}) {
+  const promos = await getActivePromos(slot, 'RO', 3);
   if (!promos.length) return null;
   const offers = promos.map((p: any) => ({ ...p.offer, isSponsored: true }));
   return (
@@ -13,7 +19,7 @@ export default async function PromoStrip({ slot, title = "Sponsored" }: { slot: 
         <SponsoredBadge />
       </div>
       <OffersGrid offers={offers} />
-      <p className="mt-3 text-xs opacity-60">ConÃˆâ€ºinut comercial. 18+ JoacÃ„Æ’ responsabil.</p>
+      <p className="mt-3 text-xs opacity-60">Conținut comercial. 18+ Joacă responsabil.</p>
     </section>
   );
 }

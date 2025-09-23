@@ -1,7 +1,7 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { getCompareIds } from "@/lib/compare";
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getCompareIds } from '@/lib/compare';
 
 export default function PopulateFromLocal() {
   const router = useRouter();
@@ -9,7 +9,7 @@ export default function PopulateFromLocal() {
     try {
       const ids = getCompareIds();
       if (ids && ids.length > 0) {
-        router.replace(`/compare?ids=${encodeURIComponent(ids.join(","))}`);
+        router.replace(`/compare?ids=${encodeURIComponent(ids.join(','))}`);
       }
     } catch {}
   }, [router]);

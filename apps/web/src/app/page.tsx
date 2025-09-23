@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
 import { getActiveOffers, prisma } from '@bonusmax/lib';
@@ -19,10 +19,11 @@ import TopToday from '@/components/TopToday';
 import PromoStrip from '@/components/PromoStrip';
 import { Suspense } from 'react';
 import { SkeletonCards, SkeletonStats } from '@/components/Skeletons';
+import NewsletterSignup from '@/components/home/NewsletterSignup';
 
 export const metadata = defaultMetadata({
   title: 'Top bonusuri',
-  alternates: { canonical: absoluteUrl('/') }
+  alternates: { canonical: absoluteUrl('/') },
 });
 
 export default async function HomePage() {
@@ -38,15 +39,20 @@ export default async function HomePage() {
     include: { operator: true },
     orderBy: { updatedAt: 'desc' },
   });
-  const heroProps = betano ? {
-    brand: betano.operator?.name || betano.brand || 'Betano',
-    logoUrl: betano.operator?.logoUrl || betano.logoUrl || '/logos/betano.png',
-    headline: betano.title || betano.headline || '600 RON Bonus + 50 Rotiri',
-    wr: (betano as any).wrMultiplier || (betano as any).wr || 'x30',
-    days: (betano as any).validDays || (betano as any).validityDays || 7,
-    minDeposit: typeof (betano as any).minDeposit === 'number' ? (betano as any).minDeposit : (betano as any).min_deposit || 20,
-    ctaHref: `/go/${betano.id}` as any,
-  } : undefined;
+  const heroProps = betano
+    ? {
+        brand: betano.operator?.name || betano.brand || 'Betano',
+        logoUrl: betano.operator?.logoUrl || betano.logoUrl || '/logos/betano.png',
+        headline: betano.title || betano.headline || '600 RON Bonus + 50 Rotiri',
+        wr: (betano as any).wrMultiplier || (betano as any).wr || 'x30',
+        days: (betano as any).validDays || (betano as any).validityDays || 7,
+        minDeposit:
+          typeof (betano as any).minDeposit === 'number'
+            ? (betano as any).minDeposit
+            : (betano as any).min_deposit || 20,
+        ctaHref: `/go/${betano.id}` as any,
+      }
+    : undefined;
   return (
     <main id="main" className="mx-auto max-w-screen-xl">
       <StickyHeader />
@@ -71,7 +77,9 @@ export default async function HomePage() {
         <div className="mt-4">
           <OffersGrid offers={offers} />
         </div>
-        <p className="mt-4 text-[12px] opacity-70">Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+</p>
+        <p className="mt-4 text-[12px] opacity-70">
+          Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
+        </p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
       <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
@@ -79,7 +87,12 @@ export default async function HomePage() {
       {/* Chapter 6: Guides */}
       <GuidesTeaser />
       <FaqAccordion />
-      <CompareUI />
+      {/* Newsletter & spacing before footer */}
+      <NewsletterSignup />
+      {/* Leave a bit of space before CompareUI */}
+      <div className="mt-6">
+        <CompareUI />
+      </div>
       <TrustBarMobile />
       <StickyCtaMobile />
     </main>

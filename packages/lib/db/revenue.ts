@@ -1,21 +1,26 @@
-import prisma from "../db/client";
+import prisma from '../db/client';
 
 export async function revenueByOffer(from?: string, to?: string) {
   const start = from ? new Date(from) : new Date(Date.now() - 30 * 864e5);
   const end = to ? new Date(to) : new Date();
   const rev = await prisma.revenueEvent.groupBy({
-    by: ["offerId"],
+    by: ['offerId'],
     where: { ts: { gte: start, lte: end } },
     _sum: { amount: true },
     _count: { offerId: true },
   });
   const clicks = await prisma.clickEvent.groupBy({
-    by: ["offerId"],
+    by: ['offerId'],
     where: { ts: { gte: start, lte: end } },
     _count: { offerId: true },
   });
-  const offerIds = Array.from(new Set(rev.map((r) => r.offerId).concat(clicks.map((c) => c.offerId))));
-  const offers = await prisma.offer.findMany({ where: { id: { in: offerIds } }, include: { operator: true } });
+  const offerIds = Array.from(
+    new Set(rev.map((r) => r.offerId).concat(clicks.map((c) => c.offerId)))
+  );
+  const offers = await prisma.offer.findMany({
+    where: { id: { in: offerIds } },
+    include: { operator: true },
+  });
   const cMap = new Map(clicks.map((c) => [c.offerId, (c._count.offerId as number) ?? 0] as const));
   const oMap = new Map(offers.map((o) => [o.id, o] as const));
   return rev
@@ -33,17 +38,21 @@ export async function revenueByOperator(from?: string, to?: string) {
   const start = from ? new Date(from) : new Date(Date.now() - 30 * 864e5);
   const end = to ? new Date(to) : new Date();
   const rev = await prisma.revenueEvent.groupBy({
-    by: ["operatorId"],
+    by: ['operatorId'],
     where: { ts: { gte: start, lte: end } },
     _sum: { amount: true },
   });
   const clicks = await prisma.clickEvent.groupBy({
-    by: ["operatorId"],
+    by: ['operatorId'],
     where: { ts: { gte: start, lte: end } },
     _count: { operatorId: true },
   });
-  const ops = await prisma.operator.findMany({ where: { id: { in: rev.map((r) => r.operatorId) } } });
-  const cMap = new Map(clicks.map((c) => [c.operatorId, (c._count.operatorId as number) ?? 0] as const));
+  const ops = await prisma.operator.findMany({
+    where: { id: { in: rev.map((r) => r.operatorId) } },
+  });
+  const cMap = new Map(
+    clicks.map((c) => [c.operatorId, (c._count.operatorId as number) ?? 0] as const)
+  );
   const oMap = new Map(ops.map((o) => [o.id, o] as const));
   return rev
     .map((r) => {
@@ -60,9 +69,12 @@ export async function spendBySource(from?: string, to?: string) {
   const start = from ? new Date(from) : new Date(Date.now() - 30 * 864e5);
   const end = to ? new Date(to) : new Date();
   const spend = await (prisma as any).adSpend.groupBy({
-    by: ["source"],
+    by: ['source'],
     where: { day: { gte: start, lte: end } },
     _sum: { amount: true },
   });
-  return spend.map((s: any) => ({ source: s.source, spend: (s._sum.amount as number | null) ?? 0 }));
+  return spend.map((s: any) => ({
+    source: s.source,
+    spend: (s._sum.amount as number | null) ?? 0,
+  }));
 }

@@ -1,5 +1,5 @@
-import { getTopTodayOffers } from "@bonusmax/lib";
-import TopBonusesSectionClient from "./home/TopBonusesSectionClient";
+import { getTopTodayOffers } from '@bonusmax/lib';
+import TopBonusesSectionClient from './home/TopBonusesSectionClient';
 
 export default async function TopToday() {
   const top = await getTopTodayOffers(6, 72);

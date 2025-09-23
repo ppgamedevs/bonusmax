@@ -9,7 +9,7 @@ export default function CategoryCard({ category }: { category: HelpCategory }) {
       </div>
       <p className="text-zinc-400 mb-4">{category.description}</p>
       <ul className="space-y-2">
-        {category.topLinks.map(link => (
+        {category.topLinks.map((link) => (
           <li key={link.href}>
             <a href={link.href} className="text-blue-400 hover:underline text-sm">
               {link.title}

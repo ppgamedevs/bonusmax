@@ -1,13 +1,13 @@
-"use client";
-import { usePathname } from "next/navigation";
+'use client';
+import { usePathname } from 'next/navigation';
 
 export default function BackButton() {
   const pathname = usePathname();
-  if (pathname === "/") return null;
+  if (pathname === '/') return null;
   function goBack() {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     if (window.history.length > 1) window.history.back();
-    else window.location.href = "/";
+    else window.location.href = '/';
   }
   return (
     <button

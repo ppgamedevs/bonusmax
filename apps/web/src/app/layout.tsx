@@ -1,24 +1,50 @@
 import type { ReactNode } from 'react';
 import './globals.css';
+import StickyHeader from '@/components/layout/StickyHeader';
+import Footer from '@/components/layout/Footer';
+import { configureSeo, jsonLdOrganization, jsonLdWebsite } from '@bonusmax/lib';
+import { siteConfig } from '@/config/site';
+import { ThemeProvider } from 'next-themes';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
-  charset: 'utf-8',
+  // Next.js sets UTF-8 by default; keeping icons here.
   icons: [
     { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },
-    { rel: 'alternate icon', url: '/favicon.ico' }
-  ]
+    { rel: 'alternate icon', url: '/favicon.ico' },
+  ],
 };
 
 export const viewport = {
   width: 'device-width',
-  initialScale: 1
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  // Configure SEO defaults from app site config
+  configureSeo({
+    name: siteConfig.name,
+    description: siteConfig.description,
+    baseUrl: siteConfig.baseUrl,
+    locale: siteConfig.locale,
+    twitter: siteConfig.twitter,
+    email: siteConfig.email,
+  });
+  const orgLd = jsonLdOrganization();
+  const siteLd = jsonLdWebsite();
   return (
     <html lang="ro" suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd) }} />
+          <StickyHeader />
+          <main>{children}</main>
+          <Footer />
+          <CookieConsentBanner />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

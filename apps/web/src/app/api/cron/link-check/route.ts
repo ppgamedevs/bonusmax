@@ -1,22 +1,23 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { NextResponse } from "next/server";
-import { prisma, checkAffiliateLink, recordLinkCheck } from "@bonusmax/lib";
+import { NextResponse } from 'next/server';
+import { prisma, checkAffiliateLink, recordLinkCheck } from '@bonusmax/lib';
 
 function assertCronKey(url: URL) {
   if (!process.env.CRON_KEY) return false;
-  return url.searchParams.get("key") === process.env.CRON_KEY;
+  return url.searchParams.get('key') === process.env.CRON_KEY;
 }
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  if (!assertCronKey(url)) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!assertCronKey(url))
+    return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
 
-  const limit = Number(url.searchParams.get("limit") ?? 20);
+  const limit = Number(url.searchParams.get('limit') ?? 20);
 
   const offers = await prisma.offer.findMany({
-    where: { isActive: true, country: "RO", operator: { isLicensedRO: true } },
-    orderBy: [{ lastCheckedAt: "asc" }, { createdAt: "asc" }],
+    where: { isActive: true, country: 'RO', operator: { isLicensedRO: true } },
+    orderBy: [{ lastCheckedAt: 'asc' }, { createdAt: 'asc' }],
     take: limit,
     select: { id: true, ctaBaseUrl: true },
   });
@@ -30,4 +31,3 @@ export async function GET(req: Request) {
 
   return NextResponse.json({ ok: true, checked: results.length, results });
 }
-

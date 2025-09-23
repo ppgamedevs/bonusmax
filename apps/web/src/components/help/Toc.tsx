@@ -6,8 +6,8 @@ export default function Toc({ content }: { content: string }) {
   useEffect(() => {
     const lines = content.split('\n');
     const h = lines
-      .filter(l => l.startsWith('#'))
-      .map(l => {
+      .filter((l) => l.startsWith('#'))
+      .map((l) => {
         const level = l.match(/^#+/)![0].length;
         const text = l.replace(/^#+ /, '');
         const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -22,7 +22,7 @@ export default function Toc({ content }: { content: string }) {
     <nav className="sticky top-8 p-4 border border-zinc-800 rounded-lg bg-zinc-900/50">
       <h3 className="text-sm font-semibold mb-4 text-zinc-100">Cuprins</h3>
       <ul className="space-y-2">
-        {headings.map(h => (
+        {headings.map((h) => (
           <li key={h.id} className={`pl-${(h.level - 1) * 4}`}>
             <a
               href={`#${h.id}`}

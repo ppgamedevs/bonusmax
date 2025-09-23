@@ -8,16 +8,16 @@ export default {
     './src/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './pages/**/*.{ts,tsx}',
-    '../../packages/ui/**/*.{ts,tsx}'
+    '../../packages/ui/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#0ea5e9'
-        }
-      }
-    }
+          DEFAULT: '#0ea5e9',
+        },
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 } satisfies Config;

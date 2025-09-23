@@ -1,4 +1,4 @@
-import { prisma } from "../index";
+import { prisma } from '../index';
 
 export async function getSocialTotals() {
   const now = new Date();
@@ -8,7 +8,7 @@ export async function getSocialTotals() {
   const offers = await prisma.offer.count({
     where: {
       isActive: true,
-      country: "RO",
+      country: 'RO',
       operator: { isLicensedRO: true },
       AND: [
         { OR: [{ startAt: null }, { startAt: { lte: now } }] },

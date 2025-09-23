@@ -1,10 +1,10 @@
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
-import remarkGfm from "remark-gfm";
-import { compileMDX } from "next-mdx-remote/rsc";
+import fs from 'node:fs';
+import path from 'node:path';
+import matter from 'gray-matter';
+import remarkGfm from 'remark-gfm';
+import { compileMDX } from 'next-mdx-remote/rsc';
 
-const CONTENT_DIR = path.join(process.cwd(), "../../packages/content/ghiduri");
+const CONTENT_DIR = path.join(process.cwd(), '../../packages/content/ghiduri');
 
 export type GuideFrontmatter = {
   title: string;
@@ -15,10 +15,10 @@ export type GuideFrontmatter = {
 };
 
 export async function getAllGuides(): Promise<Array<GuideFrontmatter & { file: string }>> {
-  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
+  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.mdx'));
   return files
     .map((file) => {
-      const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
+      const raw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf8');
       const { data } = matter(raw);
       const fm = data as GuideFrontmatter;
       return { ...fm, file };
@@ -27,21 +27,31 @@ export async function getAllGuides(): Promise<Array<GuideFrontmatter & { file: s
 }
 
 export async function getGuideBySlug(slug: string) {
-  const file = fs.readdirSync(CONTENT_DIR).find((f) => f.endsWith(".mdx") && f.includes(slug));
+  const file = fs.readdirSync(CONTENT_DIR).find((f) => f.endsWith('.mdx') && f.includes(slug));
   if (!file) return null;
-  const source = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
+  const source = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf8');
 
   function slugifyHeading(t: string) {
-    return t.toLowerCase().replace(/[^a-z0-9Ãƒâ€žÃ†â€™ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â®ÃƒË†Ã¢â€žÂ¢ÃƒË†Ã¢â‚¬Âº -]/gi, "").replace(/\s+/g, "-").replace(/-+/g, "-");
+    return t
+      .toLowerCase()
+      .replace(/[^a-z0-9ăâîșțĂÂÎȘȚ -]/gi, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
   }
   function extractHeadings(md: string) {
-    const lines = md.split("\n");
+    const lines = md.split('\n');
     const hs: { level: 2 | 3; text: string; id: string }[] = [];
     for (const line of lines) {
       const m2 = /^##\s+(.+)$/.exec(line);
       const m3 = /^###\s+(.+)$/.exec(line);
-      if (m2) { const text = m2[1].trim(); hs.push({ level: 2, text, id: slugifyHeading(text) }); }
-      if (m3) { const text = m3[1].trim(); hs.push({ level: 3, text, id: slugifyHeading(text) }); }
+      if (m2) {
+        const text = m2[1].trim();
+        hs.push({ level: 2, text, id: slugifyHeading(text) });
+      }
+      if (m3) {
+        const text = m3[1].trim();
+        hs.push({ level: 3, text, id: slugifyHeading(text) });
+      }
     }
     return hs;
   }
@@ -50,7 +60,7 @@ export async function getGuideBySlug(slug: string) {
   const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
     source,
     options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
-    components: (await import("../mdx/components")).default,
+    components: (await import('../app/mdx/components')).default,
   });
 
   return { content, frontmatter, headings };

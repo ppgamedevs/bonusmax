@@ -1,6 +1,6 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { prisma } from "@bonusmax/lib";
+import { prisma } from '@bonusmax/lib';
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY)
@@ -12,17 +12,25 @@ function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: s
   return <>{children}</>;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string>>;
+}) {
   const resolvedSearchParams: Record<string, string> = (await searchParams) ?? {};
   const key = resolvedSearchParams.key;
-  const rows = await (prisma as any).backlink.findMany({ include: { domain: true }, orderBy: [{ ok: "asc" }, { lastSeen: "asc" }], take: 300 });
+  const rows = await (prisma as any).backlink.findMany({
+    include: { domain: true },
+    orderBy: [{ ok: 'asc' }, { lastSeen: 'asc' }],
+    take: 300,
+  });
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold">Backlinks</h1>
         <p className="mt-2 text-sm opacity-70">
           <a className="underline" href={`/api/cron/backlinks?key=${key}&limit=50`}>
-            RuleazÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ verificare (50)
+            Rulează verificare (50)
           </a>
         </p>
         <table className="mt-4 w-full text-sm">
@@ -38,15 +46,19 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <tbody>
             {rows.map((r: any) => (
               <tr key={r.id} className="border-t">
-                <td className={`p-2 ${r.ok ? "text-emerald-700" : "text-rose-700"}`}>{r.ok ? "OK" : "Missing"}</td>
+                <td className={`p-2 ${r.ok ? 'text-emerald-700' : 'text-rose-700'}`}>
+                  {r.ok ? 'OK' : 'Missing'}
+                </td>
                 <td className="p-2">{r.domain.host}</td>
                 <td className="p-2">
                   <a className="underline" href={r.url} rel="nofollow" target="_blank">
                     {r.url}
                   </a>
                 </td>
-                <td className="p-2">{r.anchor ?? "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â"}</td>
-                <td className="p-2">{r.lastSeen ? new Date(r.lastSeen).toLocaleString("ro-RO") : "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â"}</td>
+                <td className="p-2">{r.anchor ?? '—'}</td>
+                <td className="p-2">
+                  {r.lastSeen ? new Date(r.lastSeen).toLocaleString('ro-RO') : '—'}
+                </td>
               </tr>
             ))}
           </tbody>

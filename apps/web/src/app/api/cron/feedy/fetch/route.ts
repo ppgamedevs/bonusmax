@@ -1,13 +1,13 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { NextResponse } from "next/server";
-import { prisma } from "@bonusmax/lib";
-import Parser from "rss-parser";
-import * as cheerio from "cheerio";
-import { makeSlug, cleanExcerpt } from "@/lib/feedy";
+import { NextResponse } from 'next/server';
+import { prisma } from '@bonusmax/lib';
+import Parser from 'rss-parser';
+import * as cheerio from 'cheerio';
+import { makeSlug, cleanExcerpt } from '@/lib/feedy';
 
 function ok(url: URL) {
-  return !!process.env.CRON_KEY && url.searchParams.get("key") === process.env.CRON_KEY;
+  return !!process.env.CRON_KEY && url.searchParams.get('key') === process.env.CRON_KEY;
 }
 
 async function upsertItem(data: {
@@ -27,14 +27,14 @@ async function upsertItem(data: {
       url: data.url,
       slug,
       title: data.title,
-      excerpt: cleanExcerpt(data.excerpt || ""),
+      excerpt: cleanExcerpt(data.excerpt || ''),
       image: data.image || null,
       publishedAt: data.publishedAt || null,
-      status: "PENDING",
+      status: 'PENDING',
     },
     update: {
       title: data.title,
-      excerpt: cleanExcerpt(data.excerpt || ""),
+      excerpt: cleanExcerpt(data.excerpt || ''),
       image: data.image || null,
       publishedAt: data.publishedAt || null,
     },
@@ -51,33 +51,49 @@ export async function GET(req: Request) {
   let created = 0;
   for (const s of sources) {
     try {
-      if (s.type === "RSS") {
+      if (s.type === 'RSS') {
         const feed = await parser.parseURL(s.url);
         for (const it of feed.items.slice(0, 20)) {
-          const link = (it.link || "").trim();
-          const title = (it.title || "").trim();
+          const link = (it.link || '').trim();
+          const title = (it.title || '').trim();
           if (!link || !title) continue;
-          const date = (it.isoDate ? new Date(it.isoDate) : it.pubDate ? new Date(it.pubDate) : null) as Date | null;
-          const img = (it.enclosure as any)?.url || (it as any)["media:content"]?.url;
-          await upsertItem({ sourceId: s.id, url: link, title, excerpt: (it as any).contentSnippet || (it as any).content || "", image: img, publishedAt: date });
+          const date = (
+            it.isoDate ? new Date(it.isoDate) : it.pubDate ? new Date(it.pubDate) : null
+          ) as Date | null;
+          const img = (it.enclosure as any)?.url || (it as any)['media:content']?.url;
+          await upsertItem({
+            sourceId: s.id,
+            url: link,
+            title,
+            excerpt: (it as any).contentSnippet || (it as any).content || '',
+            image: img,
+            publishedAt: date,
+          });
           created++;
         }
       } else {
-        const r = await fetch(s.url, { headers: { "user-agent": "BonusmaxFeedy/1.0" } });
+        const r = await fetch(s.url, { headers: { 'user-agent': 'BonusmaxFeedy/1.0' } });
         const html = await r.text();
         const $ = cheerio.load(html);
-        const sel = s.selector || "article a";
+        const sel = s.selector || 'article a';
         const links: string[] = [];
         $(sel).each((_, el) => {
-          const href = $(el).attr("href") || "";
-          const title = ($(el).attr("title") || $(el).text() || "").trim();
+          const href = $(el).attr('href') || '';
+          const title = ($(el).attr('title') || $(el).text() || '').trim();
           if (!href || !title) return;
-          const abs = href.startsWith("http") ? href : new URL(href, s.url).toString();
+          const abs = href.startsWith('http') ? href : new URL(href, s.url).toString();
           links.push(JSON.stringify({ url: abs, title }));
         });
         for (const raw of links.slice(0, 20)) {
           const { url: link, title } = JSON.parse(raw);
-          await upsertItem({ sourceId: s.id, url: link, title, excerpt: "", image: undefined, publishedAt: null });
+          await upsertItem({
+            sourceId: s.id,
+            url: link,
+            title,
+            excerpt: '',
+            image: undefined,
+            publishedAt: null,
+          });
           created++;
         }
       }
@@ -87,4 +103,3 @@ export async function GET(req: Request) {
   }
   return NextResponse.json({ ok: true, created });
 }
-

@@ -15,15 +15,8 @@
     "noEmit": true,
     "incremental": true,
     "isolatedModules": true,
-    "plugins": [
-      { "name": "next" }
-    ]
+    "plugins": [{ "name": "next" }]
   },
-  "include": [
-    "next-env.d.ts",
-    "next.config.ts",
-    "src",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["next-env.d.ts", "next.config.ts", "src", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

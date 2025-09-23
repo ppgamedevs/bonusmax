@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
@@ -13,7 +13,8 @@ function getIp(h: Headers) {
 export async function POST(req: Request) {
   try {
     const { offerId } = await req.json();
-    if (!offerId) return NextResponse.json({ ok: false, error: 'offerId required' }, { status: 400 });
+    if (!offerId)
+      return NextResponse.json({ ok: false, error: 'offerId required' }, { status: 400 });
 
     const h = await headers();
     const ua = h.get('user-agent');
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
       operatorId: offer.operatorId,
       ipHash,
       userAgent: ua ?? undefined,
-      referer: referer ?? undefined
+      referer: referer ?? undefined,
     });
 
     return NextResponse.json({ ok: true });
@@ -37,4 +38,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
   }
 }
-

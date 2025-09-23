@@ -1,12 +1,12 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { abReportCta, abReportOrder, uiCtrReport } from "@bonusmax/lib";
+import { abReportCta, abReportOrder, uiCtrReport } from '@bonusmax/lib';
 
 function Guard({ children, keyParam }: { children: React.ReactNode; keyParam?: string }) {
   if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Unauthorized</h1>
+        <h1 className="text-xl font-semibold">401 — Unauthorized</h1>
       </main>
     );
   }
@@ -18,17 +18,19 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
   const keyParam = sp.key;
   const cta = await abReportCta();
   const ord = await abReportOrder();
-  const sticky = await uiCtrReport("sticky_bar");
-  const exit = await uiCtrReport("exit_modal");
+  const sticky = await uiCtrReport('sticky_bar');
+  const exit = await uiCtrReport('exit_modal');
 
   return (
     <Guard keyParam={keyParam}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">A/B (30 zile) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Light</h1>
-        <p className="mt-1 text-sm opacity-70">Min 10 clicks pentru rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ndurile pe paginÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢. Valorile sunt ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n RON.</p>
+        <h1 className="text-2xl font-bold">A/B (30 zile) — Light</h1>
+        <p className="mt-1 text-sm opacity-70">
+          Min 10 clicks pentru rândurile pe pagină. Valorile sunt în RON.
+        </p>
 
         <section className="mt-6">
-          <h2 className="text-lg font-semibold">CTA Copy ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Total</h2>
+          <h2 className="text-lg font-semibold">CTA Copy — Total</h2>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
@@ -50,12 +52,12 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
             </tbody>
           </table>
 
-          <h3 className="mt-6 font-semibold">CTA Copy ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Top pagini (min 10 clicks)</h3>
+          <h3 className="mt-6 font-semibold">CTA Copy — Top pagini (min 10 clicks)</h3>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
                 <th className="p-2 text-left">Variant</th>
-                <th className="p-2 text-left">PaginÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢</th>
+                <th className="p-2 text-left">Pagină</th>
                 <th className="p-2 text-center">Clicks</th>
                 <th className="p-2 text-right">Revenue</th>
                 <th className="p-2 text-right">EPC</th>
@@ -74,7 +76,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
               {cta.perPath.length === 0 && (
                 <tr>
                   <td className="p-2" colSpan={5}>
-                    ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ncÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ nu ai destule clicks.
+                    Încă nu ai destule clicks.
                   </td>
                 </tr>
               )}
@@ -83,7 +85,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         </section>
 
         <section className="mt-8">
-          <h2 className="text-lg font-semibold">Offers Order ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Total</h2>
+          <h2 className="text-lg font-semibold">Offers Order — Total</h2>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
@@ -107,7 +109,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         </section>
 
         <section className="mt-10">
-          <h2 className="text-lg font-semibold">Sticky bar ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â CTR (30 zile)</h2>
+          <h2 className="text-lg font-semibold">Sticky bar — CTR (30 zile)</h2>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
@@ -129,11 +131,11 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
             </tbody>
           </table>
 
-          <h3 className="mt-6 font-semibold">Sticky ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â top pagini (min 10 imp)</h3>
+          <h3 className="mt-6 font-semibold">Sticky — top pagini (min 10 imp)</h3>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
-                <th className="p-2 text-left">PaginÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢</th>
+                <th className="p-2 text-left">Pagină</th>
                 <th className="p-2">Variant</th>
                 <th className="p-2 text-center">Imp</th>
                 <th className="p-2 text-center">Clicks</th>
@@ -153,7 +155,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
               {sticky.perPath.length === 0 && (
                 <tr>
                   <td className="p-2" colSpan={5}>
-                    Nimic ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®ncÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢.
+                    Nimic încă.
                   </td>
                 </tr>
               )}
@@ -162,7 +164,7 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
         </section>
 
         <section className="mt-10">
-          <h2 className="text-lg font-semibold">Exit-intent ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â CTR (30 zile)</h2>
+          <h2 className="text-lg font-semibold">Exit-intent — CTR (30 zile)</h2>
           <table className="mt-2 w-full text-sm">
             <thead>
               <tr>
@@ -184,7 +186,6 @@ export default async function Page({ searchParams }: { searchParams?: Record<str
             </tbody>
           </table>
         </section>
-
       </main>
     </Guard>
   );

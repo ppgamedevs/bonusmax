@@ -6,18 +6,14 @@ export default function FeedbackWidget() {
   const [no, setNo] = useState(0);
 
   const handleVote = (isYes: boolean) => {
-    if (isYes) setYes(y => y + 1);
-    else setNo(n => n + 1);
+    if (isYes) setYes((y) => y + 1);
+    else setNo((n) => n + 1);
     setVoted(true);
     console.log('help-feedback', isYes ? 'yes' : 'no');
   };
 
   if (voted) {
-    return (
-      <div className="text-zinc-400 text-center py-4">
-        MulÃˆâ€ºumim pentru feedback!
-      </div>
-    );
+    return <div className="text-zinc-400 text-center py-4">MulÃˆâ€ºumim pentru feedback!</div>;
   }
 
   return (

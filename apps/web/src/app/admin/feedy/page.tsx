@@ -1,41 +1,66 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import { prisma } from "@bonusmax/lib";
+import { prisma } from '@bonusmax/lib';
 
 function Guard({ children, keyParam }: { children: any; keyParam?: string }) {
-  if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY) return <main className="p-8">401</main>;
+  if (!process.env.ADMIN_KEY || keyParam !== process.env.ADMIN_KEY)
+    return <main className="p-8">401</main>;
   return <>{children}</>;
 }
 
 async function act(formData: FormData) {
-  "use server";
-  if (!process.env.ADMIN_KEY || String(formData.get("key")) !== process.env.ADMIN_KEY) throw new Error("Unauthorized");
-  const id = String(formData.get("id"));
-  const action = String(formData.get("action"));
-  if (action === "approve") await (prisma as any).feedItem.update({ where: { id }, data: { status: "APPROVED" } });
-  if (action === "reject") await (prisma as any).feedItem.update({ where: { id }, data: { status: "REJECTED" } });
-  if (action === "feature") await (prisma as any).feedItem.update({ where: { id }, data: { featured: true, status: "APPROVED" } });
+  'use server';
+  if (!process.env.ADMIN_KEY || String(formData.get('key')) !== process.env.ADMIN_KEY)
+    throw new Error('Unauthorized');
+  const id = String(formData.get('id'));
+  const action = String(formData.get('action'));
+  if (action === 'approve')
+    await (prisma as any).feedItem.update({ where: { id }, data: { status: 'APPROVED' } });
+  if (action === 'reject')
+    await (prisma as any).feedItem.update({ where: { id }, data: { status: 'REJECTED' } });
+  if (action === 'feature')
+    await (prisma as any).feedItem.update({
+      where: { id },
+      data: { featured: true, status: 'APPROVED' },
+    });
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const searchParamsObj = (typeof searchParams === 'object' && 'then' in (searchParams as any)) ? await (searchParams as any) : (searchParams as any);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string>>;
+}) {
+  const searchParamsObj =
+    typeof searchParams === 'object' && 'then' in (searchParams as any)
+      ? await (searchParams as any)
+      : (searchParams as any);
   const key = searchParamsObj?.key;
-  const pending = await (prisma as any).feedItem.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: "desc" }, take: 100, include: { source: true, tags: { include: { tag: true } } } });
-  const recent = await (prisma as any).feedItem.findMany({ where: { status: "APPROVED" }, orderBy: { publishedAt: "desc" }, take: 50, include: { source: true, tags: { include: { tag: true } } } });
+  const pending = await (prisma as any).feedItem.findMany({
+    where: { status: 'PENDING' },
+    orderBy: { createdAt: 'desc' },
+    take: 100,
+    include: { source: true, tags: { include: { tag: true } } },
+  });
+  const recent = await (prisma as any).feedItem.findMany({
+    where: { status: 'APPROVED' },
+    orderBy: { publishedAt: 'desc' },
+    take: 50,
+    include: { source: true, tags: { include: { tag: true } } },
+  });
 
   return (
     <Guard keyParam={key}>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold">Feedy ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Review</h1>
+        <h1 className="text-2xl font-bold">Feedy — Review</h1>
 
         <section className="mt-6">
-          <h2 className="text-lg font-semibold">ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½n aÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¹ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢teptare</h2>
+          <h2 className="text-lg font-semibold">În așteptare</h2>
           <ul className="mt-2 space-y-2">
             {pending.map((i: any) => (
               <li key={i.id} className="rounded border p-3">
-                <div className="text-sm opacity-70">{i.source?.name || "UGC"}</div>
+                <div className="text-sm opacity-70">{i.source?.name || 'UGC'}</div>
                 <div className="font-semibold">{i.title}</div>
-                <div className="text-sm opacity-80">{i.excerpt || ""}</div>
+                <div className="text-sm opacity-80">{i.excerpt || ''}</div>
                 <div className="mt-2 flex gap-2 text-sm">
                   <form action={act}>
                     <input type="hidden" name="key" defaultValue={key} />
@@ -72,7 +97,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <ul className="mt-2 space-y-2">
             {recent.map((i: any) => (
               <li key={i.id} className="rounded border p-3">
-                <div className="text-sm opacity-70">{i.source?.name || "UGC"}</div>
+                <div className="text-sm opacity-70">{i.source?.name || 'UGC'}</div>
                 <div className="font-semibold">{i.title}</div>
                 <a className="text-sm underline" href={`/noutati/${i.slug}`} target="_blank">
                   /noutati/{i.slug}

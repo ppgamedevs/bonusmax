@@ -1,34 +1,40 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
-import Link from "next/link";
+import Link from 'next/link';
 import {
   analyticsByOperator,
   analyticsClicksByOffer,
-  analyticsImpressionsByOffer
-} from "@bonusmax/lib";
+  analyticsImpressionsByOffer,
+} from '@bonusmax/lib';
 
 function getParam(sp: Record<string, string> | undefined, key: string) {
   const v = sp?.[key];
-  return typeof v === "string" ? v : undefined;
+  return typeof v === 'string' ? v : undefined;
 }
 
-export default async function Page({ searchParams }: { searchParams?: Promise<Record<string, string>> }) {
-  const sp = (await searchParams) || {} as Record<string, string>;
-  const key = getParam(sp, "key");
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string>>;
+}) {
+  const sp = (await searchParams) || ({} as Record<string, string>);
+  const key = getParam(sp, 'key');
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return (
       <main className="container mx-auto px-4 py-10">
-        <h1 className="text-xl font-semibold">401 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ Unauthorized</h1>
-        <p className="mt-2 text-sm opacity-80">AdaugÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ ?key=ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ (ADMIN_KEY) ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n URL.</p>
+        <h1 className="text-xl font-semibold">401 — Unauthorized</h1>
+        <p className="mt-2 text-sm opacity-80">
+          Adaugă ?key=<strong>ADMIN_KEY</strong> în URL pentru acces.
+        </p>
       </main>
     );
   }
 
-  const from = getParam(sp, "from");
-  const to = getParam(sp, "to");
+  const from = getParam(sp, 'from');
+  const to = getParam(sp, 'to');
 
   const clicks = await analyticsClicksByOffer(from, to);
-  const impsMap = await analyticsImpressionsByOffer(from, to) as Map<string, number>;
+  const impsMap = (await analyticsImpressionsByOffer(from, to)) as Map<string, number>;
 
   const rows: { offer: any; clicks: number; impressions: number; ctr: number }[] = clicks
     .map((c) => {
@@ -42,20 +48,30 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
 
   return (
     <main className="container mx-auto px-4 py-8" id="main">
-      <h1 className="text-2xl font-bold">Admin ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ PerformanÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</h1>
+      <h1 className="text-2xl font-bold">Admin — Performanțe</h1>
 
       <form className="mt-4 flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
           <label className="text-xs opacity-70">From (YYYY-MM-DD)</label>
-          <input className="rounded border px-3 py-2 text-sm" type="date" name="from" defaultValue={from} />
+          <input
+            className="rounded border px-3 py-2 text-sm"
+            type="date"
+            name="from"
+            defaultValue={from}
+          />
         </div>
         <div className="flex flex-col">
           <label className="text-xs opacity-70">To (YYYY-MM-DD)</label>
-          <input className="rounded border px-3 py-2 text-sm" type="date" name="to" defaultValue={to} />
+          <input
+            className="rounded border px-3 py-2 text-sm"
+            type="date"
+            name="to"
+            defaultValue={to}
+          />
         </div>
         <input type="hidden" name="key" value={key} />
         <button className="rounded border px-3 py-2 text-sm" type="submit">
-          AplicÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+          Aplică
         </button>
       </form>
 
@@ -65,7 +81,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
           <thead>
             <tr>
               <th className="text-left p-2">Operator</th>
-              <th className="text-left p-2">OfertÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢</th>
+              <th className="text-left p-2">Ofertă</th>
               <th className="p-2">Clicks</th>
               <th className="p-2">Impr.</th>
               <th className="p-2">CTR</th>
@@ -76,7 +92,7 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
               <tr key={r.offer.id} className="border-t">
                 <td className="p-2">{r.offer.operator.name}</td>
                 <td className="p-2">
-                  <Link href={("/bonus/" + r.offer.id) as any} className="underline">
+                  <Link href={('/bonus/' + r.offer.id) as any} className="underline">
                     {r.offer.title}
                   </Link>
                 </td>
@@ -115,4 +131,3 @@ export default async function Page({ searchParams }: { searchParams?: Promise<Re
     </main>
   );
 }
-

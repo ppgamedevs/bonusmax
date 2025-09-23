@@ -13,5 +13,8 @@ export function buildAffiliateUrl(base: string, offerId: string, extras?: Record
 
 export function hashIp(ip: string, ua: string | null) {
   const salt = process.env.HASH_SALT || 'bonusmax';
-  return crypto.createHash('sha256').update(`${ip}|${ua ?? ''}|${salt}`).digest('hex');
+  return crypto
+    .createHash('sha256')
+    .update(`${ip}|${ua ?? ''}|${salt}`)
+    .digest('hex');
 }

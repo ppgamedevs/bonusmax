@@ -1,24 +1,55 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 import { defaultMetadata, absoluteUrl, jsonLdBreadcrumb } from '@bonusmax/lib/seo';
 import JsonLd from '@/components/JsonLd';
+import BackHome from '@/components/BackHome';
 
 export const metadata = defaultMetadata({ title: 'GDPR' });
 
 export default function GDPRPage() {
   const lastUpdated = new Date().toLocaleDateString('ro-RO');
   return (
-    <section className="space-y-4">
+    <main className="mx-auto max-w-4xl px-4 py-10">
       <JsonLd
         data={jsonLdBreadcrumb([
-          { name: 'AcasÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢', url: absoluteUrl('/') },
-          { name: 'GDPR', url: absoluteUrl('/gdpr') }
+          { name: 'Acasă', url: absoluteUrl('/') },
+          { name: 'GDPR', url: absoluteUrl('/gdpr') },
         ])}
       />
-      <h1 className="text-2xl font-semibold">GDPR</h1>
-      <p>InformaÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºii privind protecÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Âºia datelor cu caracter personal vor fi publicate ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®n curÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢nd.</p>
-      <p>Vom explica scopurile prelucrÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢rii, temeiurile ÃƒÆ’Ã†â€™Ãƒâ€¹Ã¢â‚¬Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢i drepturile tale.</p>
-      <p className="text-sm text-muted-foreground">Ultima actualizare: {lastUpdated}</p>
-    </section>
+
+      <header>
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
+          <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
+          Protecția datelor • GDPR
+        </div>
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight">GDPR</h1>
+        <p className="mt-2 max-w-2xl text-sm text-zinc-300">
+          Informații privind protecția datelor cu caracter personal. Mai jos găsești un rezumat
+          clar despre scopurile prelucrării, temeiurile legale și drepturile tale.
+        </p>
+        <div className="mt-2 text-xs text-zinc-400">Ultima actualizare: {lastUpdated}</div>
+      </header>
+
+      <BackHome />
+
+      <section className="prose prose-invert mt-6 max-w-none">
+        <h2>Ce publicăm aici</h2>
+        <p>
+          Publicăm pe scurt informațiile esențiale despre modul în care prelucrăm datele tale,
+          inclusiv categoriile de date, scopurile, temeiurile legale și perioadele de păstrare.
+        </p>
+        <h2>Drepturile tale</h2>
+        <ul>
+          <li>Acces, rectificare, ștergere, restricționare, opoziție și portabilitate.</li>
+          <li>
+            Ne poți contacta în orice moment la <a href="mailto:contact@bonusmax.ro">contact@bonusmax.ro</a>.
+          </li>
+        </ul>
+        <p>
+          Pentru informații detaliate, consultă și <a href="/politica-confidentialitate">Politica de
+          confidențialitate</a>.
+        </p>
+      </section>
+    </main>
   );
 }

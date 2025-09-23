@@ -15,7 +15,7 @@ let SITE: SiteConfig = {
   baseUrl: 'https://bonusmax.ro',
   locale: 'ro-RO',
   twitter: '@bonusmax',
-  email: 'contact@bonusmax.ro'
+  email: 'contact@bonusmax.ro',
 };
 
 export function configureSeo(cfg: Partial<SiteConfig>) {
@@ -32,18 +32,16 @@ export function absoluteUrl(path: string = '/'): string {
 // Default metadata for pages, mergeable via overrides
 type MetadataLike = Record<string, any>;
 
-export function defaultMetadata(
-  overrides: Partial<MetadataLike> = {}
-): MetadataLike {
+export function defaultMetadata(overrides: Partial<MetadataLike> = {}): MetadataLike {
   const base: MetadataLike = {
     metadataBase: new URL(SITE.baseUrl),
     title: {
       default: SITE.name,
-      template: '%s | Bonusmax'
+      template: '%s | Bonusmax',
     },
     description: SITE.description,
     alternates: {
-      canonical: absoluteUrl('/')
+      canonical: absoluteUrl('/'),
     },
     openGraph: {
       type: 'website',
@@ -51,15 +49,15 @@ export function defaultMetadata(
       siteName: SITE.name,
       title: SITE.name,
       description: SITE.description,
-      locale: SITE.locale
+      locale: SITE.locale,
     },
     twitter: {
       card: 'summary_large_image',
       site: SITE.twitter,
-      creator: SITE.twitter
+      creator: SITE.twitter,
     },
     // Placeholder for future verification codes
-    verification: {}
+    verification: {},
   };
 
   return {
@@ -68,7 +66,7 @@ export function defaultMetadata(
     // Merge nested objects we care about
     openGraph: { ...base.openGraph, ...overrides.openGraph },
     twitter: { ...base.twitter, ...overrides.twitter },
-    alternates: { ...base.alternates, ...overrides.alternates }
+    alternates: { ...base.alternates, ...overrides.alternates },
   } as MetadataLike;
 }
 
@@ -80,7 +78,7 @@ export function jsonLdOrganization() {
     name: SITE.name,
     url: SITE.baseUrl,
     email: SITE.email,
-    sameAs: [] as string[]
+    sameAs: [] as string[],
   };
 }
 
@@ -94,8 +92,8 @@ export function jsonLdWebsite() {
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE.baseUrl}/cauta?q={search_term_string}`,
-      'query-input': 'required name=search_term_string'
-    }
+      'query-input': 'required name=search_term_string',
+    },
   };
 }
 
@@ -107,7 +105,7 @@ export function jsonLdBreadcrumb(items: { name: string; url: string }[]) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url
-    }))
+      item: item.url,
+    })),
   };
 }

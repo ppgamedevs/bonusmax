@@ -1,4 +1,4 @@
-import { prisma } from "../index";
+import { prisma } from '../index';
 
 function range30() {
   const end = new Date();
@@ -6,12 +6,16 @@ function range30() {
   return { start, end };
 }
 
-export async function uiCtrReport(component: "sticky_bar" | "exit_modal") {
+export async function uiCtrReport(component: 'sticky_bar' | 'exit_modal') {
   const end = new Date();
   const start = new Date(end.getTime() - 30 * 864e5);
   const [impA, impB] = await Promise.all([
-    (prisma as any).uiImpression.count({ where: { component, ts: { gte: start, lte: end }, variant: "A" } }),
-    (prisma as any).uiImpression.count({ where: { component, ts: { gte: start, lte: end }, variant: "B" } }),
+    (prisma as any).uiImpression.count({
+      where: { component, ts: { gte: start, lte: end }, variant: 'A' },
+    }),
+    (prisma as any).uiImpression.count({
+      where: { component, ts: { gte: start, lte: end }, variant: 'B' },
+    }),
   ]);
   const keyA = `${component}_A`;
   const keyB = `${component}_B`;
@@ -27,7 +31,7 @@ export async function uiCtrReport(component: "sticky_bar" | "exit_modal") {
   const perPath = new Map<string, { A: number; B: number }>();
   for (const r of impRows) {
     const row = perPath.get((r as any).path) || { A: 0, B: 0 };
-    ((r as any).variant === "B" ? row.B++ : row.A++);
+    (r as any).variant === 'B' ? row.B++ : row.A++;
     perPath.set((r as any).path, row);
   }
   const clickRows = await (prisma as any).clickEvent.findMany({
@@ -37,17 +41,17 @@ export async function uiCtrReport(component: "sticky_bar" | "exit_modal") {
   });
   const perPathClk = new Map<string, { A: number; B: number }>();
   for (const c of clickRows) {
-    const path = (c as any).landingPath || "(direct)";
+    const path = (c as any).landingPath || '(direct)';
     const row = perPathClk.get(path) || { A: 0, B: 0 };
-    ((c as any).utmContent === keyB ? row.B++ : row.A++);
+    (c as any).utmContent === keyB ? row.B++ : row.A++;
     perPathClk.set(path, row);
   }
   const pathTable = Array.from(perPath.entries())
     .map(([path, imp]) => {
       const clk = perPathClk.get(path) || { A: 0, B: 0 };
       return [
-        { path, variant: "A", impressions: imp.A, clicks: clk.A, ctr: imp.A ? clk.A / imp.A : 0 },
-        { path, variant: "B", impressions: imp.B, clicks: clk.B, ctr: imp.B ? clk.B / imp.B : 0 },
+        { path, variant: 'A', impressions: imp.A, clicks: clk.A, ctr: imp.A ? clk.A / imp.A : 0 },
+        { path, variant: 'B', impressions: imp.B, clicks: clk.B, ctr: imp.B ? clk.B / imp.B : 0 },
       ];
     })
     .flat()
@@ -57,8 +61,8 @@ export async function uiCtrReport(component: "sticky_bar" | "exit_modal") {
 
   return {
     total: [
-      { variant: "A", impressions: impA, clicks: clkA, ctr: impA ? clkA / impA : 0 },
-      { variant: "B", impressions: impB, clicks: clkB, ctr: impB ? clkB / impB : 0 },
+      { variant: 'A', impressions: impA, clicks: clkA, ctr: impA ? clkA / impA : 0 },
+      { variant: 'B', impressions: impB, clicks: clkB, ctr: impB ? clkB / impB : 0 },
     ],
     perPath: pathTable,
   };
@@ -70,13 +74,20 @@ export async function abReportCta() {
     where: { ts: { gte: start, lte: end }, expCtaCopy: { not: null } },
     select: { id: true, expCtaCopy: true, landingPath: true },
   });
-  const byVar = new Map<string, { clicks: number; ids: string[]; byPath: Map<string, { clicks: number; ids: string[] }> }>();
+  const byVar = new Map<
+    string,
+    { clicks: number; ids: string[]; byPath: Map<string, { clicks: number; ids: string[] }> }
+  >();
   for (const c of clicks) {
-    const v = (c as any).expCtaCopy || "A";
-    const b = byVar.get(v) || { clicks: 0, ids: [] as string[], byPath: new Map<string, { clicks: number; ids: string[] }>() };
+    const v = (c as any).expCtaCopy || 'A';
+    const b = byVar.get(v) || {
+      clicks: 0,
+      ids: [] as string[],
+      byPath: new Map<string, { clicks: number; ids: string[] }>(),
+    };
     b.clicks++;
     b.ids.push((c as any).id);
-    const p = (c as any).landingPath || "(direct)";
+    const p = (c as any).landingPath || '(direct)';
     const bp = b.byPath.get(p) || { clicks: 0, ids: [] as string[] };
     bp.clicks++;
     bp.ids.push((c as any).id);
@@ -88,15 +99,32 @@ export async function abReportCta() {
     select: { clickId: true, amount: true },
   });
   const revByClick = new Map<string, number>();
-  for (const r of rev) revByClick.set((r as any).clickId!, (revByClick.get((r as any).clickId!) || 0) + (r as any).amount);
+  for (const r of rev)
+    revByClick.set(
+      (r as any).clickId!,
+      (revByClick.get((r as any).clickId!) || 0) + (r as any).amount
+    );
   const sum = (ids: string[]) => ids.reduce((s, id) => s + (revByClick.get(id) || 0), 0);
 
   const total = Array.from(byVar.entries())
-    .map(([v, b]) => ({ variant: v, clicks: b.clicks, revenue: sum(b.ids), epc: b.clicks ? sum(b.ids) / b.clicks : 0 }))
+    .map(([v, b]) => ({
+      variant: v,
+      clicks: b.clicks,
+      revenue: sum(b.ids),
+      epc: b.clicks ? sum(b.ids) / b.clicks : 0,
+    }))
     .sort((a, b) => b.epc - a.epc);
 
   const perPath = Array.from(byVar.entries())
-    .flatMap(([v, b]) => Array.from(b.byPath.entries()).map(([path, bp]) => ({ variant: v, path, clicks: bp.clicks, revenue: sum(bp.ids), epc: bp.clicks ? sum(bp.ids) / bp.clicks : 0 })))
+    .flatMap(([v, b]) =>
+      Array.from(b.byPath.entries()).map(([path, bp]) => ({
+        variant: v,
+        path,
+        clicks: bp.clicks,
+        revenue: sum(bp.ids),
+        epc: bp.clicks ? sum(bp.ids) / bp.clicks : 0,
+      }))
+    )
     .filter((r) => r.clicks >= 10)
     .sort((a, b) => b.epc - a.epc)
     .slice(0, 50);
@@ -112,7 +140,7 @@ export async function abReportOrder() {
   });
   const byVar = new Map<string, { clicks: number; ids: string[] }>();
   for (const c of clicks) {
-    const v = (c as any).expOffersOrder || "A";
+    const v = (c as any).expOffersOrder || 'A';
     const b = byVar.get(v) || { clicks: 0, ids: [] as string[] };
     b.clicks++;
     b.ids.push((c as any).id);
@@ -123,11 +151,20 @@ export async function abReportOrder() {
     select: { clickId: true, amount: true },
   });
   const revByClick = new Map<string, number>();
-  for (const r of rev) revByClick.set((r as any).clickId!, (revByClick.get((r as any).clickId!) || 0) + (r as any).amount);
+  for (const r of rev)
+    revByClick.set(
+      (r as any).clickId!,
+      (revByClick.get((r as any).clickId!) || 0) + (r as any).amount
+    );
   const sum = (ids: string[]) => ids.reduce((s, id) => s + (revByClick.get(id) || 0), 0);
 
   const total = Array.from(byVar.entries())
-    .map(([v, b]) => ({ variant: v, clicks: b.clicks, revenue: sum(b.ids), epc: b.clicks ? sum(b.ids) / b.clicks : 0 }))
+    .map(([v, b]) => ({
+      variant: v,
+      clicks: b.clicks,
+      revenue: sum(b.ids),
+      epc: b.clicks ? sum(b.ids) / b.clicks : 0,
+    }))
     .sort((a, b) => b.epc - a.epc);
 
   return { total };

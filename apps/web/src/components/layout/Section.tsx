@@ -3,7 +3,7 @@ export default function Section({
   title,
   subtitle,
   children,
-  className = "",
+  className = '',
 }: {
   id?: string;
   title?: string | React.ReactNode;

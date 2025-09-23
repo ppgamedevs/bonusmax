@@ -15,9 +15,11 @@ const candidates = [
 const selected = candidates.find(Boolean);
 
 if (!selected) {
-  console.error(`db-init: No UNPOOLED Postgres URL found. Expected one of: ` +
-    `DATABASE_URL_UNPOOLED, POSTGRES_PRISMA_URL, POSTGRES_URL_NON_POOLING, ` +
-    `STORAGE_DATABASE_URL_UNPOOLED, POSTGRES_POSTGRES_PRISMA_URL, POSTGRES_POSTGRES_URL_NON_POOLING.`);
+  console.error(
+    `db-init: No UNPOOLED Postgres URL found. Expected one of: ` +
+      `DATABASE_URL_UNPOOLED, POSTGRES_PRISMA_URL, POSTGRES_URL_NON_POOLING, ` +
+      `STORAGE_DATABASE_URL_UNPOOLED, POSTGRES_POSTGRES_PRISMA_URL, POSTGRES_POSTGRES_URL_NON_POOLING.`
+  );
   process.exit(1);
 }
 
