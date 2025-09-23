@@ -5,9 +5,12 @@ import { prisma } from '@bonusmax/lib';
 // Protect with a simple shared secret to avoid accidental public seeding.
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const key = url.searchParams.get('key');
-  const secret = process.env.BLOG_SEED_SECRET || process.env.NEXT_PUBLIC_BLOG_SEED_SECRET;
-  if (!secret || key !== secret) {
+  const qp = (url.searchParams.get('key') || '').trim();
+  const auth = (req.headers.get('authorization') || '').trim();
+  const bearer = auth.toLowerCase().startsWith('bearer ') ? auth.slice(7).trim() : '';
+  const provided = qp || bearer;
+  const secret = (process.env.BLOG_SEED_SECRET || process.env.NEXT_PUBLIC_BLOG_SEED_SECRET || '').trim();
+  if (!secret || provided !== secret) {
     return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 });
   }
 
