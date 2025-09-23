@@ -6,6 +6,7 @@ import { configureSeo, jsonLdOrganization, jsonLdWebsite } from '@bonusmax/lib';
 import { siteConfig } from '@/config/site';
 import { ThemeProvider } from 'next-themes';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main>{children}</main>
           <Footer />
           <CookieConsentBanner />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
