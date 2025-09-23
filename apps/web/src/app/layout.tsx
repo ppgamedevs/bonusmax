@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site';
 import { ThemeProvider } from 'next-themes';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Footer />
           <CookieConsentBanner />
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
