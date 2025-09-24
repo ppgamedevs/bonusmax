@@ -16,7 +16,7 @@ export default function TopTodayCarousel({ id, children }: { id: string; childre
         aria-hidden
       />
 
-      <div id={`${id}-scroller`} className="-mx-4 overflow-x-auto px-4 scrollbar-none" style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '280px' }}>
+      <div id={`${id}-scroller`} className="-mx-4 overflow-x-auto px-4 scrollbar-none">
         <div className="flex snap-x snap-mandatory gap-4 pb-2" style={{ minHeight: 280 }}>
           {children}
         </div>
