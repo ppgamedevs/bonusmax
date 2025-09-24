@@ -15,12 +15,33 @@ function pseudoClaims(id: string): number {
 export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
   const [ids, setIds] = useState<string[]>([]);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [showEdges, setShowEdges] = useState(false);
 
   useEffect(() => {
     const load = () => setIds(getCompareIds());
     load();
     window.addEventListener('storage', load);
     return () => window.removeEventListener('storage', load);
+  }, []);
+
+  // Detect if horizontal overflow exists; only then show edge gradients
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const update = () => {
+      const hasOverflow = el.scrollWidth > el.clientWidth + 1;
+      setShowEdges(hasOverflow);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    el.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      ro.disconnect();
+      el.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, []);
 
   const items = useMemo(() => offers || [], [offers]);
@@ -30,16 +51,20 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
   };
 
   return (
-    <div className="relative pb-6 md:pb-8">
+    <div className="relative pb-2 md:pb-3">
       {/* gradient edges */}
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/10 to-transparent dark:from-black/30"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/10 to-transparent dark:from-black/30"
-        aria-hidden
-      />
+      {showEdges && (
+        <>
+          <div
+            className="pointer-events-none absolute inset-y-1 left-0 w-4 md:w-6 lg:w-8 bg-gradient-to-r from-black/5 to-transparent dark:from-black/25 rounded-l"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-y-1 right-0 w-4 md:w-6 lg:w-8 bg-gradient-to-l from-black/5 to-transparent dark:from-black/25 rounded-r"
+            aria-hidden
+          />
+        </>
+      )}
       <div ref={scrollerRef} className="-mx-4 overflow-x-auto px-4 scrollbar-none">
         <div className="flex snap-x snap-mandatory gap-4 pb-2">
           {items.map((o: any) => {
