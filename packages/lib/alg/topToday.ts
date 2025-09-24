@@ -38,10 +38,16 @@ export function scoreOffer(i: RankInput, opts?: { halfLifeH?: number }) {
 export async function getTopTodayOffers(limit = 6, windowHours = 72) {
   const now = new Date();
   const start = new Date(now.getTime() - windowHours * 36e5);
+  const start24 = new Date(now.getTime() - 24 * 36e5);
 
   const clicks = await prisma.clickEvent.groupBy({
     by: ['offerId'],
     where: { ts: { gte: start, lte: now } },
+    _count: { offerId: true },
+  });
+  const clicks24 = await prisma.clickEvent.groupBy({
+    by: ['offerId'],
+    where: { ts: { gte: start24, lte: now } },
     _count: { offerId: true },
   });
   const imps = await (prisma as any).offerImpression.groupBy({
@@ -54,6 +60,9 @@ export async function getTopTodayOffers(limit = 6, windowHours = 72) {
   );
   const clkMap: Map<string, number> = new Map(
     clicks.map((c: any) => [c.offerId as string, c._count.offerId as number])
+  );
+  const clk24Map: Map<string, number> = new Map(
+    clicks24.map((c: any) => [c.offerId as string, c._count.offerId as number])
   );
 
   const offers = await prisma.offer.findMany({
@@ -73,6 +82,7 @@ export async function getTopTodayOffers(limit = 6, windowHours = 72) {
 
   const scored: any[] = offers.map((o: any) => {
     const clicks = clkMap.get(o.id) ?? 0;
+    const clicks24h = clk24Map.get(o.id) ?? 0;
     const impressions = impMap.get(o.id) ?? 0;
     const s = scoreOffer({
       offerId: o.id,
@@ -82,7 +92,7 @@ export async function getTopTodayOffers(limit = 6, windowHours = 72) {
       clicks,
       impressions,
     });
-    return { offer: o, ...s };
+    return { offer: o, clicks24h, ...s };
   });
 
   scored.sort((a, b) => {

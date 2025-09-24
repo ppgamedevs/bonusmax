@@ -4,12 +4,11 @@ import { motion } from 'framer-motion';
 import OfferCard from '../offers/OfferCard';
 import { getCompareIds, toggleCompare } from '../../lib/compare';
 
-function pseudoClaims(id: string): number {
-  // Stable pseudo-random between 24 and 240 per id
+function stableSmallOffset(id: string): number {
+  // Stable pseudo-random integer in [2,6]
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  const n = 24 + (h % 217); // 24..240
-  return n;
+  return 2 + (h % 5); // 2..6
 }
 
 export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
@@ -69,7 +68,8 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
         <div className="flex snap-x snap-mandatory gap-4 pb-2">
           {items.map((o: any) => {
             const inCompare = ids.includes(o.id);
-            const claims = o.claims24h ?? pseudoClaims(o.id);
+            const real = typeof o.clicks24h === 'number' ? o.clicks24h : 0;
+            const claims = Math.max(0, real) + stableSmallOffset(o.id);
             return (
               <motion.div
                 key={o.id}
@@ -111,7 +111,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
         <button
           type="button"
           aria-label="Scroll left"
-          className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/70 text-black shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/70 dark:text-white"
+          className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/80 text-black text-xl shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/80 dark:text-white"
           onClick={() => {
             const el = scrollerRef.current;
             if (!el) return;
@@ -123,7 +123,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
         <button
           type="button"
           aria-label="Scroll right"
-          className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/70 text-black shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/70 dark:text-white"
+          className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/80 text-black text-xl shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/80 dark:text-white"
           onClick={() => {
             const el = scrollerRef.current;
             if (!el) return;

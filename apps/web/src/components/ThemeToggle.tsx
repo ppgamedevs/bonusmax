@@ -34,7 +34,7 @@ export default function ThemeToggle() {
           )}
         </span>
       </span>
-      <span className="hidden lg:inline ml-auto whitespace-nowrap text-[11px]">{isDark ? 'Întunecată' : 'Luminoasă'}</span>
+      <span className="hidden lg:inline ml-auto whitespace-nowrap text-[11px]">{isDark ? 'Luminoasă' : 'Întunecată'}</span>
     </button>
   );
 }
