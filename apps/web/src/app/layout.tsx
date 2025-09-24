@@ -10,6 +10,9 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter } from 'next/font/google';
 
+// Fonts must be instantiated at module scope
+const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '600', '800'] });
+
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
   // Next.js sets UTF-8 by default; keeping icons here.
@@ -25,7 +28,6 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '600', '800'] });
   // Configure SEO defaults from app site config
   configureSeo({
     name: siteConfig.name,

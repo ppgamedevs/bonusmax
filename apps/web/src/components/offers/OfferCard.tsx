@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { motion, useReducedMotion } from 'framer-motion';
 
 export type OfferCardProps = {
   id: string;
@@ -42,30 +41,6 @@ export default function OfferCard({
   days,
   spins,
 }: OfferCardProps) {
-  const r = useReducedMotion();
-
-  function handleRipple(e: React.MouseEvent<HTMLAnchorElement>) {
-    const el = e.currentTarget as HTMLElement;
-    const rect = el.getBoundingClientRect();
-    const span = document.createElement('span');
-    const size = Math.max(rect.width, rect.height);
-    span.style.position = 'absolute';
-    span.style.left = `${e.clientX - rect.left - size / 2}px`;
-    span.style.top = `${e.clientY - rect.top - size / 2}px`;
-    span.style.width = span.style.height = `${size}px`;
-    span.style.borderRadius = '9999px';
-    span.style.background = 'rgba(255,255,255,0.25)';
-    span.style.transform = 'scale(0)';
-    span.style.opacity = '0.7';
-    span.style.pointerEvents = 'none';
-    span.style.transition = 'transform 400ms ease, opacity 600ms ease';
-    el.appendChild(span);
-    requestAnimationFrame(() => {
-      span.style.transform = 'scale(1)';
-      span.style.opacity = '0';
-    });
-    setTimeout(() => span.remove(), 650);
-  }
 
   function WRTooltip() {
     const tip =
@@ -80,9 +55,7 @@ export default function OfferCard({
   }
 
   return (
-    <motion.div
-      whileHover={r ? undefined : { y: -2, scale: 1.01, rotateX: 0.5, rotateY: -0.5 }}
-      transition={{ type: 'spring', stiffness: 350, damping: 25, mass: 0.3 }}
+    <div
       className={clsx(
         'group relative flex h-full flex-col justify-between rounded-2xl p-4 shadow-sm ring-1 will-change-transform overflow-hidden',
         // dark matte base + subtle border
@@ -176,7 +149,7 @@ export default function OfferCard({
           href={ctaHref}
           aria-label="Revendică bonusul (Conținut comercial, 18+)"
           className="btn-accent h-11 w-full focus-accent relative overflow-hidden"
-          onMouseDown={handleRipple}
+          data-cta
           rel="nofollow sponsored noopener"
         >
           Revendică bonusul
@@ -210,7 +183,7 @@ export default function OfferCard({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
