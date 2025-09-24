@@ -91,6 +91,13 @@ export default function OfferCard({
         'bg-white/80 border-neutral-200 ring-neutral-200/50',
         className
       )}
+      style={{
+        // Reserve vertical space to reduce CLS on first render
+        minHeight: 320,
+        // Hint to the browser to skip rendering until needed, but reserve layout size
+        contentVisibility: 'auto',
+        containIntrinsicSize: '320px',
+      }}
     >
       {/* hover shader subtil */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-white/10 transition-opacity duration-200 group-hover:opacity-100" />

@@ -15,6 +15,7 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
   const [ids, setIds] = useState<string[]>([]);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [showEdges, setShowEdges] = useState(false);
+  const [readyAnim, setReadyAnim] = useState(false);
 
   useEffect(() => {
     const load = () => setIds(getCompareIds());
@@ -64,8 +65,8 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
           />
         </>
       )}
-      <div ref={scrollerRef} className="-mx-4 overflow-x-auto px-4 scrollbar-none">
-        <div className="flex snap-x snap-mandatory gap-4 pb-2">
+      <div ref={scrollerRef} className="-mx-4 overflow-x-auto px-4 scrollbar-none" style={{ contentVisibility: 'auto', containIntrinsicSize: '280px' }}>
+        <div className="flex snap-x snap-mandatory gap-4 pb-2" style={{ minHeight: 280 }}>
           {items.map((o: any) => {
             const inCompare = ids.includes(o.id);
             const real = typeof o.clicks24h === 'number' ? o.clicks24h : 0;
@@ -74,8 +75,8 @@ export default function TopTodayCarouselClient({ offers }: { offers: any[] }) {
               <motion.div
                 key={o.id}
                 className="snap-start shrink-0 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[32%]"
-                initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={readyAnim ? { opacity: 0, y: 16, scale: 0.98 } : false as any}
+                whileInView={readyAnim ? { opacity: 1, y: 0, scale: 1 } : undefined}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
               >

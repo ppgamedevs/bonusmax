@@ -8,6 +8,7 @@ import { ThemeProvider } from 'next-themes';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Inter } from 'next/font/google';
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
@@ -24,6 +25,7 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '600', '800'] });
   // Configure SEO defaults from app site config
   configureSeo({
     name: siteConfig.name,
@@ -37,7 +39,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const siteLd = jsonLdWebsite();
   return (
     <html lang="ro" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <head>
+        {/* Preconnect image CDNs used across the site to speed up LCP image fetches */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+      </head>
+      <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd) }} />
