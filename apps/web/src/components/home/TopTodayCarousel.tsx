@@ -1,4 +1,4 @@
-'use server';
+// Server component by default
 import type { ReactNode } from 'react';
 import TopTodayCarouselEnhancer from './TopTodayCarouselEnhancer';
 
