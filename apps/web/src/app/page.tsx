@@ -60,18 +60,28 @@ export default async function HomePage() {
       <Hero />
       <HeroOfferMockup {...(heroProps || {})} />
       {/* Moved full Trust & Safety section here instead of small signals strip */}
-      <TrustSafety />
-      <Suspense fallback={<SkeletonStats />}>
-        <SocialProof />
-      </Suspense>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '360px' }}>
+        <TrustSafety />
+      </div>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '280px' }}>
+        <Suspense fallback={<SkeletonStats />}>
+          <SocialProof />
+        </Suspense>
+      </div>
       {/* Chapter 2: Top bonuses carousel */}
-      <PromoStrip slot="HOME_TOP" title="Sponsored pe homepage" />
-      <TopTodayHeader />
-      <Suspense fallback={<SkeletonCards n={6} />}>
-        <TopToday />
-      </Suspense>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
+        <PromoStrip slot="HOME_TOP" title="Sponsored pe homepage" />
+      </div>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '80px' }}>
+        <TopTodayHeader />
+      </div>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '360px' }}>
+        <Suspense fallback={<SkeletonCards n={6} />}>
+          <TopToday />
+        </Suspense>
+      </div>
       {/* Chapter 3: Comparison grid */}
-      <section className="mx-auto mt-10 max-w-6xl px-4">
+      <section className="mx-auto mt-10 max-w-6xl px-4" style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '1200px' }}>
         <h2 className="text-xl font-bold u-underline-hover">Toate ofertele recomandate</h2>
         <DisclosureBar />
         <div className="mt-4">
@@ -82,19 +92,31 @@ export default async function HomePage() {
         </p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
-      <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
+        <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
+      </div>
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
-      <GuidesTeaser />
-      <FaqAccordion />
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '520px' }}>
+        <GuidesTeaser />
+      </div>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '520px' }}>
+        <FaqAccordion />
+      </div>
       {/* Newsletter & spacing before footer */}
-      <NewsletterSignup />
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '420px' }}>
+        <NewsletterSignup />
+      </div>
       {/* Leave a bit of space before CompareUI */}
-      <div className="mt-6">
+      <div className="mt-6" style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '200px' }}>
         <CompareUI />
       </div>
-      <TrustBarMobile />
-      <StickyCtaMobile />
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
+        <TrustBarMobile />
+      </div>
+      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '80px' }}>
+        <StickyCtaMobile />
+      </div>
     </main>
   );
 }

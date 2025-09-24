@@ -3,6 +3,7 @@ export const revalidate = 60;
 
 import type { Metadata } from 'next';
 import { absoluteUrl, defaultMetadata, jsonLdBreadcrumb } from '@bonusmax/lib';
+import BackHome from '@/components/BackHome';
 
 export const metadata: Metadata = defaultMetadata({
   title: 'Termeni și condiții',
@@ -38,26 +39,28 @@ export default function Page() {
 
       {/* Hero */}
       <header className="mx-auto max-w-4xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
+        <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-neutral-700 dark:text-zinc-300 border-neutral-200 bg-neutral-50 dark:border-white/10 dark:bg-white/5">
           <span className="inline-flex h-2 w-2 rounded-full bg-amber-400" aria-hidden />
           Termeni de utilizare
         </div>
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight">Termeni și condiții</h1>
-        <p className="mt-2 max-w-2xl text-sm text-zinc-300">
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">Termeni și condiții</h1>
+        <p className="mt-2 max-w-2xl text-sm text-neutral-700 dark:text-zinc-200">
           Te rugăm să citești cu atenție acești termeni. Accesarea și folosirea site-ului implică
           acceptarea lor.
         </p>
-        <div className="mt-3 text-xs text-zinc-400">Ultima actualizare: {new Date(lastUpdated).toLocaleDateString('ro-RO')}</div>
+        <div className="mt-3 text-xs text-neutral-600 dark:text-zinc-400">Ultima actualizare: {new Date(lastUpdated).toLocaleDateString('ro-RO')}</div>
       </header>
+
+      <BackHome />
 
       <div className="mt-8 grid gap-8 md:grid-cols-[220px_1fr]">
         <nav className="hidden md:block">
-          <div className="sticky top-24 rounded-xl border border-white/10 bg-white/5 p-3 text-sm">
-            <div className="px-1 text-xs font-semibold uppercase tracking-wide opacity-70">Cuprins</div>
+          <div className="sticky top-24 rounded-xl border p-3 text-sm border-neutral-200 bg-white dark:border-white/10 dark:bg-white/5">
+            <div className="px-1 text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:text-zinc-400">Cuprins</div>
             <ul className="mt-2 space-y-1">
               {sections.map((s) => (
                 <li key={s.id}>
-                  <a className="block rounded px-2 py-1 text-zinc-300 hover:bg-white/10" href={`#${s.id}`}>
+                  <a className="block rounded px-2 py-1 text-neutral-700 hover:bg-neutral-100 dark:text-zinc-300 dark:hover:bg-white/10" href={`#${s.id}`}>
                     {s.title}
                   </a>
                 </li>
@@ -66,7 +69,7 @@ export default function Page() {
           </div>
         </nav>
 
-        <article className="prose prose-invert max-w-none">
+        <article className="prose max-w-none prose-neutral dark:prose-invert">
           <section id="acceptare">
             <h2>Acceptarea termenilor</h2>
             <p>

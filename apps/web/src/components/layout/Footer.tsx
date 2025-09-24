@@ -85,6 +85,11 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link className={link} href="/politica-cookie">
+                Politica de Cookie-uri
+              </Link>
+            </li>
+            <li>
               <Link className={link} href="/termeni-si-conditii">
                 Termeni și condiții
               </Link>

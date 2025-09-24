@@ -78,7 +78,7 @@ export default function HeroOfferMockup({
       whileHover={{ y: -2 }}
       transition={{ type: 'spring', stiffness: 300, damping: 24 }}
     >
-      <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-neutral-950/80 p-5 shadow-xl ring-1 ring-white/10 dark:bg-neutral-900/70">
+      <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-neutral-950/80 p-5 shadow-xl ring-1 ring-white/10 dark:bg-neutral-900/70" style={{ containIntrinsicSize: '380px', contentVisibility: 'auto' as any }}>
         {/* Soft gradient blend with Betano orange */}
         <div
           className="pointer-events-none absolute inset-0 opacity-60 mix-blend-screen"
@@ -104,7 +104,14 @@ export default function HeroOfferMockup({
 
         <div className="relative z-10 flex items-start gap-4">
           <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-black/20 ring-1 ring-white/15">
-            <Image src={logoUrl || '/logos/betano.png'} alt={brand} width={40} height={40} />
+            <Image
+              src={logoUrl || '/logos/betano.png'}
+              alt={brand}
+              width={40}
+              height={40}
+              sizes="48px"
+              priority
+            />
           </div>
           <div>
             <div className="text-xs uppercase tracking-wide text-white/80">
