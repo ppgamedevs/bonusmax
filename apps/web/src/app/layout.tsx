@@ -9,6 +9,7 @@ import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter } from 'next/font/google';
+import PerformanceMonitor from '@/components/PerformanceMonitor';
 
 // Fonts must be instantiated at module scope
 const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '700'] });
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <CookieConsentBanner />
           <Analytics />
           <SpeedInsights />
+          <PerformanceMonitor />
         </ThemeProvider>
       </body>
     </html>

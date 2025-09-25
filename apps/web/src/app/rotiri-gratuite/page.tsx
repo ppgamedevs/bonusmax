@@ -6,6 +6,9 @@ import FilterBar from '@/components/FilterBar';
 import DisclosureBar from '@/components/DisclosureBar';
 import PromoStrip from '@/components/PromoStrip';
 import OffersGrid from '@/components/offers/OffersGrid';
+import BackHome from '@/components/BackHome';
+import NextDynamic from 'next/dynamic';
+const CompareUIDynamic = NextDynamic(() => import('@/components/compare/CompareUI'));
 
 function parseNumber(v: string | string[] | undefined) {
   if (!v || Array.isArray(v)) return undefined;
@@ -53,6 +56,7 @@ export default async function Page({
   return (
     <main className="container mx-auto px-4 py-8" id="main">
       <h1 className="text-2xl font-bold mb-4">Rotiri gratuite</h1>
+      <BackHome />
       <DisclosureBar />
       {/* Sponsored strip (kept for visibility); the list below is also pinned */}
       <PromoStrip slot="HUB_ROTIRI" title="Sponsored — Rotiri gratuite" />
@@ -110,6 +114,9 @@ export default async function Page({
           </p>
         </>
       )}
+      
+      {/* Compare UI */}
+      <CompareUIDynamic />
     </main>
   );
 }

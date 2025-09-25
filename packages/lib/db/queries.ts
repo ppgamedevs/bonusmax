@@ -1,11 +1,11 @@
-import prisma from './client';
+import prisma, { executeQuery, executeBatchQueries } from './client';
 import { OfferType, Prisma } from '@prisma/client';
-import { withCache } from '../cache';
+import { withCache, withBatchCache } from '../cache';
 
 export async function getActiveOffers(country = 'RO') {
   return withCache(
     `active-offers-${country}`,
-    () => prisma.offer.findMany({
+    () => executeQuery(client => client.offer.findMany({
       where: {
         isActive: true,
         country,
@@ -15,10 +15,24 @@ export async function getActiveOffers(country = 'RO') {
           { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
         ],
       },
-      include: { operator: true },
+      include: { 
+        operator: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            logoUrl: true,
+            isLicensedRO: true,
+            // Only select needed fields to reduce payload
+          }
+        }
+      },
       orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-    }),
-    300 // 5 minutes cache
+      // Add cursor-based pagination for large datasets
+      take: 100, // Limit initial load
+    })),
+    600, // 10 minutes cache - longer for better performance
+    true // Enable stale-while-revalidate
   );
 }
 

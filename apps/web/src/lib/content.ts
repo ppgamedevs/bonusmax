@@ -204,7 +204,7 @@ export async function getGuideBySlug(slug: string) {
   const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
     source,
     options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
-    components: (await import('../mdx/components')).default,
+    components: (await import('@/mdx/components')).default,
   });
 
   return { content, frontmatter, headings };
