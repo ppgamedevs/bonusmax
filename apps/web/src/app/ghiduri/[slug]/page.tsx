@@ -1,5 +1,5 @@
-export const dynamic = 'force-dynamic';
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 600; // 10 minutes - guides don't change often
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { absoluteUrl, defaultMetadata, jsonLdBreadcrumb } from '@bonusmax/lib';

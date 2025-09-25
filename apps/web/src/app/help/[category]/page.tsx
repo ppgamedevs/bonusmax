@@ -1,5 +1,5 @@
-export const dynamic = 'force-dynamic';
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 600; // 10 minutes - help content doesn't change often
 
 import type { Metadata } from 'next';
 import Link from 'next/link';

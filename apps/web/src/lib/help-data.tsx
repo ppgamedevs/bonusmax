@@ -374,6 +374,89 @@ Operatorii trebuie să ofere instrumente: limite depunere, auto-excludere, istor
 <ButtonLink href="/onjn/operatori-licentiati">Vezi operatori licențiați ONJN</ButtonLink>`,
   },
   {
+    id: '11',
+    category: 'legal-conformitate',
+    slug: 'gdpr',
+    title: 'GDPR și datele tale',
+    excerpt: 'Cum îți protejăm datele personale conform GDPR.',
+    updatedAt: '2024-09-25',
+    readMins: 4,
+    kind: 'Ghid',
+    content: `# GDPR și datele tale
+
+<Callout type="info" title="Protecția datelor">
+Respectăm GDPR și îți protejăm datele personale conform legislației europene.
+</Callout>
+
+## Ce date colectăm
+- **Date de identificare**: nume, email, telefon
+- **Date de utilizare**: istoricul navigării, preferințe
+- **Date tehnice**: IP, browser, dispozitiv
+
+## Cum folosim datele
+1. **Furnizarea serviciilor** - pentru funcționarea platformei
+2. **Comunicare** - newsletter și notificări (cu acordul tău)
+3. **Îmbunătățiri** - analiză și optimizare
+
+## Drepturile tale GDPR
+- **Dreptul de acces** - să știi ce date avem despre tine
+- **Dreptul de rectificare** - să corectezi datele greșite
+- **Dreptul de ștergere** - să îți ștergi contul și datele
+- **Dreptul de portabilitate** - să îți exporți datele
+
+## Contact pentru GDPR
+Pentru exercitarea drepturilor GDPR, contactează-ne la: privacy@bonusmax.ro
+
+<ButtonLink href="/politica-confidentialitate">Citește politica completă</ButtonLink>`,
+  },
+  {
+    id: '12',
+    category: 'legal-conformitate',
+    slug: 'termeni-conditii',
+    title: 'Termeni și condiții',
+    excerpt: 'Termenii de utilizare a platformei Bonusmax.',
+    updatedAt: '2024-09-25',
+    readMins: 5,
+    kind: 'Ghid',
+    content: `# Termeni și condiții
+
+## Utilizarea platformei
+Bonusmax este o platformă informativă despre bonusuri de casino și pariuri din România.
+
+<Callout type="warning" title="Important">
+Nu suntem un operator de jocuri de noroc. Oferim doar informații și comparații.
+</Callout>
+
+## Condiții de utilizare
+1. **Vârsta minimă**: 18 ani pentru utilizarea serviciilor
+2. **Utilizare legală**: doar în scopuri legale și conforme
+3. **Responsabilitate**: joci pe propria răspundere
+
+## Conținut comercial
+- Unele linkuri sunt sponsorizate
+- Marcăm clar conținutul comercial
+- Primim comisioane de la operatori
+
+## Limitarea răspunderii
+- Informațiile sunt furnizate "ca atare"
+- Nu garantăm acuratețea completă
+- Nu suntem responsabili pentru deciziile tale de joc
+
+## Joc responsabil
+<Callout type="error" title="18+ Joacă responsabil">
+Jocurile de noroc pot crea dependență. Joacă doar cu bani pe care îți permiți să îi pierzi.
+</Callout>
+
+- Setează limite de timp și bani
+- Nu juca pentru a recupera pierderile
+- Caută ajutor dacă pierzi controlul
+
+## Contact
+Pentru întrebări despre termeni: legal@bonusmax.ro
+
+<ButtonLink href="/joc-responsabil">Resurse joc responsabil</ButtonLink>`,
+  },
+  {
     id: '8',
     category: 'tehnic-securitate',
     slug: 'securitate-2fa',
@@ -447,5 +530,95 @@ Poți solicita temporar (1–6 luni) sau permanent. Efectul este imediat.
 - ANPC/ONJN — informații oficiale
 
 <ButtonLink href="/joc-responsabil">Vezi instrumente de joc responsabil</ButtonLink>`,
+  },
+  // Missing articles referenced in topLinks
+  {
+    id: '13',
+    category: 'cont-preferinte',
+    slug: 'cum-ma-inregistrez',
+    title: 'Cum mă înregistrez?',
+    excerpt: 'Ghid pas cu pas pentru înregistrarea unui cont nou.',
+    updatedAt: '2024-09-25',
+    readMins: 2,
+    kind: 'Ghid',
+    content: `# Cum mă înregistrez?
+
+## Pași pentru înregistrare
+
+1. **Accesează site-ul operatorului** licențiat ONJN
+2. **Apasă "Înregistrare"** sau "Cont nou"
+3. **Completează datele** (nume, email, telefon, dată nașterii)
+4. **Alege o parolă** sigură (minim 8 caractere)
+5. **Acceptă termenii** și confirmă că ai peste 18 ani
+6. **Verifică email-ul** - click pe linkul primit
+
+<Callout type="info" title="Verificare obligatorie">
+Vei primi un email de confirmare. Fără această verificare, contul rămâne inactiv.
+</Callout>
+
+## Ce date sunt necesare?
+
+- **Nume complet** (ca pe CI)
+- **Email valid** (pentru comunicare)
+- **Număr de telefon** (pentru securitate)
+- **Dată nașterii** (verificare vârstă)
+- **Adresă** (pentru verificări KYC)
+
+## După înregistrare
+
+1. **Verifică email-ul** și activează contul
+2. **Completează profilul** cu informații suplimentare
+3. **Setează limite** de depunere (recomandat)
+4. **Activează 2FA** pentru securitate extra
+
+<ButtonLink href="/help/tehnic-securitate/securitate-2fa">Activează 2FA</ButtonLink>`,
+  },
+  {
+    id: '14',
+    category: 'cont-preferinte',
+    slug: 'stergere-cont',
+    title: 'Ștergere cont',
+    excerpt: 'Cum să îți ștergi contul definitiv.',
+    updatedAt: '2024-09-25',
+    readMins: 3,
+    kind: 'Ghid',
+    content: `# Ștergere cont
+
+<Callout type="warning" title="Atenție">
+Ștergerea contului este definitivă și nu poate fi anulată.
+</Callout>
+
+## Înainte de ștergere
+
+1. **Retrage toate fondurile** din cont
+2. **Anulează bonusurile** active
+3. **Salvează documentele** importante (istoric tranzacții)
+4. **Verifică dacă ai tranzacții** în așteptare
+
+## Cum ștergi contul
+
+### Metoda 1: Din setările contului
+1. Mergi la **Setări cont** → **Securitate**
+2. Caută opțiunea **"Închide cont"** sau **"Șterge cont"**
+3. Confirmă decizia și motivul
+4. Urmează instrucțiunile primite pe email
+
+### Metoda 2: Contact suport
+1. **Trimite email** la suportul operatorului
+2. **Specifică cererea** de închidere cont
+3. **Furnizează datele** de identificare
+4. **Confirmă** prin răspuns la email
+
+## Perioada de răgândire
+
+Majoritatea operatorilor oferă **24-48 ore** pentru anularea cererii de închidere.
+
+## Ce se întâmplă cu datele
+
+- **Datele personale** sunt anonimizate conform GDPR
+- **Istoricul jocurilor** este păstrat pentru audit (5 ani)
+- **Comunicările** sunt oprite imediat
+
+<ButtonLink href="/help/legal-conformitate/gdpr">Află mai multe despre GDPR</ButtonLink>`,
   },
 ];

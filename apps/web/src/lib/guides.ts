@@ -1,7 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import matter from 'gray-matter';
-
 export type Guide = {
   slug: string;
   title: string;
@@ -9,27 +5,145 @@ export type Guide = {
   updatedAt?: string;
   headings: { depth: number; text: string; id: string }[];
   source: string;
+  faqs?: { q: string; a: string }[];
 };
 
-// Resolve from apps/web working directory to monorepo packages/content/ghiduri
-const DIR = path.join(process.cwd(), '../../packages/content/ghiduri');
+// Embedded guides data to avoid file system issues in production
+const guidesData: Array<{
+  slug: string;
+  title: string;
+  description: string;
+  updatedAt: string;
+  content: string;
+  faqs?: { q: string; a: string }[];
+}> = [
+  {
+    slug: 'bonus-fara-depunere',
+    title: 'Bonus fără depunere: cum funcționează + capcane',
+    description: 'Ghid simplu despre bonusurile fără depunere: termeni, WR, capcane și cum alegi corect.',
+    updatedAt: '2025-09-01',
+    content: `# Bonus fără depunere: cum funcționează + capcane
+
+<Callout type="info" title="Verifică mereu">
+Verifică mereu WR, contribuția jocurilor și plafonul de cashout.
+</Callout>
+
+## Ce sunt bonusurile fără depunere?
+
+Bonusurile fără depunere sunt oferte prin care operatorii îți dau bani sau rotiri gratuite fără să depui nimic. Sună prea bine ca să fie adevărat? Ei bine, există câteva capcane importante.
+
+## Lista scurtă de verificat:
+
+- **WR mai mic = mai bine** (sub x30 este decent)
+- **Min. depozit mic = accesibil** pentru majoritatea jucătorilor
+- **Citește T&C complet** - nu te baza doar pe titlu
+
+## Capcane frecvente
+
+### 1. WR foarte mare
+Unii operatori oferă 50 RON bonus cu WR x50. Asta înseamnă că trebuie să rulezi 2.500 RON pentru a putea retrage.
+
+### 2. Contribuția jocurilor
+Nu toate jocurile contribuie 100% la WR:
+- Sloturi: 100%
+- Blackjack: 10-20%
+- Ruletă: 10-50%
+
+### 3. Plafon de cashout
+Multe bonusuri fără depunere au o limită maximă de retragere (ex. 100 RON), indiferent cât câștigi.
+
+## Cum alegi corect
+
+1. **Compară WR-ul** - sub x30 este rezonabil
+2. **Verifică jocurile eligibile** - asigură-te că poți juca ce îți place
+3. **Citește plafonul de cashout** - să nu ai surprize
+4. **Verifică termenul limită** - de obicei 7-30 zile
+
+<Callout type="warning" title="Atenție">
+Bonusurile fără depunere sunt pentru testare, nu pentru câștiguri mari. Joacă responsabil!
+</Callout>`,
+    faqs: [
+      { q: 'Ce înseamnă WR?', a: 'Wagering Requirement — de câte ori trebuie rulate sumele înainte de retragere.' },
+      { q: 'Pot retrage imediat?', a: 'Nu. De obicei există WR, perioadă limitată și plafon de cashout.' },
+    ],
+  },
+  {
+    slug: 'rotiri-gratuite',
+    title: 'Rotiri gratuite: cum profiți legal',
+    description: 'Tot ce trebuie să știi despre free spins: contribuții, RTP, limitări.',
+    updatedAt: '2025-09-01',
+    content: `# Rotiri gratuite: cum profiți legal
+
+<Callout type="warning" title="Regula de aur">
+Nu urmări pierderile. Stabilește-ți un buget și respectă-l.
+</Callout>
+
+## Ce sunt rotirile gratuite?
+
+Rotirile gratuite (free spins) sunt rotiri la sloturi pe care le primești fără să plătești. Pot veni ca bonus de bun venit, promoție sau parte dintr-o ofertă mai mare.
+
+## Tipuri de rotiri gratuite
+
+### 1. Fără depunere
+- Primești rotiri doar pentru înregistrare
+- De obicei 10-50 rotiri
+- WR pe câștiguri: x20-x40
+
+### 2. Cu depunere
+- Parte din pachetul de bun venit
+- 50-200 rotiri
+- WR mai mic: x15-x30
+
+### 3. Rotiri recurente
+- Promoții săptămânale
+- Pentru jucători activi
+- Condiții variabile
+
+## Aspecte importante
+
+### RTP și volatilitate
+- **RTP mare** (peste 96%) = șanse mai bune pe termen lung
+- **Volatilitate mică** = câștiguri mici dar frecvente
+- **Volatilitate mare** = câștiguri rare dar mari
+
+### Contribuția la WR
+Nu toate sloturile contribuie 100% la îndeplinirea WR:
+- Sloturi populare: 100%
+- Sloturi cu jackpot: 50-80%
+- Sloturi excluse: 0%
+
+### Valoarea rotirilor
+- Rotiri de 0.10 RON = valoare mică
+- Rotiri de 1 RON = valoare mare
+- Verifică întotdeauna valoarea în T&C
+
+## Strategii pentru maximizarea profitului
+
+1. **Alege sloturi cu RTP mare** (NetEnt, Play'n GO)
+2. **Respectă bugetul** - nu depune mai mult pentru rotiri
+3. **Citește restricțiile** - unele rotiri sunt doar pe anumite jocuri
+4. **Joacă când ai timp** - nu te grăbi să îndeplinești WR
+
+<Callout type="success" title="Sfat pro">
+Folosește rotirile gratuite pentru a testa jocuri noi fără risc financiar.
+</Callout>`,
+    faqs: [
+      { q: 'Toate sloturile contribuie 100%?', a: 'Nu. Unele jocuri au contribuție redusă în WR.' },
+      { q: 'Pot alege eu slotul?', a: 'Depinde de ofertă. Unele rotiri sunt pe sloturi specifice.' },
+    ],
+  },
+];
 
 export function getAllGuidesMeta(): Array<
   Pick<Guide, 'slug' | 'title' | 'description' | 'updatedAt'>
 > {
-  const files = fs.existsSync(DIR) ? fs.readdirSync(DIR).filter((f) => f.endsWith('.mdx')) : [];
-  return files
-    .map((f) => {
-      const slug = f.replace(/\.mdx$/, '');
-      const raw = fs.readFileSync(path.join(DIR, f), 'utf8');
-      const { data } = matter(raw);
-      return {
-        slug,
-        title: (data as any).title || slug,
-        description: (data as any).description || '',
-        updatedAt: (data as any).updatedAt || (data as any).date || '',
-      };
-    })
+  return guidesData
+    .map(({ slug, title, description, updatedAt }) => ({
+      slug,
+      title,
+      description: description || '',
+      updatedAt: updatedAt || '',
+    }))
     .sort((a, b) => {
       const ad = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
       const bd = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
@@ -38,9 +152,12 @@ export function getAllGuidesMeta(): Array<
 }
 
 export function loadGuide(slug: string): Guide {
-  const file = path.join(DIR, `${slug}.mdx`);
-  const raw = fs.readFileSync(file, 'utf8');
-  const { data, content } = matter(raw);
+  const guideData = guidesData.find(g => g.slug === slug);
+  if (!guideData) {
+    throw new Error(`Guide not found: ${slug}`);
+  }
+
+  const content = guideData.content;
   const headings = Array.from(content.matchAll(/^(\#{2,3})\s+(.+)$/gm)).map((m) => {
     const depth = (m[1] as string).length;
     const text = (m[2] as string).trim();
@@ -52,6 +169,7 @@ export function loadGuide(slug: string): Guide {
       .replace(/^-|-$/g, '');
     return { depth, text, id };
   });
+  
   // Add anchors to h2/h3
   const source = content.replace(/^(\#{2,3}\s+)(.+)$/gm, (_: string, h: string, t: string) => {
     const id = t
@@ -62,12 +180,14 @@ export function loadGuide(slug: string): Guide {
       .replace(/^-|-$/g, '');
     return `${h}<a id="${id}"></a>${t}`;
   });
+  
   return {
-    slug,
-    title: (data as any).title || slug,
-    description: (data as any).description || '',
-    updatedAt: (data as any).updatedAt || (data as any).date || '',
+    slug: guideData.slug,
+    title: guideData.title,
+    description: guideData.description || '',
+    updatedAt: guideData.updatedAt || '',
     headings,
     source,
+    faqs: guideData.faqs,
   };
 }
