@@ -34,7 +34,7 @@ export default async function HomePage() {
 
   if (process.env.DATABASE_URL && prisma) {
     try {
-      // Combine database queries (caching temporarily removed for build compatibility)
+      // Database queries with optimized selects
       const results = await Promise.all([
         getActiveOffers('RO'),
         prisma.offer.findFirst({

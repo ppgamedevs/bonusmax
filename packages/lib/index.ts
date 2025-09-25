@@ -2,7 +2,7 @@ export * from './seo';
 export * from './affiliate';
 export * from './analytics';
 export * from './db/queries';
-export { default as prisma } from './db/client';
+export { default as prisma } from './db/simple-client';
 export * from './qa/linkcheck';
 export * from './alg/topToday';
 export * from './db/analytics_totals';

@@ -21,7 +21,18 @@ export async function getActiveOffers(country = 'RO') {
           { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
         ],
       },
-      include: { 
+      select: {
+        // Only select needed fields to reduce payload size
+        id: true,
+        title: true,
+        termsShort: true,
+        offerType: true,
+        priority: true,
+        minDeposit: true,
+        wrMultiplier: true,
+        logoUrl: true,
+        createdAt: true,
+        updatedAt: true,
         operator: {
           select: {
             id: true,
@@ -29,13 +40,12 @@ export async function getActiveOffers(country = 'RO') {
             slug: true,
             logoUrl: true,
             isLicensedRO: true,
-            // Only select needed fields to reduce payload
           }
         }
       },
       orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-      // Add cursor-based pagination for large datasets
-      take: 100, // Limit initial load
+      // Limit initial load for better performance
+      take: 50, // Reduced from 100 for faster loading
     }));
   } catch (error) {
     console.warn('Database connection failed, returning empty array');
@@ -143,9 +153,31 @@ export async function getOffersByType(
 
     return prisma.offer.findMany({
       where,
-      include: { operator: true },
+      select: {
+        // Only select needed fields to reduce payload size
+        id: true,
+        title: true,
+        termsShort: true,
+        offerType: true,
+        priority: true,
+        minDeposit: true,
+        wrMultiplier: true,
+        logoUrl: true,
+        createdAt: true,
+        updatedAt: true,
+        operator: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            logoUrl: true,
+            isLicensedRO: true,
+          }
+        }
+      },
       orderBy:
         sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
+      take: 50, // Limit results for better performance
     });
   } catch (error) {
     console.warn('Database connection failed, returning empty array');
