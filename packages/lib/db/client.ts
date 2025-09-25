@@ -1,53 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
-const globalForPrisma = globalThis as unknown as { 
-  prisma?: PrismaClient;
-  prismaPool?: PrismaClient[];
-  currentPoolIndex?: number;
-};
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-// Connection pool configuration
-const POOL_SIZE = process.env.NODE_ENV === 'production' ? 10 : 3;
-const CONNECTION_TIMEOUT = 10000; // 10 seconds
-const QUERY_TIMEOUT = 30000; // 30 seconds
-
-// Create optimized Prisma client with aggressive performance settings
-function createPrismaClient(): PrismaClient {
-  return new PrismaClient({
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
-    },
-    // Note: Connection pooling is handled at the application level
   });
-}
 
-// Initialize connection pool
-if (!globalForPrisma.prismaPool) {
-  globalForPrisma.prismaPool = Array.from({ length: POOL_SIZE }, () => createPrismaClient());
-  globalForPrisma.currentPoolIndex = 0;
-}
-
-// Round-robin connection pool
-function getPooledConnection(): PrismaClient {
-  if (!globalForPrisma.prismaPool) {
-    throw new Error('Prisma pool not initialized');
-  }
-  
-  const index = globalForPrisma.currentPoolIndex!;
-  globalForPrisma.currentPoolIndex = (index + 1) % POOL_SIZE;
-  
-  return globalForPrisma.prismaPool[index];
-}
-
-// Main prisma instance (backwards compatibility)
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-
-if (process.env.NODE_ENV === 'development') {
-  globalForPrisma.prisma = prisma;
-}
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 // Enhanced query execution with automatic retries and connection pooling
 export async function executeQuery<T>(

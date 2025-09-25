@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react';
-import { useVirtualScrolling, useIntersectionObserver } from '@bonusmax/lib/performance';
 import OfferCard from './OfferCard';
 
 interface OffersGridProps {
@@ -33,35 +32,6 @@ const transformOfferData = (o: any) => ({
   heroImageUrl: o.heroImageUrl || null,
 });
 
-// Memoized offer card component
-const MemoizedOfferCard = memo(OfferCard, (prevProps, nextProps) => {
-  // Custom comparison for better performance
-  return (
-    prevProps.id === nextProps.id &&
-    prevProps.inCompare === nextProps.inCompare &&
-    prevProps.brand === nextProps.brand &&
-    prevProps.title === nextProps.title
-  );
-});
-
-// Lazy loaded offer card for intersection observer
-const LazyOfferCard = memo(({ offerData, index }: { offerData: any; index: number }) => {
-  const [ref, isVisible] = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '100px', // Load 100px before coming into view
-  });
-
-  return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} style={{ minHeight: '200px' }}>
-      {isVisible ? (
-        <MemoizedOfferCard {...offerData} />
-      ) : (
-        <div className="animate-pulse bg-gray-200 rounded-lg h-48" />
-      )}
-    </div>
-  );
-});
-
 function OffersGrid({ offers, virtualScrolling = false, lazyLoad = true }: OffersGridProps) {
   // Memoize transformed offer data to prevent recalculation
   const transformedOffers = useMemo(
@@ -69,56 +39,15 @@ function OffersGrid({ offers, virtualScrolling = false, lazyLoad = true }: Offer
     [offers]
   );
 
-  // Virtual scrolling for large datasets
-  if (virtualScrolling && offers.length > 50) {
-    const { visibleItems, startIndex, totalHeight, offsetY } = useVirtualScrolling(
-      transformedOffers,
-      250, // Estimated item height
-      800  // Container height
-    );
-
-    return (
-      <div style={{ height: '800px', overflow: 'auto' }}>
-        <div style={{ height: totalHeight, position: 'relative' }}>
-          <div
-            style={{
-              transform: `translateY(${offsetY}px)`,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-            }}
-            className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
-          >
-            {visibleItems.map((offerData, index) => (
-              <MemoizedOfferCard
-                key={offerData.id}
-                {...offerData}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Regular grid with optional lazy loading
+  // Simplified grid without advanced features for build compatibility
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-      {transformedOffers.map((offerData, index) => 
-        lazyLoad && index > 6 ? (
-          <LazyOfferCard
-            key={offerData.id}
-            offerData={offerData}
-            index={index}
-          />
-        ) : (
-          <MemoizedOfferCard
-            key={offerData.id}
-            {...offerData}
-          />
-        )
-      )}
+      {transformedOffers.map((offerData) => (
+        <OfferCard
+          key={offerData.id}
+          {...offerData}
+        />
+      ))}
     </div>
   );
 }

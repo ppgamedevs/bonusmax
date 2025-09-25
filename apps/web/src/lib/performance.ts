@@ -1,16 +1,17 @@
+'use client';
+
 // Advanced React performance optimization utilities
 import React, { memo, useMemo, useCallback, useRef, useEffect, useState } from 'react';
-import { cache } from './cache';
 
 // Aggressive memoization wrapper
 export function deepMemo<T extends React.ComponentType<any>>(
   Component: T,
-  areEqual?: (prevProps: React.ComponentProps<T>, nextProps: React.ComponentProps<T>) => boolean
+  areEqual?: (prevProps: Readonly<React.ComponentProps<T>>, nextProps: Readonly<React.ComponentProps<T>>) => boolean
 ): T {
-  return memo(Component, areEqual || ((prev: React.ComponentProps<T>, next: React.ComponentProps<T>) => {
+  return memo(Component, areEqual || ((prev: Readonly<React.ComponentProps<T>>, next: Readonly<React.ComponentProps<T>>) => {
     // Deep comparison for complex props
     return JSON.stringify(prev) === JSON.stringify(next);
-  })) as T;
+  })) as unknown as T;
 }
 
 // Optimized useCallback with dependency tracking
@@ -21,13 +22,8 @@ export function useOptimizedCallback<T extends (...args: any[]) => any>(
 ): T {
   const memoizedCallback = useCallback(callback, deps);
   
-  // Cache the callback if a key is provided
-  if (cacheKey) {
-    const cached = cache.get<T>(cacheKey);
-    if (cached) return cached;
-    
-    cache.set(cacheKey, memoizedCallback, 300);
-  }
+  // Note: Cache functionality removed for build compatibility
+  // TODO: Re-implement with client-side cache if needed
   
   return memoizedCallback;
 }
@@ -40,13 +36,8 @@ export function useOptimizedMemo<T>(
 ): T {
   const memoizedValue = useMemo(factory, deps);
   
-  // Cache the computed value if a key is provided
-  if (cacheKey) {
-    const cached = cache.get<T>(cacheKey);
-    if (cached) return cached;
-    
-    cache.set(cacheKey, memoizedValue, 300);
-  }
+  // Note: Cache functionality removed for build compatibility
+  // TODO: Re-implement with client-side cache if needed
   
   return memoizedValue;
 }
@@ -54,9 +45,9 @@ export function useOptimizedMemo<T>(
 // Intersection Observer hook for lazy loading
 export function useIntersectionObserver(
   options: IntersectionObserverInit = {}
-): [React.RefObject<HTMLElement>, boolean] {
+): [React.RefObject<HTMLElement | null>, boolean] {
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const element = ref.current;

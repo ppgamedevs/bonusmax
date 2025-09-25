@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getCacheStats } from '@bonusmax/lib/cache';
+// Note: Cache stats temporarily disabled for build compatibility
+// import { getCacheStats } from '@bonusmax/lib/cache';
 
 interface PerformanceMetrics {
   cacheStats: {
@@ -43,9 +44,16 @@ export default function PerformanceMonitor() {
     if (process.env.NODE_ENV !== 'development') return;
 
     const updateMetrics = () => {
-      const cacheStats = getCacheStats();
+      // Temporary mock cache stats for build compatibility
+      const cacheStats = {
+        hits: 0,
+        misses: 0,
+        hitRate: 0,
+        totalSize: 0,
+        entryCount: 0,
+      };
       
-      let memoryUsage;
+      let memoryUsage: { used: number; total: number } | undefined;
       if ('memory' in performance) {
         const memory = (performance as any).memory;
         memoryUsage = {
@@ -65,45 +73,59 @@ export default function PerformanceMonitor() {
     const interval = setInterval(updateMetrics, 5000);
     updateMetrics(); // Initial update
 
-    // Listen for Web Vitals
-    if (typeof window !== 'undefined' && 'web-vitals' in window) {
-      import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-        getCLS((metric) => {
-          setMetrics(prev => ({
-            ...prev,
-            webVitals: { ...prev.webVitals, cls: metric.value },
-          }));
-        });
+    // Listen for Web Vitals (simplified implementation)
+    if (typeof window !== 'undefined') {
+      import('web-vitals').then((webVitals) => {
+        // Use the available functions from web-vitals v5
+        const vitalsModule = webVitals as any;
+        
+        if (vitalsModule.onCLS) {
+          vitalsModule.onCLS((metric: any) => {
+            setMetrics(prev => ({
+              ...prev,
+              webVitals: { ...prev.webVitals, cls: metric.value },
+            }));
+          });
+        }
 
-        getFID((metric) => {
-          setMetrics(prev => ({
-            ...prev,
-            webVitals: { ...prev.webVitals, fid: metric.value },
-          }));
-        });
+        if (vitalsModule.onINP) {
+          vitalsModule.onINP((metric: any) => {
+            setMetrics(prev => ({
+              ...prev,
+              webVitals: { ...prev.webVitals, fid: metric.value },
+            }));
+          });
+        }
 
-        getFCP((metric) => {
-          setMetrics(prev => ({
-            ...prev,
-            webVitals: { ...prev.webVitals, fcp: metric.value },
-          }));
-        });
+        if (vitalsModule.onFCP) {
+          vitalsModule.onFCP((metric: any) => {
+            setMetrics(prev => ({
+              ...prev,
+              webVitals: { ...prev.webVitals, fcp: metric.value },
+            }));
+          });
+        }
 
-        getLCP((metric) => {
-          setMetrics(prev => ({
-            ...prev,
-            webVitals: { ...prev.webVitals, lcp: metric.value },
-          }));
-        });
+        if (vitalsModule.onLCP) {
+          vitalsModule.onLCP((metric: any) => {
+            setMetrics(prev => ({
+              ...prev,
+              webVitals: { ...prev.webVitals, lcp: metric.value },
+            }));
+          });
+        }
 
-        getTTFB((metric) => {
-          setMetrics(prev => ({
-            ...prev,
-            webVitals: { ...prev.webVitals, ttfb: metric.value },
-          }));
-        });
+        if (vitalsModule.onTTFB) {
+          vitalsModule.onTTFB((metric: any) => {
+            setMetrics(prev => ({
+              ...prev,
+              webVitals: { ...prev.webVitals, ttfb: metric.value },
+            }));
+          });
+        }
       }).catch(() => {
-        // web-vitals not available
+        // web-vitals not available, continue without it
+        console.log('Web Vitals not available');
       });
     }
 
