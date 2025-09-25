@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import './globals.css';
+import '../styles/layout-stability.css';
 import StickyHeader from '@/components/layout/StickyHeader';
 import Footer from '@/components/layout/Footer';
 import { configureSeo, jsonLdOrganization, jsonLdWebsite } from '@bonusmax/lib';
@@ -12,8 +13,14 @@ import { Inter } from 'next/font/google';
 // Temporarily disabled for build compatibility
 // import PerformanceMonitor from '@/components/PerformanceMonitor';
 
-// Fonts must be instantiated at module scope
-const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '700'] });
+// Fonts must be instantiated at module scope with optimal loading
+const inter = Inter({ 
+  subsets: ['latin', 'latin-ext'], 
+  display: 'swap', // Prevent layout shift during font loading
+  weight: ['400', '700'],
+  preload: true, // Preload for better performance
+  fallback: ['system-ui', 'arial'], // Fallback fonts
+});
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },
