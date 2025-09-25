@@ -7,7 +7,6 @@ import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
 import TopTodayHeader from '@/components/home/TopTodayHeader';
 import HeroOfferMockupServer from '@/components/home/HeroOfferMockupServer';
-import StickyHeader from '@/components/layout/StickyHeader';
 import NextDynamic from 'next/dynamic';
 const CompareUIDynamic = NextDynamic(() => import('@/components/compare/CompareUI'), { ssr: false });
 const TrustBarMobileDynamic = NextDynamic(() => import('@/components/TrustBarMobile'), { ssr: false });
@@ -21,6 +20,7 @@ import PromoStrip from '@/components/PromoStrip';
 import { Suspense } from 'react';
 import { SkeletonCards, SkeletonStats } from '@/components/Skeletons';
 import NewsletterSignup from '@/components/home/NewsletterSignup';
+import DeferOnIdle from '@/components/DeferOnIdle';
 
 export const metadata = defaultMetadata({
   title: 'Top bonusuri',
@@ -56,7 +56,6 @@ export default async function HomePage() {
     : undefined;
   return (
     <main id="main" className="mx-auto max-w-screen-xl">
-      <StickyHeader />
       {/* Chapter 1: Hero + Dynamic Hero Offer */}
       <Hero />
       <HeroOfferMockupServer {...(heroProps || {})} />
@@ -110,13 +109,19 @@ export default async function HomePage() {
       </div>
       {/* Leave a bit of space before CompareUI */}
       <div className="mt-6 cv-auto ci-200">
-        <CompareUIDynamic />
+        <DeferOnIdle>
+          <CompareUIDynamic />
+        </DeferOnIdle>
       </div>
       <div className="cv-auto ci-120">
-        <TrustBarMobileDynamic />
+        <DeferOnIdle>
+          <TrustBarMobileDynamic />
+        </DeferOnIdle>
       </div>
       <div className="cv-auto ci-80">
-        <StickyCtaMobileDynamic />
+        <DeferOnIdle>
+          <StickyCtaMobileDynamic />
+        </DeferOnIdle>
       </div>
     </main>
   );

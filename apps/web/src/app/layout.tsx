@@ -44,6 +44,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* Preconnect image CDNs used across the site to speed up LCP image fetches */}
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        {/* Preload frequently used hero/logo assets to improve LCP */}
+        <link rel="preload" as="image" href="/logos/betano.png" />
+        <link rel="preload" as="image" href="/images/stadium.jpg" />
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
