@@ -1,5 +1,5 @@
-export const dynamic = 'force-dynamic';
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 600; // 10 minutes - guides don't change often
 import { getAllGuidesMeta } from '@/lib/guides';
 import Link from 'next/link';
 import type { Metadata } from 'next';

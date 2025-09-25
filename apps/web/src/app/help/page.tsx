@@ -28,12 +28,12 @@ export default function Page() {
 
       {/* Hero */}
       <header className="mx-auto max-w-4xl">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
+        <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-neutral-700 border-neutral-200 bg-neutral-50 dark:text-zinc-300 dark:border-white/10 dark:bg-white/5">
           <span className="inline-flex h-2 w-2 rounded-full bg-sky-400" aria-hidden />
           Help Center
         </div>
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight">Ajutor & suport</h1>
-        <p className="mt-2 max-w-2xl text-sm text-zinc-300">
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">Ajutor & suport</h1>
+        <p className="mt-2 max-w-2xl text-sm text-neutral-600 dark:text-zinc-300">
           Găsești răspunsuri rapide despre folosirea Bonusmax și ofertele listate.
         </p>
       </header>

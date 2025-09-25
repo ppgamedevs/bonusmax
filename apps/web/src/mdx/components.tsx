@@ -38,5 +38,16 @@ export function FAQList({ items }: { items?: { q: string; a: string }[] }) {
   );
 }
 
-const components = { Callout, FAQList, h2: H2, h3: H3 };
+export function ButtonLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+    >
+      {children}
+    </a>
+  );
+}
+
+const components = { Callout, FAQList, ButtonLink, h2: H2, h3: H3 };
 export default components;

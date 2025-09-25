@@ -1,4 +1,4 @@
-import { getActivePromos } from '@bonusmax/lib';
+import { getActivePromos, withCache } from '@bonusmax/lib';
 import OffersGrid from './offers/OffersGrid';
 import { SponsoredBadge } from './Badges';
 
@@ -9,7 +9,11 @@ export default async function PromoStrip({
   slot: 'HOME_TOP' | 'HUB_FARA_DEP' | 'HUB_ROTIRI' | 'OPERATOR_TOP';
   title?: string;
 }) {
-  const promos = await getActivePromos(slot, 'RO', 3);
+  const promos = await withCache(
+    `promo-strip-${slot}`,
+    () => getActivePromos(slot, 'RO', 3),
+    300 // 5 minutes cache
+  ) as any[];
   if (!promos.length) return null;
   const offers = promos.map((p: any) => ({ ...p.offer, isSponsored: true }));
   return (

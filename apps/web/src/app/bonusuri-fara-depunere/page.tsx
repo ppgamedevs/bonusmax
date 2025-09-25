@@ -1,7 +1,7 @@
-export const dynamic = 'force-dynamic';
-export const revalidate = 60;
+export const dynamic = 'force-static';
+export const revalidate = 300; // 5 minutes
 import { OfferType } from '@prisma/client';
-import { getOffersByType, getActivePromos } from '@bonusmax/lib';
+import { getOffersByType, getActivePromos, withCache } from '@bonusmax/lib';
 import FilterBar from '@/components/FilterBar';
 import DisclosureBar from '@/components/DisclosureBar';
 import PromoStrip from '@/components/PromoStrip';
@@ -26,14 +26,23 @@ export default async function Page({
   const maxMinDep = parseNumber(sp.max_min_dep);
   const view = typeof sp.view === 'string' ? sp.view : undefined;
 
-  const offers = await getOffersByType(OfferType.FARA_DEPUNERE, 'RO', operator, sort, {
-    minWr,
-    maxWr,
-    maxMinDep,
-  });
-
-  // Pin/merge sponsored promos at the top (no duplication)
-  const promos = await getActivePromos('HUB_FARA_DEP', 'RO', 3);
+  // Combine queries and cache them
+  const [offers, promos] = await Promise.all([
+    withCache(
+      `fara-depunere-offers-${operator || 'all'}-${sort}-${minWr || 'any'}-${maxWr || 'any'}-${maxMinDep || 'any'}`,
+      () => getOffersByType(OfferType.FARA_DEPUNERE, 'RO', operator, sort, {
+        minWr,
+        maxWr,
+        maxMinDep,
+      }),
+      300 // 5 minutes cache
+    ),
+    withCache(
+      'fara-depunere-promos',
+      () => getActivePromos('HUB_FARA_DEP', 'RO', 3),
+      300 // 5 minutes cache
+    )
+  ]) as [any[], any[]];
   const pinCap = 2; // cap number of pinned sponsored items
   const promoOffers = promos.slice(0, pinCap).map((p: any) => ({ ...p.offer, isSponsored: true }));
   const merged = [

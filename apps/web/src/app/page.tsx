@@ -1,7 +1,7 @@
 export const dynamic = 'force-static';
 export const revalidate = 300; // Revalidate every 5 minutes
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
-import { getActiveOffers, prisma } from '@bonusmax/lib';
+import { getActiveOffers, prisma, withCache } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';
 import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
@@ -28,18 +28,24 @@ export const metadata = defaultMetadata({
 });
 
 export default async function HomePage() {
-  const offers = await getActiveOffers('RO');
-  // Try to fetch a live Betano offer for the hero mockup
-  const betano = await (prisma as any).offer.findFirst({
-    where: {
-      isActive: true,
-      operator: {
-        name: { contains: 'Betano', mode: 'insensitive' },
-      },
-    },
-    include: { operator: true },
-    orderBy: { updatedAt: 'desc' },
-  });
+  // Combine database queries and cache them aggressively
+  const [offers, betano] = await Promise.all([
+    getActiveOffers('RO'),
+    withCache(
+      'homepage-betano-offer',
+      () => (prisma as any).offer.findFirst({
+        where: {
+          isActive: true,
+          operator: {
+            name: { contains: 'Betano', mode: 'insensitive' },
+          },
+        },
+        include: { operator: true },
+        orderBy: { updatedAt: 'desc' },
+      }),
+      600 // 10 minutes cache
+    ) as Promise<any>
+  ]);
   const heroProps = betano
     ? {
         brand: betano.operator?.name || betano.brand || 'Betano',

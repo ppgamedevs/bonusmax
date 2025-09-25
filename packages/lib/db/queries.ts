@@ -96,29 +96,35 @@ export async function getOffersByType(
   sort: 'priority' | 'recent' = 'priority',
   filters?: { minWr?: number; maxWr?: number; maxMinDep?: number }
 ) {
-  const and: Prisma.OfferWhereInput[] = [
-    { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-    { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
-  ];
-  if (typeof filters?.minWr === 'number') and.push({ wrMultiplier: { gte: filters.minWr } } as any);
-  if (typeof filters?.maxWr === 'number') and.push({ wrMultiplier: { lte: filters.maxWr } } as any);
-  if (typeof filters?.maxMinDep === 'number')
-    and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
+  return withCache(
+    `offers-by-type-${type}-${country}-${operatorSlug || 'all'}-${sort}-${JSON.stringify(filters || {})}`,
+    () => {
+      const and: Prisma.OfferWhereInput[] = [
+        { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
+        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+      ];
+      if (typeof filters?.minWr === 'number') and.push({ wrMultiplier: { gte: filters.minWr } } as any);
+      if (typeof filters?.maxWr === 'number') and.push({ wrMultiplier: { lte: filters.maxWr } } as any);
+      if (typeof filters?.maxMinDep === 'number')
+        and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
 
-  const where: Prisma.OfferWhereInput = {
-    isActive: true,
-    country,
-    offerType: type,
-    operator: { isLicensedRO: true, ...(operatorSlug ? { slug: operatorSlug } : {}) } as any,
-    AND: and,
-  };
+      const where: Prisma.OfferWhereInput = {
+        isActive: true,
+        country,
+        offerType: type,
+        operator: { isLicensedRO: true, ...(operatorSlug ? { slug: operatorSlug } : {}) } as any,
+        AND: and,
+      };
 
-  return prisma.offer.findMany({
-    where,
-    include: { operator: true },
-    orderBy:
-      sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
-  });
+      return prisma.offer.findMany({
+        where,
+        include: { operator: true },
+        orderBy:
+          sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
+      });
+    },
+    300 // 5 minutes cache
+  );
 }
 
 // Analytics helpers
@@ -185,22 +191,28 @@ export async function getActivePromos(
   country = 'RO',
   limit = 3
 ) {
-  const now = new Date();
-  return (prisma as any).promoPlacement.findMany({
-    where: {
-      slot,
-      country,
-      isActive: true,
-      offer: { isActive: true, country, operator: { isLicensedRO: true } },
-      AND: [
-        { OR: [{ startAt: null }, { startAt: { lte: now } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: now } }] },
-      ],
+  return withCache(
+    `active-promos-${slot}-${country}-${limit}`,
+    () => {
+      const now = new Date();
+      return (prisma as any).promoPlacement.findMany({
+        where: {
+          slot,
+          country,
+          isActive: true,
+          offer: { isActive: true, country, operator: { isLicensedRO: true } },
+          AND: [
+            { OR: [{ startAt: null }, { startAt: { lte: now } }] },
+            { OR: [{ endAt: null }, { endAt: { gte: now } }] },
+          ],
+        },
+        include: { offer: { include: { operator: true } } },
+        orderBy: [{ weight: 'asc' }, { createdAt: 'desc' }],
+        take: limit,
+      });
     },
-    include: { offer: { include: { operator: true } } },
-    orderBy: [{ weight: 'asc' }, { createdAt: 'desc' }],
-    take: limit,
-  });
+    300 // 5 minutes cache
+  );
 }
 
 export async function getPromotedOrFallbackOffers(
@@ -208,7 +220,7 @@ export async function getPromotedOrFallbackOffers(
   country = 'RO',
   fallbackLimit = 3
 ) {
-  const promos = await getActivePromos(slot, country, fallbackLimit);
+  const promos = await getActivePromos(slot, country, fallbackLimit) as any[];
   if (promos.length > 0) return promos.map((p: any) => p.offer);
   const type = slot === 'HUB_ROTIRI' ? OfferType.ROTIRI : OfferType.FARA_DEPUNERE;
   return prisma.offer.findMany({
