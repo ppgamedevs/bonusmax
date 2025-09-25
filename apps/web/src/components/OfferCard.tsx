@@ -8,7 +8,7 @@ import { LicensedBadge, SponsoredBadge } from './Badges';
 import dynamic from 'next/dynamic';
 import HydrateOnVisible from './HydrateOnVisible';
 import Img from './Img';
-const CompareButton = dynamic(() => import('./CompareButton'), { ssr: false });
+const CompareButton = dynamic(() => import('./CompareButton'));
 
 type OfferCardProps = {
   offer: {
