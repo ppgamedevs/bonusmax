@@ -4,33 +4,43 @@ import { OfferType, Prisma } from '@prisma/client';
 // import { withCache, withBatchCache } from '../cache';
 
 export async function getActiveOffers(country = 'RO') {
-  // Temporarily removed caching for build compatibility
-  return executeQuery(client => client.offer.findMany({
-    where: {
-      isActive: true,
-      country,
-      operator: { isLicensedRO: true },
-      AND: [
-        { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
-      ],
-    },
-    include: { 
-      operator: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          logoUrl: true,
-          isLicensedRO: true,
-          // Only select needed fields to reduce payload
+  // Return empty array during build time when DATABASE_URL is not available
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
+  
+  try {
+    // Temporarily removed caching for build compatibility
+    return executeQuery(client => client.offer.findMany({
+      where: {
+        isActive: true,
+        country,
+        operator: { isLicensedRO: true },
+        AND: [
+          { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
+          { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+        ],
+      },
+      include: { 
+        operator: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            logoUrl: true,
+            isLicensedRO: true,
+            // Only select needed fields to reduce payload
+          }
         }
-      }
-    },
-    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-    // Add cursor-based pagination for large datasets
-    take: 100, // Limit initial load
-  }));
+      },
+      orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
+      // Add cursor-based pagination for large datasets
+      take: 100, // Limit initial load
+    }));
+  } catch (error) {
+    console.warn('Database connection failed, returning empty array');
+    return [];
+  }
 }
 
 // Search: offers + operators
@@ -107,30 +117,40 @@ export async function getOffersByType(
   sort: 'priority' | 'recent' = 'priority',
   filters?: { minWr?: number; maxWr?: number; maxMinDep?: number }
 ) {
-  // Temporarily removed caching for build compatibility
-  const and: Prisma.OfferWhereInput[] = [
-    { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-    { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
-  ];
-  if (typeof filters?.minWr === 'number') and.push({ wrMultiplier: { gte: filters.minWr } } as any);
-  if (typeof filters?.maxWr === 'number') and.push({ wrMultiplier: { lte: filters.maxWr } } as any);
-  if (typeof filters?.maxMinDep === 'number')
-    and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
+  // Return empty array during build time when DATABASE_URL is not available
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
+  
+  try {
+    // Temporarily removed caching for build compatibility
+    const and: Prisma.OfferWhereInput[] = [
+      { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
+      { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+    ];
+    if (typeof filters?.minWr === 'number') and.push({ wrMultiplier: { gte: filters.minWr } } as any);
+    if (typeof filters?.maxWr === 'number') and.push({ wrMultiplier: { lte: filters.maxWr } } as any);
+    if (typeof filters?.maxMinDep === 'number')
+      and.push({ minDeposit: { lte: filters.maxMinDep } } as any);
 
-  const where: Prisma.OfferWhereInput = {
-    isActive: true,
-    country,
-    offerType: type,
-    operator: { isLicensedRO: true, ...(operatorSlug ? { slug: operatorSlug } : {}) } as any,
-    AND: and,
-  };
+    const where: Prisma.OfferWhereInput = {
+      isActive: true,
+      country,
+      offerType: type,
+      operator: { isLicensedRO: true, ...(operatorSlug ? { slug: operatorSlug } : {}) } as any,
+      AND: and,
+    };
 
-  return prisma.offer.findMany({
-    where,
-    include: { operator: true },
-    orderBy:
-      sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
-  });
+    return prisma.offer.findMany({
+      where,
+      include: { operator: true },
+      orderBy:
+        sort === 'recent' ? [{ createdAt: 'desc' }] : [{ priority: 'asc' }, { createdAt: 'desc' }],
+    });
+  } catch (error) {
+    console.warn('Database connection failed, returning empty array');
+    return [];
+  }
 }
 
 // Analytics helpers
@@ -197,23 +217,33 @@ export async function getActivePromos(
   country = 'RO',
   limit = 3
 ) {
-  // Temporarily removed caching for build compatibility
-  const now = new Date();
-  return (prisma as any).promoPlacement.findMany({
-    where: {
-      slot,
-      country,
-      isActive: true,
-      offer: { isActive: true, country, operator: { isLicensedRO: true } },
-      AND: [
-        { OR: [{ startAt: null }, { startAt: { lte: now } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: now } }] },
-      ],
-    },
-    include: { offer: { include: { operator: true } } },
-    orderBy: [{ weight: 'asc' }, { createdAt: 'desc' }],
-    take: limit,
-  });
+  // Return empty array during build time when DATABASE_URL is not available
+  if (!process.env.DATABASE_URL) {
+    return [];
+  }
+  
+  try {
+    // Temporarily removed caching for build compatibility
+    const now = new Date();
+    return (prisma as any).promoPlacement.findMany({
+      where: {
+        slot,
+        country,
+        isActive: true,
+        offer: { isActive: true, country, operator: { isLicensedRO: true } },
+        AND: [
+          { OR: [{ startAt: null }, { startAt: { lte: now } }] },
+          { OR: [{ endAt: null }, { endAt: { gte: now } }] },
+        ],
+      },
+      include: { offer: { include: { operator: true } } },
+      orderBy: [{ weight: 'asc' }, { createdAt: 'desc' }],
+      take: limit,
+    });
+  } catch (error) {
+    console.warn('Database connection failed, returning empty array');
+    return [];
+  }
 }
 
 export async function getPromotedOrFallbackOffers(

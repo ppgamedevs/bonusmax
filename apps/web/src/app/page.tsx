@@ -1,7 +1,7 @@
-export const dynamic = 'force-static';
-export const revalidate = 300; // Revalidate every 5 minutes
+// Force dynamic rendering to avoid build-time database calls
+export const dynamic = 'force-dynamic';
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
-import { getActiveOffers, prisma, withCache } from '@bonusmax/lib';
+import { getActiveOffers, prisma } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';
 import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
@@ -28,24 +28,34 @@ export const metadata = defaultMetadata({
 });
 
 export default async function HomePage() {
-  // Combine database queries and cache them aggressively
-  const [offers, betano] = await Promise.all([
-    getActiveOffers('RO'),
-    withCache(
-      'homepage-betano-offer',
-      () => (prisma as any).offer.findFirst({
-        where: {
-          isActive: true,
-          operator: {
-            name: { contains: 'Betano', mode: 'insensitive' },
+  // Provide fallback data during build time when DATABASE_URL is not available
+  let offers: any[] = [];
+  let betano: any = null;
+
+  if (process.env.DATABASE_URL && prisma) {
+    try {
+      // Combine database queries (caching temporarily removed for build compatibility)
+      const results = await Promise.all([
+        getActiveOffers('RO'),
+        prisma.offer.findFirst({
+          where: {
+            isActive: true,
+            operator: {
+              name: { contains: 'Betano', mode: 'insensitive' },
+            },
           },
-        },
-        include: { operator: true },
-        orderBy: { updatedAt: 'desc' },
-      }),
-      600 // 10 minutes cache
-    ) as Promise<any>
-  ]);
+          include: { operator: true },
+          orderBy: { updatedAt: 'desc' },
+        }) as Promise<any>
+      ]);
+      offers = Array.isArray(results[0]) ? results[0] : [];
+      betano = results[1] || null;
+    } catch (error) {
+      console.warn('Database connection failed during build, using fallback data');
+      offers = [];
+      betano = null;
+    }
+  }
   const heroProps = betano
     ? {
         brand: betano.operator?.name || betano.brand || 'Betano',

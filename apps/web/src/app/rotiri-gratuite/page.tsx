@@ -1,7 +1,7 @@
-export const dynamic = 'force-static';
-export const revalidate = 300; // 5 minutes
+// Force dynamic rendering to avoid build-time database calls
+export const dynamic = 'force-dynamic';
 import { OfferType } from '@prisma/client';
-import { getOffersByType, getActivePromos, withCache } from '@bonusmax/lib';
+import { getOffersByType, getActivePromos } from '@bonusmax/lib';
 import FilterBar from '@/components/FilterBar';
 import DisclosureBar from '@/components/DisclosureBar';
 import PromoStrip from '@/components/PromoStrip';
@@ -29,23 +29,29 @@ export default async function Page({
   const maxMinDep = parseNumber(sp.max_min_dep);
   const view = typeof sp.view === 'string' ? sp.view : undefined;
 
-  // Combine queries and cache them
-  const [offers, promos] = await Promise.all([
-    withCache(
-      `rotiri-offers-${operator || 'all'}-${sort}-${minWr || 'any'}-${maxWr || 'any'}-${maxMinDep || 'any'}`,
-      () => getOffersByType(OfferType.ROTIRI, 'RO', operator, sort, {
-        minWr,
-        maxWr,
-        maxMinDep,
-      }),
-      300 // 5 minutes cache
-    ),
-    withCache(
-      'rotiri-promos',
-      () => getActivePromos('HUB_ROTIRI', 'RO', 3),
-      300 // 5 minutes cache
-    )
-  ]) as [any[], any[]];
+  // Provide fallback data during build time when DATABASE_URL is not available
+  let offers: any[] = [];
+  let promos: any[] = [];
+
+  if (process.env.DATABASE_URL) {
+    try {
+      // Combine queries (caching temporarily removed for build compatibility)
+      const results = await Promise.all([
+        getOffersByType(OfferType.ROTIRI, 'RO', operator, sort, {
+          minWr,
+          maxWr,
+          maxMinDep,
+        }),
+        getActivePromos('HUB_ROTIRI', 'RO', 3)
+      ]) as [any[], any[]];
+      offers = results[0] || [];
+      promos = results[1] || [];
+    } catch (error) {
+      console.warn('Database connection failed during build, using fallback data');
+      offers = [];
+      promos = [];
+    }
+  }
   const pinCap = 2; // cap number of pinned sponsored items
   const promoOffers = promos.slice(0, pinCap).map((p: any) => ({ ...p.offer, isSponsored: true }));
   const merged = [

@@ -1,4 +1,4 @@
-import { getActivePromos, withCache } from '@bonusmax/lib';
+import { getActivePromos } from '@bonusmax/lib';
 import OffersGrid from './offers/OffersGrid';
 import { SponsoredBadge } from './Badges';
 
@@ -9,11 +9,18 @@ export default async function PromoStrip({
   slot: 'HOME_TOP' | 'HUB_FARA_DEP' | 'HUB_ROTIRI' | 'OPERATOR_TOP';
   title?: string;
 }) {
-  const promos = await withCache(
-    `promo-strip-${slot}`,
-    () => getActivePromos(slot, 'RO', 3),
-    300 // 5 minutes cache
-  ) as any[];
+  // Provide fallback data during build time when DATABASE_URL is not available
+  let promos: any[] = [];
+  
+  if (process.env.DATABASE_URL) {
+    try {
+      promos = await getActivePromos(slot, 'RO', 3) as any[];
+    } catch (error) {
+      console.warn('Database connection failed during build, using fallback data');
+      promos = [];
+    }
+  }
+  
   if (!promos.length) return null;
   const offers = promos.map((p: any) => ({ ...p.offer, isSponsored: true }));
   return (

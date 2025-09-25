@@ -1,25 +1,34 @@
-import { PrismaClient } from '@prisma/client';
+// Dynamic Prisma client to avoid initialization during build
+let prismaInstance: any = null;
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
-
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  });
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+export const prisma = new Proxy({} as any, {
+  get(target, prop) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('Database not available during build time');
+    }
+    
+    if (!prismaInstance) {
+      // Dynamically import and create Prisma client only when needed
+      const { PrismaClient } = require('@prisma/client');
+      prismaInstance = new PrismaClient({
+        log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+      });
+    }
+    
+    return prismaInstance[prop];
+  }
+});
 
 // Simplified query execution for build compatibility
 export async function executeQuery<T>(
-  queryFn: (client: PrismaClient) => Promise<T>
+  queryFn: (client: any) => Promise<T>
 ): Promise<T> {
   return await queryFn(prisma);
 }
 
 // Simplified batch execution
 export async function executeBatchQueries<T>(
-  queries: Array<(client: PrismaClient) => Promise<T>>
+  queries: Array<(client: any) => Promise<T>>
 ): Promise<T[]> {
   const results: T[] = [];
   for (const queryFn of queries) {
