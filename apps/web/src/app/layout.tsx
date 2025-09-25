@@ -11,7 +11,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter } from 'next/font/google';
 
 // Fonts must be instantiated at module scope
-const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '600', '800'] });
+const inter = Inter({ subsets: ['latin', 'latin-ext'], display: 'swap', weight: ['400', '700'] });
 
 export const metadata = {
   title: { default: 'Bonusmax', template: '%s – Bonusmax' },

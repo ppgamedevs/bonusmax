@@ -6,11 +6,12 @@ import OffersGrid from '@/components/offers/OffersGrid';
 import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
 import TopTodayHeader from '@/components/home/TopTodayHeader';
-import HeroOfferMockup from '@/components/home/HeroOfferMockup';
-import TrustBarMobile from '@/components/TrustBarMobile';
-import StickyCtaMobile from '@/components/StickyCtaMobile';
+import HeroOfferMockupServer from '@/components/home/HeroOfferMockupServer';
 import StickyHeader from '@/components/layout/StickyHeader';
-import CompareUI from '@/components/compare/CompareUI';
+import NextDynamic from 'next/dynamic';
+const CompareUIDynamic = NextDynamic(() => import('@/components/compare/CompareUI'), { ssr: false });
+const TrustBarMobileDynamic = NextDynamic(() => import('@/components/TrustBarMobile'), { ssr: false });
+const StickyCtaMobileDynamic = NextDynamic(() => import('@/components/StickyCtaMobile'), { ssr: false });
 import TrustSafety from '@/components/home/TrustSafety';
 import GuidesTeaser from '@/components/home/GuidesTeaser';
 import FaqAccordion from '@/components/home/FaqAccordion';
@@ -58,30 +59,30 @@ export default async function HomePage() {
       <StickyHeader />
       {/* Chapter 1: Hero + Dynamic Hero Offer */}
       <Hero />
-      <HeroOfferMockup {...(heroProps || {})} />
+      <HeroOfferMockupServer {...(heroProps || {})} />
       {/* Moved full Trust & Safety section here instead of small signals strip */}
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '360px' }}>
+      <div className="cv-auto ci-360">
         <TrustSafety />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '280px' }}>
+      <div className="cv-auto ci-280">
         <Suspense fallback={<SkeletonStats />}>
           <SocialProof />
         </Suspense>
       </div>
       {/* Chapter 2: Top bonuses carousel */}
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
+      <div className="cv-auto ci-120">
         <PromoStrip slot="HOME_TOP" title="Sponsored pe homepage" />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '80px' }}>
+      <div className="cv-auto ci-80">
         <TopTodayHeader />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '360px' }}>
+      <div className="cv-auto ci-360">
         <Suspense fallback={<SkeletonCards n={6} />}>
           <TopToday />
         </Suspense>
       </div>
       {/* Chapter 3: Comparison grid */}
-      <section className="mx-auto mt-10 max-w-6xl px-4" style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '1200px' }}>
+      <section className="mx-auto mt-10 max-w-6xl px-4 cv-auto ci-1200">
         <h2 className="text-xl font-bold u-underline-hover">Toate ofertele recomandate</h2>
         <DisclosureBar />
         <div className="mt-4">
@@ -92,30 +93,30 @@ export default async function HomePage() {
         </p>
       </section>
       {/* Chapter 4: Recommended offers (promo placements) */}
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
+      <div className="cv-auto ci-120">
         <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
       </div>
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '520px' }}>
+      <div className="cv-auto ci-520">
         <GuidesTeaser />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '520px' }}>
+      <div className="cv-auto ci-520">
         <FaqAccordion />
       </div>
       {/* Newsletter & spacing before footer */}
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '420px' }}>
+      <div className="cv-auto ci-420">
         <NewsletterSignup />
       </div>
       {/* Leave a bit of space before CompareUI */}
-      <div className="mt-6" style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '200px' }}>
-        <CompareUI />
+      <div className="mt-6 cv-auto ci-200">
+        <CompareUIDynamic />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '120px' }}>
-        <TrustBarMobile />
+      <div className="cv-auto ci-120">
+        <TrustBarMobileDynamic />
       </div>
-      <div style={{ contentVisibility: 'auto' as any, containIntrinsicSize: '80px' }}>
-        <StickyCtaMobile />
+      <div className="cv-auto ci-80">
+        <StickyCtaMobileDynamic />
       </div>
     </main>
   );

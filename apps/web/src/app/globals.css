@@ -274,3 +274,14 @@ body::before {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Content-visibility utilities (safe, reusable) */
+.cv-auto { content-visibility: auto; }
+.ci-80 { contain-intrinsic-size: 80px; }
+.ci-120 { contain-intrinsic-size: 120px; }
+.ci-200 { contain-intrinsic-size: 200px; }
+.ci-280 { contain-intrinsic-size: 280px; }
+.ci-360 { contain-intrinsic-size: 360px; }
+.ci-420 { contain-intrinsic-size: 420px; }
+.ci-520 { contain-intrinsic-size: 520px; }
+.ci-1200 { contain-intrinsic-size: 1200px; }
