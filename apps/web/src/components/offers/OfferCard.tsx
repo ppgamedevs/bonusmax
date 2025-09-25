@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { getCompareIds, toggleCompare } from '../../lib/compare';
 
 export type OfferCardProps = {
   id: string;
@@ -24,6 +26,7 @@ export type OfferCardProps = {
 };
 
 export default function OfferCard({
+  id,
   brand,
   logoUrl,
   title,
@@ -41,6 +44,27 @@ export default function OfferCard({
   days,
   spins,
 }: OfferCardProps) {
+  // Internal compare state fallback (used when parent doesn't pass handlers)
+  const [chosen, setChosen] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const load = () => setChosen(getCompareIds());
+    load();
+    setMounted(true);
+    window.addEventListener('storage', load);
+    return () => window.removeEventListener('storage', load);
+  }, []);
+
+  // Determine current compare state, preferring prop when provided
+  const inCompareResolved = typeof inCompare === 'boolean' ? inCompare : chosen.includes(id);
+
+  const handleCompareToggle = onCompareToggle
+    ? onCompareToggle
+    : () => {
+        if (!mounted) return;
+        const next = toggleCompare(id);
+        setChosen(next);
+      };
 
   function WRTooltip() {
     const tip =
@@ -159,28 +183,27 @@ export default function OfferCard({
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
             18+ • T&C • Publicitate
           </p>
-          {onCompareToggle && (
-            <button
-              type="button"
-              aria-pressed={!!inCompare}
-              aria-label={inCompare ? 'Elimină din comparație' : 'Adaugă la comparație'}
-              role="checkbox"
-              aria-checked={!!inCompare}
-              className="inline-flex items-center gap-1 text-[12px] underline text-neutral-700 hover:opacity-100 dark:text-neutral-200 focus-accent"
-              onClick={onCompareToggle}
+          {/* Compare button: uses parent handler if provided, otherwise internal localStorage state */}
+          <button
+            type="button"
+            aria-pressed={!!inCompareResolved}
+            aria-label={inCompareResolved ? 'Elimină din comparație' : 'Adaugă la comparație'}
+            role="checkbox"
+            aria-checked={!!inCompareResolved}
+            className="inline-flex items-center gap-1 text-[12px] underline text-neutral-700 hover:opacity-100 dark:text-neutral-200 focus-accent"
+            onClick={handleCompareToggle}
+          >
+            <span
+              className={
+                'grid h-3.5 w-3.5 place-items-center rounded border ' +
+                (inCompareResolved ? 'bg-white/80 text-black' : 'border-white/50')
+              }
+              aria-hidden
             >
-              <span
-                className={
-                  'grid h-3.5 w-3.5 place-items-center rounded border ' +
-                  (inCompare ? 'bg-white/80 text-black' : 'border-white/50')
-                }
-                aria-hidden
-              >
-                {inCompare ? '✓' : ''}
-              </span>
-              {inCompare ? 'În listă' : 'Compară'}
-            </button>
-          )}
+              {inCompareResolved ? '✓' : ''}
+            </span>
+            {inCompareResolved ? 'În listă' : 'Compară'}
+          </button>
         </div>
       </div>
     </div>

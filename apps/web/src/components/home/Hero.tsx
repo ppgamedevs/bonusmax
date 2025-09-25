@@ -20,12 +20,11 @@ export default async function Hero() {
         Doar operatori licențiați ONJN • 18+ Joacă responsabil
       </p>
       <h1 className="mt-2 text-3xl font-extrabold tracking-tight md:text-4xl">
-        <span aria-hidden>⭐ </span>Top <span className="u-accent-text">Bonusuri</span> pentru
-        România — <span className="u-underline-hover">Verificate și Actualizate</span>
+        <span aria-hidden>⭐ </span>Top <span className="u-accent-text">Bonusuri</span> - <span className="u-underline-hover">Verificate și Actualizate</span>
       </h1>
       <p className="mx-auto mt-2 max-w-2xl text-sm opacity-80">
         Comparație rapidă, termeni clari, linkuri sigure. Unele oferte sunt{' '}
-        <span className="font-medium">sponsorizate</span> — le marcăm vizibil.
+        <span className="font-medium">sponsorizate</span> - le marcăm vizibil.
       </p>
       {/* Urgency indicators */}
       <div className="mt-2 flex items-center justify-center gap-3 text-xs opacity-80">
