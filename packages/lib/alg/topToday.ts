@@ -1,4 +1,5 @@
 import { prisma } from '../index';
+import { withCache } from '../cache';
 
 type RankInput = {
   offerId: string;
@@ -36,70 +37,80 @@ export function scoreOffer(i: RankInput, opts?: { halfLifeH?: number }) {
 }
 
 export async function getTopTodayOffers(limit = 6, windowHours = 72) {
-  const now = new Date();
-  const start = new Date(now.getTime() - windowHours * 36e5);
-  const start24 = new Date(now.getTime() - 24 * 36e5);
+  // Cache for 10 minutes since this is expensive and doesn't need real-time updates
+  return withCache(
+    `top-today-${limit}-${windowHours}`,
+    async () => {
+      const now = new Date();
+      const start = new Date(now.getTime() - windowHours * 36e5);
+      const start24 = new Date(now.getTime() - 24 * 36e5);
 
-  const clicks = await prisma.clickEvent.groupBy({
-    by: ['offerId'],
-    where: { ts: { gte: start, lte: now } },
-    _count: { offerId: true },
-  });
-  const clicks24 = await prisma.clickEvent.groupBy({
-    by: ['offerId'],
-    where: { ts: { gte: start24, lte: now } },
-    _count: { offerId: true },
-  });
-  const imps = await (prisma as any).offerImpression.groupBy({
-    by: ['offerId'],
-    where: { ts: { gte: start, lte: now } },
-    _count: { offerId: true },
-  });
-  const impMap: Map<string, number> = new Map(
-    imps.map((i: any) => [i.offerId as string, i._count.offerId as number])
-  );
-  const clkMap: Map<string, number> = new Map(
-    clicks.map((c: any) => [c.offerId as string, c._count.offerId as number])
-  );
-  const clk24Map: Map<string, number> = new Map(
-    clicks24.map((c: any) => [c.offerId as string, c._count.offerId as number])
-  );
+      // Combine queries where possible to reduce database round trips
+      const [clicks, clicks24, imps, offers] = await Promise.all([
+        prisma.clickEvent.groupBy({
+          by: ['offerId'],
+          where: { ts: { gte: start, lte: now } },
+          _count: { offerId: true },
+        }),
+        prisma.clickEvent.groupBy({
+          by: ['offerId'],
+          where: { ts: { gte: start24, lte: now } },
+          _count: { offerId: true },
+        }),
+        (prisma as any).offerImpression.groupBy({
+          by: ['offerId'],
+          where: { ts: { gte: start, lte: now } },
+          _count: { offerId: true },
+        }),
+        prisma.offer.findMany({
+          where: {
+            isActive: true,
+            country: 'RO',
+            operator: { isLicensedRO: true },
+            AND: [
+              { OR: [{ startAt: null }, { startAt: { lte: now } }] },
+              { OR: [{ endAt: null }, { endAt: { gte: now } }] },
+            ],
+          },
+          include: { operator: true },
+          orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
+          take: 50, // Reduced from 100 to improve performance
+        }),
+      ]);
 
-  const offers = await prisma.offer.findMany({
-    where: {
-      isActive: true,
-      country: 'RO',
-      operator: { isLicensedRO: true },
-      AND: [
-        { OR: [{ startAt: null }, { startAt: { lte: now } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: now } }] },
-      ],
+      const impMap: Map<string, number> = new Map(
+        imps.map((i: any) => [i.offerId as string, i._count.offerId as number])
+      );
+      const clkMap: Map<string, number> = new Map(
+        clicks.map((c: any) => [c.offerId as string, c._count.offerId as number])
+      );
+      const clk24Map: Map<string, number> = new Map(
+        clicks24.map((c: any) => [c.offerId as string, c._count.offerId as number])
+      );
+
+      const scored: any[] = offers.map((o: any) => {
+        const clicks = clkMap.get(o.id) ?? 0;
+        const clicks24h = clk24Map.get(o.id) ?? 0;
+        const impressions = impMap.get(o.id) ?? 0;
+        const s = scoreOffer({
+          offerId: o.id,
+          operatorId: o.operatorId,
+          createdAt: o.createdAt,
+          priority: o.priority,
+          clicks,
+          impressions,
+        });
+        return { offer: o, clicks24h, ...s };
+      });
+
+      scored.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (a.offer.priority !== b.offer.priority) return a.offer.priority - b.offer.priority;
+        return b.offer.createdAt.getTime() - a.offer.createdAt.getTime();
+      });
+
+      return scored.slice(0, limit);
     },
-    include: { operator: true },
-    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-    take: 100,
-  });
-
-  const scored: any[] = offers.map((o: any) => {
-    const clicks = clkMap.get(o.id) ?? 0;
-    const clicks24h = clk24Map.get(o.id) ?? 0;
-    const impressions = impMap.get(o.id) ?? 0;
-    const s = scoreOffer({
-      offerId: o.id,
-      operatorId: o.operatorId,
-      createdAt: o.createdAt,
-      priority: o.priority,
-      clicks,
-      impressions,
-    });
-    return { offer: o, clicks24h, ...s };
-  });
-
-  scored.sort((a, b) => {
-    if (b.score !== a.score) return b.score - a.score;
-    if (a.offer.priority !== b.offer.priority) return a.offer.priority - b.offer.priority;
-    return b.offer.createdAt.getTime() - a.offer.createdAt.getTime();
-  });
-
-  return scored.slice(0, limit);
+    600 // 10 minutes cache for this expensive operation
+  );
 }

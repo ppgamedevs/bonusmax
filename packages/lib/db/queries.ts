@@ -1,20 +1,25 @@
 import prisma from './client';
 import { OfferType, Prisma } from '@prisma/client';
+import { withCache } from '../cache';
 
 export async function getActiveOffers(country = 'RO') {
-  return prisma.offer.findMany({
-    where: {
-      isActive: true,
-      country,
-      operator: { isLicensedRO: true },
-      AND: [
-        { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
-        { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
-      ],
-    },
-    include: { operator: true },
-    orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-  });
+  return withCache(
+    `active-offers-${country}`,
+    () => prisma.offer.findMany({
+      where: {
+        isActive: true,
+        country,
+        operator: { isLicensedRO: true },
+        AND: [
+          { OR: [{ startAt: null }, { startAt: { lte: new Date() } }] },
+          { OR: [{ endAt: null }, { endAt: { gte: new Date() } }] },
+        ],
+      },
+      include: { operator: true },
+      orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
+    }),
+    300 // 5 minutes cache
+  );
 }
 
 // Search: offers + operators

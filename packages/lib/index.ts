@@ -15,3 +15,4 @@ export * from './schemas';
 export * from './qa/content';
 export * from './db/analytics-lite';
 export * from './db/ab-lite';
+export * from './cache';

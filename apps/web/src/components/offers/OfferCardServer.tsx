@@ -61,9 +61,16 @@ export default function OfferCardServer({
       <div className="flex items-center gap-3">
         <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-lg bg-black/5 ring-1 ring-black/10 dark:bg-black/40 dark:ring-white/10">
           {logoUrl ? (
-            // Using standard img to avoid importing next/image in server-only leaf for simplicity
-            // Dimensions are reserved by container
-            <img src={logoUrl} alt={`Logo ${brand}`} width={40} height={40} className="object-contain" />
+            // Using standard img with loading="lazy" for better performance
+            <img 
+              src={logoUrl} 
+              alt={`Logo ${brand}`} 
+              width={40} 
+              height={40} 
+              className="object-contain" 
+              loading="lazy"
+              decoding="async"
+            />
           ) : (
             <div className="h-6 w-6 rounded bg-neutral-300 dark:bg-white/10" aria-hidden />
           )}
