@@ -135,10 +135,16 @@ export default async function Page({
               className="group rounded-xl border p-4 transition-colors border-neutral-200 bg-white hover:bg-neutral-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
             >
               <Link prefetch={false} href={`/ghiduri/${g.slug}`} className="block">
-                <div className="text-base font-semibold underline underline-offset-2 group-hover:decoration-2 text-neutral-900 dark:text-white">
+                <div
+                  className="text-base font-semibold underline underline-offset-2 group-hover:decoration-2 text-neutral-900 dark:text-white"
+                  style={{ minHeight: 24 }}
+                >
                   {highlight(g.title, q) as any}
                 </div>
-                <p className="mt-1 text-sm text-neutral-700 dark:text-zinc-200">
+                <p
+                  className="mt-1 text-sm text-neutral-700 dark:text-zinc-200"
+                  style={{ minHeight: 38 }}
+                >
                   {highlight(g.description || '', q) as any}
                 </p>
                 <div className="mt-2 flex items-center justify-between text-[11px] text-neutral-600 dark:text-zinc-300">

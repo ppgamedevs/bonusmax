@@ -279,7 +279,9 @@ export async function getGuideBySlug(slug: string) {
   }
 
   // Prefer MDX for clean formatting; fall back to simple renderer on error
+  const forceFallback = slug === 'rotiri-gratuite';
   try {
+    if (forceFallback) throw new Error('force-fallback');
     const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
       source: stripped,
       options: { parseFrontmatter: false, mdxOptions: { remarkPlugins: [remarkGfm] } },

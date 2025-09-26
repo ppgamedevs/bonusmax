@@ -90,10 +90,10 @@ export default function OfferCard({
       )}
       style={{
         // Reserve vertical space to reduce CLS on first render
-        minHeight: 320,
+        minHeight: 340,
         // Hint to the browser to skip rendering until needed, but reserve layout size
         contentVisibility: 'auto',
-        containIntrinsicSize: '320px',
+        containIntrinsicSize: '340px',
       }}
     >
       {/* hover shader subtil */}
@@ -139,10 +139,16 @@ export default function OfferCard({
 
       {/* Conținut */}
       <div className="mt-3 space-y-2">
-        <h3 className="text-lg font-extrabold leading-snug text-neutral-900 dark:text-neutral-50">
-          {title}
-        </h3>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">{terms}</p>
+        {/* Title with reserved height (approx two lines) */}
+        <div style={{ minHeight: 44 }}>
+          <h3 className="text-lg font-extrabold leading-snug text-neutral-900 dark:text-neutral-50">
+            {title}
+          </h3>
+        </div>
+        {/* Terms with reserved height (approx two lines) */}
+        <div style={{ minHeight: 36 }}>
+          <p className="text-sm text-neutral-600 dark:text-neutral-300">{terms}</p>
+        </div>
         {/* Secondary info with icons */}
         <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-neutral-500 dark:text-neutral-300">
           {(wr ?? null) && (
@@ -168,7 +174,7 @@ export default function OfferCard({
       </div>
 
       {/* Bottom: CTA + secundare */}
-      <div className="mt-4">
+      <div className="mt-4" style={{ minHeight: 70 }}>
         <Link
           href={ctaHref}
           aria-label="Revendică bonusul (Conținut comercial, 18+)"
@@ -179,7 +185,7 @@ export default function OfferCard({
           Revendică bonusul
         </Link>
 
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-2 flex items-center justify-between" style={{ minHeight: 18 }}>
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
             18+ • T&C • Publicitate
           </p>
