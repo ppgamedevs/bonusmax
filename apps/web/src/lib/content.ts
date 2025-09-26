@@ -1,7 +1,4 @@
-import remarkGfm from 'remark-gfm';
-import { compileMDX } from 'next-mdx-remote/rsc';
 import React from 'react';
-import mdxComponents from '@/mdx/components';
 
 export type GuideFrontmatter = {
   title: string;
@@ -216,32 +213,74 @@ export async function getGuideBySlug(slug: string) {
   
   const headings = extractHeadings(source);
 
-  try {
-    const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
-      source,
-      options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
-      components: mdxComponents,
+  // Lightweight rendering without MDX to avoid runtime issues
+  const stripped = source.replace(/^---[\s\S]*?---\n?/m, '');
+
+  function escapeHtml(s: string) {
+    return s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function slugifyHeading(t: string) {
+    return t
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
+  function simpleRender(md: string) {
+    // Convert Callout blocks to styled divs
+    let html = md.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?>[\s\S]*?<\/Callout>/g, (_m, type, title) => {
+      const klass = String(type) === 'warning' ? 'border-yellow-200 bg-yellow-50 text-yellow-900' :
+                   String(type) === 'success' ? 'border-green-200 bg-green-50 text-green-900' :
+                   String(type) === 'error' ? 'border-red-200 bg-red-50 text-red-900' :
+                   'border-blue-200 bg-blue-50 text-blue-900';
+      return `<div class="rounded-xl border p-4 ${klass}"><div class="font-semibold mb-2">${escapeHtml(title)}</div></div>`;
     });
 
-    return { content, frontmatter, headings };
-  } catch (err) {
-    console.error('[guides] MDX compile failed for slug:', slug, err);
-    // Safe fallback: render plain text content and minimal frontmatter
-    const fallbackFrontmatter: GuideFrontmatter = {
-      title: guideData.title,
-      description: guideData.description,
-      date: guideData.date,
-      slug: guideData.slug,
-      faqs: guideData.faqs,
-    };
+    // Remove FAQList component (render FAQs separately below if present)
+    html = html.replace(/<FAQList\s*\/>/g, '');
 
-    const FallbackContent = React.createElement(
-      'div',
-      { className: 'prose prose-invert max-w-none whitespace-pre-wrap' },
-      // Strip YAML frontmatter if present (between leading --- blocks)
-      source.replace(/^---[\s\S]*?---\n?/m, '')
-    );
+    // Headings
+    html = html.replace(/^###\s+(.+)$/gm, (_m, t) => `<h3 id="${slugifyHeading(String(t).trim())}">${escapeHtml(String(t).trim())}</h3>`);
+    html = html.replace(/^##\s+(.+)$/gm, (_m, t) => `<h2 id="${slugifyHeading(String(t).trim())}">${escapeHtml(String(t).trim())}</h2>`);
 
-    return { content: FallbackContent, frontmatter: fallbackFrontmatter, headings };
+    // Lists
+    html = html.replace(/(^-\s+.+(?:\n-\s+.+)*)/gm, (block) => {
+      const items = block.split('\n').map(l => l.replace(/^-\s+/, '').trim());
+      return `<ul>${items.map(it => `<li>${escapeHtml(it)}</li>`).join('')}</ul>`;
+    });
+
+    // Bold
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1<\/strong>');
+
+    // Paragraphs: wrap leftover lines into paragraphs
+    html = html
+      .split(/\n\n+/)
+      .map(chunk => /<h\d|<ul|<div/.test(chunk) ? chunk : `<p>${escapeHtml(chunk)}</p>`)
+      .join('');
+
+    return html;
   }
+
+  const html = simpleRender(stripped);
+
+  const contentEl = React.createElement('div', {
+    className: 'prose prose-invert max-w-none',
+    dangerouslySetInnerHTML: { __html: html },
+  });
+
+  const frontmatter: GuideFrontmatter = {
+    title: guideData.title,
+    description: guideData.description,
+    date: guideData.date,
+    slug: guideData.slug,
+    faqs: guideData.faqs,
+  };
+
+  return { content: contentEl, frontmatter, headings };
 }
