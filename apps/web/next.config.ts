@@ -53,8 +53,8 @@ const nextConfig: NextConfig = {
       })
     );
 
-    // Performance optimizations for production
-    if (!dev) {
+    // Performance optimizations for production (client only)
+    if (!dev && !isServer) {
       // Optimize chunks for better caching
       config.optimization = {
         ...config.optimization,
