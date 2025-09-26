@@ -3,7 +3,7 @@ import { OfferType, Prisma } from '@prisma/client';
 // Temporarily disabled for build compatibility
 // import { withCache, withBatchCache } from '../cache';
 
-export async function getActiveOffers(country = 'RO') {
+export async function getActiveOffers(country = 'RO', opts?: { offset?: number; limit?: number }) {
   // Return empty array during build time when DATABASE_URL is not available
   if (!process.env.DATABASE_URL) {
     return [];
@@ -11,6 +11,8 @@ export async function getActiveOffers(country = 'RO') {
   
   try {
     // Temporarily removed caching for build compatibility
+    const take = Math.max(1, Math.min(100, opts?.limit ?? 50));
+    const skip = Math.max(0, opts?.offset ?? 0);
     return executeQuery(client => client.offer.findMany({
       where: {
         isActive: true,
@@ -44,8 +46,9 @@ export async function getActiveOffers(country = 'RO') {
         }
       },
       orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
-      // Limit initial load for better performance
-      take: 50, // Reduced from 100 for faster loading
+      // Pagination for performance
+      skip,
+      take,
     }));
   } catch (error) {
     console.warn('Database connection failed, returning empty array');

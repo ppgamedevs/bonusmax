@@ -1,4 +1,7 @@
 import React from 'react';
+import remarkGfm from 'remark-gfm';
+import { compileMDX } from 'next-mdx-remote/rsc';
+import mdxComponents from '@/mdx/components';
 
 export type GuideFrontmatter = {
   title: string;
@@ -213,8 +216,10 @@ export async function getGuideBySlug(slug: string) {
   
   const headings = extractHeadings(source);
 
-  // Lightweight rendering without MDX to avoid runtime issues
-  const stripped = source.replace(/^---[\s\S]*?---\n?/m, '');
+  // Strip YAML frontmatter and the first H1 to avoid duplicate page title
+  const stripped = source
+    .replace(/^---[\s\S]*?---\n?/m, '')
+    .replace(/^#\s+.+\n?/, '');
 
   function escapeHtml(s: string) {
     return s
@@ -224,17 +229,32 @@ export async function getGuideBySlug(slug: string) {
   }
 
   function simpleRender(md: string) {
-    // Convert Callout blocks to styled divs
-    let html = md.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?>[\s\S]*?<\/Callout>/g, (_m, type, title) => {
-      const klass = String(type) === 'warning' ? 'border-yellow-200 bg-yellow-50 text-yellow-900' :
-                   String(type) === 'success' ? 'border-green-200 bg-green-50 text-green-900' :
-                   String(type) === 'error' ? 'border-red-200 bg-red-50 text-red-900' :
-                   'border-blue-200 bg-blue-50 text-blue-900';
-      return `<div class="rounded-xl border p-4 ${klass}"><div class="font-semibold mb-2">${escapeHtml(title)}</div></div>`;
-    });
+    let work = md.trim();
+
+    // Remove the first H1 from content (we already render a page title)
+    work = work.replace(/^#\s+.+\n?/, '');
+
+    // Convert Callout blocks to styled divs, preserving inner content
+    work = work.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?\s*>([\s\S]*?)<\/Callout>/g,
+      (_m, type, title, inner) => {
+        const klass = String(type) === 'warning' ? 'border-yellow-200 bg-yellow-50 text-yellow-900' :
+                     String(type) === 'success' ? 'border-green-200 bg-green-50 text-green-900' :
+                     String(type) === 'error' ? 'border-red-200 bg-red-50 text-red-900' :
+                     'border-blue-200 bg-blue-50 text-blue-900';
+        // Render inner content as simple paragraphs (bold supported below)
+        const innerEscaped = escapeHtml(String(inner).trim());
+        const innerHtml = innerEscaped
+          .split(/\n\n+/)
+          .map(chunk => `<p>${chunk.replace(/\n/g, '<br>')}</p>`) 
+          .join('');
+        return `<div class="rounded-xl border p-4 ${klass}">`+
+               `<div class="font-semibold mb-2">${escapeHtml(title)}</div>`+
+               `${innerHtml}</div>`;
+      }
+    );
 
     // Remove FAQList component (render FAQs separately below if present)
-    html = html.replace(/<FAQList\s*\/>/g, '');
+    let html = work.replace(/<FAQList\s*\/>/g, '');
 
     // Headings
     html = html.replace(/^###\s+(.+)$/gm, (_m, t) => `<h3 id="${slugifyHeading(String(t).trim())}">${escapeHtml(String(t).trim())}</h3>`);
@@ -258,20 +278,34 @@ export async function getGuideBySlug(slug: string) {
     return html;
   }
 
-  const html = simpleRender(stripped);
-
-  const contentEl = React.createElement('div', {
-    className: 'prose prose-invert max-w-none',
-    dangerouslySetInnerHTML: { __html: html },
-  });
-
-  const frontmatter: GuideFrontmatter = {
-    title: guideData.title,
-    description: guideData.description,
-    date: guideData.date,
-    slug: guideData.slug,
-    faqs: guideData.faqs,
-  };
-
-  return { content: contentEl, frontmatter, headings };
+  // Prefer MDX for clean formatting; fall back to simple renderer on error
+  try {
+    const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
+      source: stripped,
+      options: { parseFrontmatter: false, mdxOptions: { remarkPlugins: [remarkGfm] } },
+      components: mdxComponents,
+    });
+    return { content, frontmatter: {
+      title: guideData.title,
+      description: guideData.description,
+      date: guideData.date,
+      slug: guideData.slug,
+      faqs: guideData.faqs,
+    }, headings };
+  } catch (err) {
+    console.error('[guides] MDX compile failed (fallback to simple renderer):', slug, err);
+    const html = simpleRender(stripped);
+    const contentEl = React.createElement('div', {
+      className: 'prose prose-invert max-w-none',
+      dangerouslySetInnerHTML: { __html: html },
+    });
+    const frontmatter: GuideFrontmatter = {
+      title: guideData.title,
+      description: guideData.description,
+      date: guideData.date,
+      slug: guideData.slug,
+      faqs: guideData.faqs,
+    };
+    return { content: contentEl, frontmatter, headings };
+  }
 }

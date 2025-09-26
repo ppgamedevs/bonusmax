@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { defaultMetadata, absoluteUrl } from '@bonusmax/lib/seo';
 import { getActiveOffers, prisma } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';
+import LoadMoreOffers from '@/components/offers/LoadMoreOffers';
 import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
 import TopTodayHeader from '@/components/home/TopTodayHeader';
@@ -34,9 +35,9 @@ export default async function HomePage() {
 
   if (process.env.DATABASE_URL && prisma) {
     try {
-      // Database queries with optimized selects
+      // Database queries with optimized selects (limit initial payload)
       const results = await Promise.all([
-        getActiveOffers('RO'),
+        getActiveOffers('RO', { limit: 12 }),
         prisma.offer.findFirst({
           where: {
             isActive: true,
@@ -92,16 +93,18 @@ export default async function HomePage() {
         <TopTodayHeader />
       </div>
       <div className="cv-auto ci-360">
-        <Suspense fallback={<SkeletonCards n={6} />}>
-          <TopToday />
-        </Suspense>
-      </div>
       {/* Chapter 3: Comparison grid */}
       <section className="mx-auto mt-10 max-w-6xl px-4 cv-auto ci-1200">
         <h2 className="text-xl font-bold u-underline-hover">Toate ofertele recomandate</h2>
         <DisclosureBar />
         <div className="mt-4">
-          <OffersGrid offers={offers} />
+          {offers.length > 0 ? (
+            <OffersGrid offers={offers} />
+          ) : (
+            <div className="mt-4 text-center text-sm opacity-80">Nu sunt oferte active momentan.</div>
+          )}
+          {/* Lazy-load the rest of the offers after FCP */}
+          <LoadMoreOffers initialCount={offers.length || 12} limit={36} />
         </div>
         <p className="mt-4 text-[12px] opacity-70">
           Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
@@ -110,7 +113,6 @@ export default async function HomePage() {
       {/* Chapter 4: Recommended offers (promo placements) */}
       <div className="cv-auto ci-120">
         <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
-      </div>
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
       <div className="cv-auto ci-520">
