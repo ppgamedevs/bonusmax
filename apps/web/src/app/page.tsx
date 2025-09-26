@@ -5,7 +5,6 @@ import { getActiveOffers, prisma } from '@bonusmax/lib';
 import OffersGrid from '@/components/offers/OffersGrid';
 import DisclosureBar from '@/components/DisclosureBar';
 import Hero from '@/components/home/Hero';
-import { OffersGridSkeleton, HeroSkeleton } from '@/components/LayoutStability';
 import TopTodayHeader from '@/components/home/TopTodayHeader';
 import HeroOfferMockupServer from '@/components/home/HeroOfferMockupServer';
 import NextDynamic from 'next/dynamic';

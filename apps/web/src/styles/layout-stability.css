@@ -1,105 +1,37 @@
-/* Layout Stability Optimizations */
+/* Minimal Layout Stability - Critical CSS Only */
 
-/* Prevent layout shift with CSS containment */
-.layout-stable {
-  contain: layout style;
+/* Prevent image layout shift - most important */
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-/* Optimize grid layouts */
-.offers-grid {
-  contain: layout style;
-  /* Reserve space for grid items */
-  min-height: 280px;
+/* Ensure images have dimensions to prevent CLS */
+.offer-card img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
-/* Prevent image layout shift */
-.image-container {
-  contain: layout;
-  position: relative;
-  overflow: hidden;
+/* Basic grid stability without blocking render */
+.grid {
+  display: grid;
+  gap: 1.25rem;
 }
 
-.image-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Skeleton loading animations */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Prevent font loading layout shift */
-.font-stable {
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Prevent font loading CLS */
+body {
   font-display: swap;
-  text-rendering: optimizeSpeed;
-}
-
-/* Hero section stability */
-.hero-container {
-  contain: layout style;
-  min-height: 400px;
-}
-
-/* Card container stability */
-.card-container {
-  contain: layout style;
-  min-height: 200px;
-}
-
-/* Prevent CLS from dynamic content */
-.dynamic-content {
-  contain: layout;
-  min-height: 1px; /* Reserve minimal space */
-}
-
-/* Optimize for Core Web Vitals */
-.performance-optimized {
-  contain: layout style paint;
-  will-change: auto; /* Only when needed */
-}
-
-/* Reduce layout thrashing */
-.no-layout-shift {
-  transform: translateZ(0); /* Create stacking context */
-  backface-visibility: hidden;
-}
-
-/* Grid item stability */
-.grid-item {
-  contain: layout style;
-  min-height: 250px; /* Consistent height */
-}
-
-/* Loading state containers */
-.loading-container {
-  contain: layout style;
-  position: relative;
-}
-
-.loading-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

@@ -1,6 +1,5 @@
-import { memo, useMemo, Suspense } from 'react';
+import { memo, useMemo } from 'react';
 import OfferCard from './OfferCard';
-import { OffersGridSkeleton } from '../LayoutStability';
 
 interface OffersGridProps {
   offers: any[];
@@ -40,30 +39,16 @@ function OffersGrid({ offers, virtualScrolling = false, lazyLoad = true }: Offer
     [offers]
   );
 
-  // Show skeleton while loading to prevent layout shift
-  if (!offers || offers.length === 0) {
-    return <OffersGridSkeleton count={6} />;
-  }
-
-  // Grid with reserved space to prevent layout shift
+  // Simple grid without blocking optimizations
   return (
-    <Suspense fallback={<OffersGridSkeleton count={transformedOffers.length} />}>
-      <div 
-        className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
-        style={{
-          // Reserve minimum height to prevent layout shift
-          minHeight: `${Math.ceil(transformedOffers.length / 3) * 280}px`,
-          contain: 'layout style', // Optimize for layout stability
-        }}
-      >
-        {transformedOffers.map((offerData) => (
-          <OfferCard
-            key={offerData.id}
-            {...offerData}
-          />
-        ))}
-      </div>
-    </Suspense>
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {transformedOffers.map((offerData) => (
+        <OfferCard
+          key={offerData.id}
+          {...offerData}
+        />
+      ))}
+    </div>
   );
 }
 

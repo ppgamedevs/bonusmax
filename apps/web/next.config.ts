@@ -17,11 +17,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
 
-  // Experimental features for performance
+  // Minimal experimental features
   experimental: {
-    optimizePackageImports: ['lucide-react', '@vercel/analytics', 'framer-motion'],
-    optimizeCss: true,
-    scrollRestoration: true,
+    optimizePackageImports: ['lucide-react'],
   },
 
   // Enhanced image optimization
