@@ -1,5 +1,7 @@
 import remarkGfm from 'remark-gfm';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import React from 'react';
+import mdxComponents from '@/mdx/components';
 
 export type GuideFrontmatter = {
   title: string;
@@ -167,6 +169,19 @@ export async function getAllGuides(): Promise<Array<GuideFrontmatter & { file: s
     .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime());
 }
 
+// Lightweight helper: only read frontmatter/meta without compiling MDX
+export async function getGuideFrontmatterBySlug(slug: string) {
+  const guideData = guidesData.find(g => g.slug === slug);
+  if (!guideData) return null;
+  return {
+    title: guideData.title,
+    description: guideData.description,
+    slug: guideData.slug,
+    date: guideData.date,
+    faqs: guideData.faqs,
+  } as GuideFrontmatter;
+}
+
 export async function getGuideBySlug(slug: string) {
   const guideData = guidesData.find(g => g.slug === slug);
   if (!guideData) return null;
@@ -201,11 +216,32 @@ export async function getGuideBySlug(slug: string) {
   
   const headings = extractHeadings(source);
 
-  const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
-    source,
-    options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
-    components: (await import('@/mdx/components')).default,
-  });
+  try {
+    const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
+      source,
+      options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
+      components: mdxComponents,
+    });
 
-  return { content, frontmatter, headings };
+    return { content, frontmatter, headings };
+  } catch (err) {
+    console.error('[guides] MDX compile failed for slug:', slug, err);
+    // Safe fallback: render plain text content and minimal frontmatter
+    const fallbackFrontmatter: GuideFrontmatter = {
+      title: guideData.title,
+      description: guideData.description,
+      date: guideData.date,
+      slug: guideData.slug,
+      faqs: guideData.faqs,
+    };
+
+    const FallbackContent = React.createElement(
+      'div',
+      { className: 'prose prose-invert max-w-none whitespace-pre-wrap' },
+      // Strip YAML frontmatter if present (between leading --- blocks)
+      source.replace(/^---[\s\S]*?---\n?/m, '')
+    );
+
+    return { content: FallbackContent, frontmatter: fallbackFrontmatter, headings };
+  }
 }

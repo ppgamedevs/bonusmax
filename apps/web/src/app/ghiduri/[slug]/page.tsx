@@ -12,23 +12,40 @@ type PageParams = { slug: string };
 export async function generateMetadata(
   { params }: { params: Promise<PageParams> }
 ): Promise<Metadata> {
-  const { slug } = await params;
-  const guide = await getGuideBySlug(slug);
-  if (!guide) return defaultMetadata({ title: 'Ghiduri' });
-  const { frontmatter } = guide;
-  return defaultMetadata({
-    title: frontmatter.title || 'Ghid',
-    description: frontmatter.description,
-    alternates: { canonical: absoluteUrl(`/ghiduri/${frontmatter.slug || slug}`) },
-  });
+  try {
+    const { slug } = await params;
+    const guide = await getGuideBySlug(slug);
+    if (!guide) return defaultMetadata({ title: 'Ghiduri' });
+    const { frontmatter } = guide;
+    return defaultMetadata({
+      title: frontmatter.title || 'Ghid',
+      description: frontmatter.description,
+      alternates: { canonical: absoluteUrl(`/ghiduri/${frontmatter.slug || slug}`) },
+    });
+  } catch {
+    return defaultMetadata({ title: 'Ghiduri' });
+  }
 }
 
 export default async function Page({ params }: { params: Promise<PageParams> }) {
   const { slug } = await params;
-  const guide = await getGuideBySlug(slug);
-  if (!guide) return notFound();
-
-  const { content, frontmatter, headings } = guide;
+  let content: any = null;
+  let frontmatter: any = null;
+  let headings: Array<{ id: string; text: string; level: 2 | 3 }> = [];
+  try {
+    const guide = await getGuideBySlug(slug);
+    if (!guide) return notFound();
+    ({ content, frontmatter, headings } = guide as any);
+  } catch (err) {
+    // Render a safe fallback instead of 500
+    console.error('[guides] rendering failed for', slug, err);
+    frontmatter = { title: 'Ghid indisponibil', description: 'Ne pare rău, conținutul nu poate fi afișat acum.' };
+    content = (
+      <div className="rounded border border-red-200 bg-red-50 p-4 text-red-900 dark:border-red-800 dark:bg-red-900/20 dark:text-red-100">
+        Conținutul ghidului nu poate fi afișat momentan. Încearcă din nou mai târziu.
+      </div>
+    );
+  }
   const breadcrumbLd = jsonLdBreadcrumb([
     { name: 'Acasă', url: absoluteUrl('/') },
     { name: 'Ghiduri', url: absoluteUrl('/ghiduri') },
