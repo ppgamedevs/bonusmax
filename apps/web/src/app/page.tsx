@@ -89,12 +89,19 @@ export default async function HomePage() {
       <div className="cv-auto ci-120">
         <PromoStrip slot="HOME_TOP" title="Sponsored pe homepage" />
       </div>
+      
+      {/* Top Today section */}
       <div className="cv-auto ci-80">
         <TopTodayHeader />
       </div>
       <div className="cv-auto ci-360">
+        <Suspense fallback={<SkeletonCards />}>
+          <TopToday />
+        </Suspense>
+      </div>
+
       {/* Chapter 3: Comparison grid */}
-      <section className="mx-auto mt-10 max-w-6xl px-4 cv-auto ci-1200">
+      <section className="mx-auto mt-10 max-w-6xl px-4">
         <h2 className="text-xl font-bold u-underline-hover">Toate ofertele recomandate</h2>
         <DisclosureBar />
         <div className="mt-4">
@@ -110,7 +117,6 @@ export default async function HomePage() {
           Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
         </p>
       </section>
-      </div>
       {/* Chapter 4: Recommended offers (promo placements) */}
       <div className="cv-auto ci-120">
         <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
