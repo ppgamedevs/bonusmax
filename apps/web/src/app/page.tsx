@@ -110,9 +110,11 @@ export default async function HomePage() {
           Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
         </p>
       </section>
+      </div>
       {/* Chapter 4: Recommended offers (promo placements) */}
       <div className="cv-auto ci-120">
         <PromoStrip slot="OPERATOR_TOP" title="Recomandările noastre" />
+      </div>
       {/* Chapter 5: Trust & Safety (moved above, removed here) */}
       {/* Chapter 6: Guides */}
       <div className="cv-auto ci-520">
