@@ -5,7 +5,7 @@ import OffersGrid from "./OffersGrid";
 
 type Offer = any;
 
-export default function LoadMoreOffers({ initialCount = 12, limit = 36 }: { initialCount?: number; limit?: number }) {
+export default function LoadMoreOffers({ initialCount = 50, limit = 50 }: { initialCount?: number; limit?: number }) {
   const [offers, setOffers] = useState<Offer[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);

@@ -231,9 +231,6 @@ export async function getGuideBySlug(slug: string) {
   function simpleRender(md: string) {
     let work = md.trim();
 
-    // Remove the first H1 from content (we already render a page title)
-    work = work.replace(/^#\s+.+\n?/, '');
-
     // Convert Callout blocks to styled divs, preserving inner content
     work = work.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?\s*>([\s\S]*?)<\/Callout>/g,
       (_m, type, title, inner) => {
@@ -279,9 +276,7 @@ export async function getGuideBySlug(slug: string) {
   }
 
   // Prefer MDX for clean formatting; fall back to simple renderer on error
-  const forceFallback = slug === 'rotiri-gratuite';
   try {
-    if (forceFallback) throw new Error('force-fallback');
     const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
       source: stripped,
       options: { parseFrontmatter: false, mdxOptions: { remarkPlugins: [remarkGfm] } },

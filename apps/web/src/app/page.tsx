@@ -35,9 +35,9 @@ export default async function HomePage() {
 
   if (process.env.DATABASE_URL && prisma) {
     try {
-      // Database queries with optimized selects (limit initial payload)
+      // Database queries with optimized selects (balanced payload)
       const results = await Promise.all([
-        getActiveOffers('RO', { limit: 12 }),
+        getActiveOffers('RO', { limit: 50 }),
         prisma.offer.findFirst({
           where: {
             isActive: true,
@@ -103,8 +103,8 @@ export default async function HomePage() {
           ) : (
             <div className="mt-4 text-center text-sm opacity-80">Nu sunt oferte active momentan.</div>
           )}
-          {/* Lazy-load the rest of the offers after FCP. If SSR returned 0, fetch from offset 0. */}
-          <LoadMoreOffers initialCount={offers.length} limit={36} />
+          {/* Lazy-load additional offers after FCP if there are more than 50 */}
+          {offers.length >= 50 && <LoadMoreOffers initialCount={offers.length} limit={50} />}
         </div>
         <p className="mt-4 text-[12px] opacity-70">
           Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
