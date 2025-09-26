@@ -1,10 +1,8 @@
-'use client';
 import React from 'react';
 
 function slugify(text: string) {
   return String(text)
     .toLowerCase()
-    .replace(/[^a-z0-9ăâîșțĂÂÎȘȚ -]/gi, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
 }
