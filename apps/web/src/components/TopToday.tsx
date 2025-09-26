@@ -3,7 +3,7 @@ import TopTodayCarousel from './home/TopTodayCarousel';
 import OfferCardServer from './offers/OfferCardServer';
 
 export default async function TopToday() {
-  const top = await getTopTodayOffers(9, 72);
+  const top = await getTopTodayOffers(12, 72);
   const items = top.map((t: any) => ({ offer: t.offer, clicks24h: t.clicks24h || 0 }));
   return (
     <section id="topul-de-azi" className="mx-auto mt-6 md:mt-8 max-w-6xl px-4">

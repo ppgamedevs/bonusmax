@@ -37,7 +37,7 @@ export function scoreOffer(i: RankInput, opts?: { halfLifeH?: number }) {
   return { score, ctr, clicks: i.clicks, impressions: i.impressions, recency: recencyTerm };
 }
 
-export async function getTopTodayOffers(limit = 6, windowHours = 72) {
+export async function getTopTodayOffers(limit = 9, windowHours = 72) {
   // Return empty array during build time when DATABASE_URL is not available
   if (!process.env.DATABASE_URL) {
     return [];

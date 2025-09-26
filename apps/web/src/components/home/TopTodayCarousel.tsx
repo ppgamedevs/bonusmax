@@ -22,10 +22,24 @@ export default function TopTodayCarousel({ id, children }: { id: string; childre
         </div>
       </div>
 
-      {/* nav arrows (wired by client enhancer) */}
-      <div className="pointer-events-none absolute inset-y-0 left-1 right-1 flex items-center justify-between">
-        <button id={`${id}-left`} type="button" aria-label="Scroll left" className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/80 text-black text-xl shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/80 dark:text-white">‹</button>
-        <button id={`${id}-right`} type="button" aria-label="Scroll right" className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/80 text-black text-xl shadow-sm backdrop-blur hover:bg-white focus-accent dark:bg-neutral-800/80 dark:text-white">›</button>
+      {/* nav arrows (improved styling) */}
+      <div className="pointer-events-none absolute inset-y-0 left-2 right-2 flex items-center justify-between">
+        <button 
+          id={`${id}-left`} 
+          type="button" 
+          aria-label="Scroll left" 
+          className="pointer-events-auto grid h-12 w-12 place-items-center rounded-full border-2 border-white/20 bg-white/90 text-neutral-800 text-2xl font-bold shadow-lg backdrop-blur-sm hover:bg-white hover:border-white/40 hover:shadow-xl focus-accent transition-all duration-200 dark:bg-neutral-900/90 dark:text-white dark:border-neutral-700/50 dark:hover:bg-neutral-800"
+        >
+          ‹
+        </button>
+        <button 
+          id={`${id}-right`} 
+          type="button" 
+          aria-label="Scroll right" 
+          className="pointer-events-auto grid h-12 w-12 place-items-center rounded-full border-2 border-white/20 bg-white/90 text-neutral-800 text-2xl font-bold shadow-lg backdrop-blur-sm hover:bg-white hover:border-white/40 hover:shadow-xl focus-accent transition-all duration-200 dark:bg-neutral-900/90 dark:text-white dark:border-neutral-700/50 dark:hover:bg-neutral-800"
+        >
+          ›
+        </button>
       </div>
 
       {/* Minimal client-side behavior for arrows */}

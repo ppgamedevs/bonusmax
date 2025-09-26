@@ -34,10 +34,24 @@ export default function LoadMoreOffers({ initialCount = 50, limit = 50 }: { init
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="h-[340px] rounded-2xl border border-white/10 bg-white/5 dark:bg-white/5" />
-        ))}
+      <div className="mt-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="h-[340px] rounded-2xl border border-white/10 bg-white/5 dark:bg-white/5 animate-pulse">
+              <div className="p-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-lg bg-white/10" />
+                  <div className="h-4 w-24 rounded bg-white/10" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-6 w-3/4 rounded bg-white/10" />
+                  <div className="h-4 w-1/2 rounded bg-white/10" />
+                </div>
+                <div className="mt-6 h-11 w-full rounded-xl bg-white/10" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

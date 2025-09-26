@@ -113,6 +113,11 @@ export default async function HomePage() {
           {/* Lazy-load additional offers after FCP if there are more than 50 */}
           {offers.length >= 50 && <LoadMoreOffers initialCount={offers.length} limit={50} />}
         </div>
+        <div className="mt-6 text-center">
+          <a href="/toate-ofertele" className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2 text-sm font-medium hover:bg-white/10 focus-accent transition-colors">
+            Vezi toate ofertele →
+          </a>
+        </div>
         <p className="mt-4 text-[12px] opacity-70">
           Unele oferte sunt sponsorizate. Marcăm clar toate plasările. 18+
         </p>
