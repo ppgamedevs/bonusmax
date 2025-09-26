@@ -223,15 +223,6 @@ export async function getGuideBySlug(slug: string) {
       .replace(/>/g, '&gt;');
   }
 
-  function slugifyHeading(t: string) {
-    return t
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-  }
-
   function simpleRender(md: string) {
     // Convert Callout blocks to styled divs
     let html = md.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?>[\s\S]*?<\/Callout>/g, (_m, type, title) => {
