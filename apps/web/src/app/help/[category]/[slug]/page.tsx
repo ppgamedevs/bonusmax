@@ -26,10 +26,11 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: { params: Promise<{ category: string; slug: string }> }) {
-  const { category, slug } = await params;
-  const a = helpArticles.find((x) => x.category === category && x.slug === slug);
-  const cat = helpCategories.find((c) => c.slug === category);
-  if (!a || !cat) return notFound();
+  try {
+    const { category, slug } = await params;
+    const a = helpArticles.find((x) => x.category === category && x.slug === slug);
+    const cat = helpCategories.find((c) => c.slug === category);
+    if (!a || !cat) return notFound();
 
   // Extract H2/H3 headings for TOC
   function extractHeadings(md: string): Heading[] {
@@ -51,46 +52,113 @@ export default async function Page({ params }: { params: Promise<{ category: str
   }
   const headings = extractHeadings(a.content);
 
-  // Compile MDX with error handling
-  let content: React.ReactElement;
-  try {
-    const result = await compileMDX<{}>(
-      {
-        source: a.content,
-        options: { parseFrontmatter: false },
-        components: (await import('../../../../mdx/components')).default,
-      }
-    );
-    content = result.content;
-  } catch (err) {
-    console.error('[help] MDX compilation failed for', category, slug, err);
-    // Fallback to simple HTML rendering
-    const React = (await import('react')).default;
-    const simpleHtml = a.content
-      .replace(/^#\s+(.+)$/gm, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
-      .replace(/^##\s+(.+)$/gm, '<h2 class="text-xl font-semibold mt-6 mb-3">$1</h2>')
-      .replace(/^###\s+(.+)$/gm, '<h3 class="text-lg font-medium mt-4 mb-2">$1</h3>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/<Callout\s+type="?(\w+)"?\s+title="?([^"]+)"?\s*>([\s\S]*?)<\/Callout>/g, 
-        (_, type, title, inner) => {
-          const bgClass = type === 'warning' ? 'bg-yellow-50 border-yellow-200 text-yellow-900' :
-                         type === 'error' ? 'bg-red-50 border-red-200 text-red-900' :
-                         type === 'success' ? 'bg-green-50 border-green-200 text-green-900' :
-                         'bg-blue-50 border-blue-200 text-blue-900';
-          return `<div class="rounded-lg border p-4 my-4 ${bgClass}"><div class="font-semibold mb-2">${title}</div><div>${inner}</div></div>`;
-        })
-      .replace(/<ButtonLink\s+href="([^"]+)"\s*>([^<]+)<\/ButtonLink>/g, 
-        '<a href="$1" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">$2</a>')
-      .split('\n\n')
-      .map(p => p.trim() ? (p.startsWith('<') ? p : `<p class="mb-4">${p}</p>`) : '')
-      .filter(Boolean)
-      .join('\n');
+    // Compile MDX with comprehensive error handling
+    let content: React.ReactElement;
     
-    content = React.createElement('div', {
-      className: 'prose prose-neutral dark:prose-invert max-w-none',
-      dangerouslySetInnerHTML: { __html: simpleHtml }
-    });
-  }
+    // Force simple renderer for legal pages to avoid MDX issues
+    const forceSimple = category === 'legal-conformitate';
+    
+    try {
+      if (forceSimple) throw new Error('force-simple-renderer');
+      
+      // Try to import components safely
+      let mdxComponents;
+      try {
+        mdxComponents = (await import('../../../../mdx/components')).default;
+      } catch (componentErr) {
+        console.warn('[help] MDX components import failed, using empty components', componentErr);
+        mdxComponents = {};
+      }
+      
+      const result = await compileMDX<{}>(
+        {
+          source: a.content,
+          options: { parseFrontmatter: false },
+          components: mdxComponents,
+        }
+      );
+      content = result.content;
+    } catch (err) {
+      console.error('[help] MDX compilation failed for', category, slug, err);
+      // Fallback to simple HTML rendering
+      try {
+        const React = (await import('react')).default;
+        let processedContent = a.content;
+        
+        // Handle tables first
+        processedContent = processedContent.replace(
+          /\|(.+)\|\n\|[-\s|]+\|\n((?:\|.+\|\n?)+)/g,
+          (match: string, header: string, rows: string) => {
+            const headerCells = header.split('|').map((cell: string) => cell.trim()).filter(Boolean);
+            const rowsArray = rows.trim().split('\n').map((row: string) => 
+              row.split('|').map((cell: string) => cell.trim()).filter(Boolean)
+            );
+            
+            let table = '<table class="min-w-full border-collapse border border-gray-300 my-4">';
+            table += '<thead><tr>';
+            headerCells.forEach((cell: string) => {
+              table += `<th class="border border-gray-300 px-4 py-2 bg-gray-50 font-semibold">${cell}</th>`;
+            });
+            table += '</tr></thead><tbody>';
+            
+            rowsArray.forEach((row: string[]) => {
+              table += '<tr>';
+              row.forEach((cell: string) => {
+                table += `<td class="border border-gray-300 px-4 py-2">${cell}</td>`;
+              });
+              table += '</tr>';
+            });
+            
+            table += '</tbody></table>';
+            return table;
+          }
+        );
+        
+        // Process other markdown elements
+        const simpleHtml = processedContent
+          .replace(/^#\s+(.+)$/gm, '<h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">$1</h1>')
+          .replace(/^##\s+(.+)$/gm, '<h2 class="text-xl font-semibold mt-6 mb-3 text-gray-900 dark:text-white">$1</h2>')
+          .replace(/^###\s+(.+)$/gm, '<h3 class="text-lg font-medium mt-4 mb-2 text-gray-900 dark:text-white">$1</h3>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+          .replace(/<Callout\s+type="?(\w+)"?\s+title="?([^"]+)"?\s*>([\s\S]*?)<\/Callout>/g, 
+            (_, type, title, inner) => {
+              const bgClass = type === 'warning' ? 'bg-yellow-50 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-600 dark:text-yellow-100' :
+                             type === 'error' ? 'bg-red-50 border-red-200 text-red-900 dark:bg-red-900/20 dark:border-red-600 dark:text-red-100' :
+                             type === 'success' ? 'bg-green-50 border-green-200 text-green-900 dark:bg-green-900/20 dark:border-green-600 dark:text-green-100' :
+                             'bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-600 dark:text-blue-100';
+              return `<div class="rounded-lg border p-4 my-4 ${bgClass}"><div class="font-semibold mb-2">${title}</div><div>${inner.trim()}</div></div>`;
+            })
+          .replace(/<ButtonLink\s+href="([^"]+)"\s*>([^<]+)<\/ButtonLink>/g, 
+            '<a href="$1" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors no-underline">$2</a>')
+          .split('\n\n')
+          .map(p => {
+            const trimmed = p.trim();
+            if (!trimmed) return '';
+            if (trimmed.startsWith('<')) return trimmed;
+            // Handle list items
+            if (trimmed.startsWith('- ')) {
+              const items = trimmed.split('\n').filter(line => line.trim().startsWith('- '));
+              const listItems = items.map(item => `<li class="mb-1">${item.substring(2).trim()}</li>`).join('');
+              return `<ul class="list-disc list-inside mb-4 space-y-1">${listItems}</ul>`;
+            }
+            return `<p class="mb-4 text-gray-700 dark:text-gray-300">${trimmed}</p>`;
+          })
+          .filter(Boolean)
+          .join('\n');
+        
+        content = React.createElement('div', {
+          className: 'prose prose-neutral dark:prose-invert max-w-none',
+          dangerouslySetInnerHTML: { __html: simpleHtml }
+        });
+      } catch (fallbackErr) {
+        console.error('[help] Fallback rendering also failed for', category, slug, fallbackErr);
+        // Ultimate fallback - just show the raw content
+        const React = (await import('react')).default;
+        content = React.createElement('div', {
+          className: 'prose prose-neutral dark:prose-invert max-w-none',
+        }, React.createElement('p', { className: 'text-red-600' }, 'Content temporarily unavailable. Please try again later.'));
+      }
+    }
 
   const breadcrumbLd = jsonLdBreadcrumb([
     { name: 'Acasă', url: absoluteUrl('/') },
@@ -185,4 +253,16 @@ export default async function Page({ params }: { params: Promise<{ category: str
       <BackToTop />
     </main>
   );
+  } catch (pageErr) {
+    console.error('[help] Page rendering failed completely for', pageErr);
+    // Ultimate fallback page
+    return (
+      <main className="mx-auto max-w-6xl px-4 py-10">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-900 dark:border-red-600 dark:bg-red-900/20 dark:text-red-100">
+          <h1 className="text-xl font-bold mb-2">Page Temporarily Unavailable</h1>
+          <p>We're experiencing technical difficulties. Please try again later.</p>
+        </div>
+      </main>
+    );
+  }
 }
