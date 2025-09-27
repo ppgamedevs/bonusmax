@@ -1,5 +1,5 @@
 export const dynamic = 'force-static';
-export const revalidate = 600; // 10 minutes - guides don't change often
+export const revalidate = 3600; // 1 hour - guides rarely change
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { absoluteUrl, defaultMetadata, jsonLdBreadcrumb } from '@bonusmax/lib';
@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: Promise<PageParams> }) 
   ]);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <main className="mx-auto max-w-6xl px-4 py-10 content-stable hydration-stable">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {Array.isArray(frontmatter.faqs) && frontmatter.faqs.length > 0 ? (
         <JsonLdFaq qa={frontmatter.faqs} />
@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: Promise<PageParams> }) 
             </nav>
           </div>
         </aside>
-        <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-h1:text-3xl prose-h1:font-bold prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed prose-p:mb-6 prose-strong:font-semibold prose-strong:text-neutral-900 dark:prose-strong:text-white prose-ul:my-6 prose-li:my-2">
+        <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-h1:text-3xl prose-h1:font-bold prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed prose-p:mb-6 prose-strong:font-semibold prose-strong:text-neutral-900 dark:prose-strong:text-white prose-ul:my-6 prose-li:my-2 font-stable transition-stable">
           {content}
         </article>
       </div>
