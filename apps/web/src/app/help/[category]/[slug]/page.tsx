@@ -1,5 +1,5 @@
 export const dynamic = 'force-static';
-export const revalidate = 600; // 10 minutes - help content doesn't change often
+export const revalidate = 3600; // 1 hour - help content rarely changes
 
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -51,13 +51,46 @@ export default async function Page({ params }: { params: Promise<{ category: str
   }
   const headings = extractHeadings(a.content);
 
-  const { content } = await compileMDX<{}>(
-    {
-      source: a.content,
-      options: { parseFrontmatter: false },
-      components: (await import('../../../../mdx/components')).default,
-    }
-  );
+  // Compile MDX with error handling
+  let content: React.ReactElement;
+  try {
+    const result = await compileMDX<{}>(
+      {
+        source: a.content,
+        options: { parseFrontmatter: false },
+        components: (await import('../../../../mdx/components')).default,
+      }
+    );
+    content = result.content;
+  } catch (err) {
+    console.error('[help] MDX compilation failed for', category, slug, err);
+    // Fallback to simple HTML rendering
+    const React = (await import('react')).default;
+    const simpleHtml = a.content
+      .replace(/^#\s+(.+)$/gm, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
+      .replace(/^##\s+(.+)$/gm, '<h2 class="text-xl font-semibold mt-6 mb-3">$1</h2>')
+      .replace(/^###\s+(.+)$/gm, '<h3 class="text-lg font-medium mt-4 mb-2">$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/<Callout\s+type="?(\w+)"?\s+title="?([^"]+)"?\s*>([\s\S]*?)<\/Callout>/g, 
+        (_, type, title, inner) => {
+          const bgClass = type === 'warning' ? 'bg-yellow-50 border-yellow-200 text-yellow-900' :
+                         type === 'error' ? 'bg-red-50 border-red-200 text-red-900' :
+                         type === 'success' ? 'bg-green-50 border-green-200 text-green-900' :
+                         'bg-blue-50 border-blue-200 text-blue-900';
+          return `<div class="rounded-lg border p-4 my-4 ${bgClass}"><div class="font-semibold mb-2">${title}</div><div>${inner}</div></div>`;
+        })
+      .replace(/<ButtonLink\s+href="([^"]+)"\s*>([^<]+)<\/ButtonLink>/g, 
+        '<a href="$1" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">$2</a>')
+      .split('\n\n')
+      .map(p => p.trim() ? (p.startsWith('<') ? p : `<p class="mb-4">${p}</p>`) : '')
+      .filter(Boolean)
+      .join('\n');
+    
+    content = React.createElement('div', {
+      className: 'prose prose-neutral dark:prose-invert max-w-none',
+      dangerouslySetInnerHTML: { __html: simpleHtml }
+    });
+  }
 
   const breadcrumbLd = jsonLdBreadcrumb([
     { name: 'Acasă', url: absoluteUrl('/') },
@@ -82,7 +115,7 @@ export default async function Page({ params }: { params: Promise<{ category: str
   const next = idx >= 0 && idx < siblings.length - 1 ? siblings[idx + 1] : null;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <main className="mx-auto max-w-6xl px-4 py-10 content-stable hydration-stable">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {Array.isArray(a.faqs) && a.faqs.length > 0 ? <JsonLdFaq qa={a.faqs} /> : null}
 
@@ -105,7 +138,7 @@ export default async function Page({ params }: { params: Promise<{ category: str
         <aside className="hidden md:block">
           <ArticleTOC headings={headings} />
         </aside>
-        <article className="prose prose-invert max-w-none">
+        <article className="prose prose-neutral dark:prose-invert max-w-none font-stable transition-stable">
           {content}
           <hr className="my-6 border-white/10" />
           <nav className="flex items-center justify-between text-sm">
