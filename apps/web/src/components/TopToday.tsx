@@ -1,7 +1,7 @@
 import { getTopTodayOffers } from '@bonusmax/lib';
 import TopTodayCarousel from './home/TopTodayCarousel';
 import OfferCardServer from './offers/OfferCardServer';
-import { Suspense } from 'react';
+// import { Suspense } from 'react'; // Temporarily commented out
 
 // Optimized component with better performance
 function TopTodayContent({ items }: { items: any[] }) {
@@ -70,9 +70,7 @@ export default async function TopToday() {
     
     return (
       <section id="topul-de-azi" className="mx-auto mt-6 md:mt-8 max-w-6xl px-4 content-stable">
-        <Suspense fallback={<TopTodayLoading />}>
-          <TopTodayContent items={items} />
-        </Suspense>
+        <TopTodayContent items={items} />
       </section>
     );
   } catch (error) {

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getActiveOffers } from '@bonusmax/lib';
 
 export const revalidate = 300; // 5 minutes
-export const dynamic = 'force-dynamic'; // Enable ISR
+// export const dynamic = 'force-dynamic'; // Commented out to avoid build issues
 
 // Add response headers for better caching
 const CACHE_HEADERS = {

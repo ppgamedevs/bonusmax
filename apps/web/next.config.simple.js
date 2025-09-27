@@ -1,13 +1,13 @@
-import type { NextConfig } from 'next';
+/** @type {import('next').NextConfig} */
 
 // Polyfill for server-side rendering
 if (typeof globalThis.self === 'undefined') {
-  (globalThis as any).self = globalThis;
+  globalThis.self = globalThis;
 }
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   
@@ -81,4 +81,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
