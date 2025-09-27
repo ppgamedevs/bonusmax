@@ -217,9 +217,21 @@ export async function getGuideBySlug(slug: string) {
   const headings = extractHeadings(source);
 
   // Strip YAML frontmatter and the first H1 to avoid duplicate page title
-  const stripped = source
-    .replace(/^---[\s\S]*?---\n?/m, '')
-    .replace(/^#\s+.+\n?/, '');
+  let stripped;
+  try {
+    stripped = source
+      .replace(/^---[\s\S]*?---\n?/m, '')
+      .replace(/^#\s+.+\n?/, '');
+    
+    // Ensure we have some content after stripping
+    if (!stripped.trim()) {
+      console.warn('[guides] No content after frontmatter stripping for', slug);
+      stripped = source; // Use original content as fallback
+    }
+  } catch (e) {
+    console.error('[guides] Error processing content for', slug, e);
+    stripped = source; // Use original content as fallback
+  }
 
   function escapeHtml(s: string) {
     return s
@@ -288,7 +300,7 @@ export async function getGuideBySlug(slug: string) {
   }
 
   // Prefer MDX for clean formatting; fall back to simple renderer on error
-  const forceSimple = slug === 'rotiri-gratuite';
+  const forceSimple = slug === 'rotiri-gratuite' || slug === 'bonus-fara-depunere';
   try {
     if (forceSimple) throw new Error('force-simple-renderer');
     const { content, frontmatter } = await compileMDX<GuideFrontmatter>({
@@ -305,18 +317,35 @@ export async function getGuideBySlug(slug: string) {
     }, headings };
   } catch (err) {
     console.error('[guides] MDX compile failed (fallback to simple renderer):', slug, err);
-    const html = simpleRender(stripped);
-    const contentEl = React.createElement('div', {
-      className: 'prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700 prose-h3:text-xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed prose-p:mb-4 prose-strong:font-semibold prose-strong:text-neutral-900 dark:prose-strong:text-white prose-ul:space-y-2 prose-ul:my-4 prose-li:relative',
-      dangerouslySetInnerHTML: { __html: html },
-    });
-    const frontmatter: GuideFrontmatter = {
-      title: guideData.title,
-      description: guideData.description,
-      date: guideData.date,
-      slug: guideData.slug,
-      faqs: guideData.faqs,
-    };
-    return { content: contentEl, frontmatter, headings };
+    try {
+      const html = simpleRender(stripped);
+      const contentEl = React.createElement('div', {
+        className: 'prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700 prose-h3:text-xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed prose-p:mb-4 prose-strong:font-semibold prose-strong:text-neutral-900 dark:prose-strong:text-white prose-ul:space-y-2 prose-ul:my-4 prose-li:relative',
+        dangerouslySetInnerHTML: { __html: html },
+      });
+      const frontmatter: GuideFrontmatter = {
+        title: guideData.title,
+        description: guideData.description,
+        date: guideData.date,
+        slug: guideData.slug,
+        faqs: guideData.faqs,
+      };
+      return { content: contentEl, frontmatter, headings };
+    } catch (simpleErr) {
+      console.error('[guides] Simple renderer also failed:', slug, simpleErr);
+      // Return minimal fallback content
+      const fallbackContent = React.createElement('div', {
+        className: 'prose prose-neutral dark:prose-invert max-w-none',
+      }, React.createElement('p', {}, 'Content temporarily unavailable. Please try again later.'));
+      
+      const frontmatter: GuideFrontmatter = {
+        title: guideData.title || 'Guide',
+        description: guideData.description || 'Guide content',
+        date: guideData.date,
+        slug: guideData.slug,
+        faqs: guideData.faqs || [],
+      };
+      return { content: fallbackContent, frontmatter, headings: [] };
+    }
   }
 }
