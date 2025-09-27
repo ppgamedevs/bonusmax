@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "pnpm -C apps/web dev",
     "build": "pnpm -C apps/web build",
+    "build:analyze": "pnpm -C apps/web build:analyze",
     "lint": "eslint .",
     "format": "prettier --write .",
     "db:push": "prisma db push --schema=./prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
     "db:seed": "tsx prisma/seed.ts",
-    "postinstall": "prisma generate --schema=./prisma/schema.prisma"
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma",
+    "perf:test": "node scripts/performance-test.js",
+    "perf:lighthouse": "lighthouse http://localhost:3000 --only-categories=performance --output=html --output-path=./lighthouse-report.html"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

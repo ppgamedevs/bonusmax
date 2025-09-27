@@ -234,42 +234,54 @@ export async function getGuideBySlug(slug: string) {
     // Convert Callout blocks to styled divs, preserving inner content
     work = work.replace(/<Callout\s+type="?(\w+)"?\s+title="?([^">]+)"?\s*>([\s\S]*?)<\/Callout>/g,
       (_m, type, title, inner) => {
-        const klass = String(type) === 'warning' ? 'border-yellow-200 bg-yellow-50 text-yellow-900' :
-                     String(type) === 'success' ? 'border-green-200 bg-green-50 text-green-900' :
-                     String(type) === 'error' ? 'border-red-200 bg-red-50 text-red-900' :
-                     'border-blue-200 bg-blue-50 text-blue-900';
-        // Render inner content as simple paragraphs (bold supported below)
-        const innerEscaped = escapeHtml(String(inner).trim());
-        const innerHtml = innerEscaped
-          .split(/\n\n+/)
-          .map(chunk => `<p>${chunk.replace(/\n/g, '<br>')}</p>`) 
-          .join('');
-        return `<div class="rounded-xl border p-4 ${klass}">`+
-               `<div class="font-semibold mb-2">${escapeHtml(title)}</div>`+
-               `${innerHtml}</div>`;
+        const klass = String(type) === 'warning' ? 'border-yellow-300 bg-yellow-50 text-yellow-900 dark:border-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-100' :
+                     String(type) === 'success' ? 'border-green-300 bg-green-50 text-green-900 dark:border-green-600 dark:bg-green-900/20 dark:text-green-100' :
+                     String(type) === 'error' ? 'border-red-300 bg-red-50 text-red-900 dark:border-red-600 dark:bg-red-900/20 dark:text-red-100' :
+                     'border-blue-300 bg-blue-50 text-blue-900 dark:border-blue-600 dark:bg-blue-900/20 dark:text-blue-100';
+        // Process inner content without escaping HTML to preserve formatting
+        const innerProcessed = String(inner).trim()
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold text
+          .replace(/\n\n+/g, '</p><p>') // Paragraph breaks
+          .replace(/\n/g, '<br>'); // Line breaks
+        const innerHtml = `<p>${innerProcessed}</p>`;
+        return `<div class="rounded-xl border p-4 mb-6 ${klass}">`+
+               `<div class="font-semibold mb-3 flex items-center gap-2">`+
+               `<span class="inline-block w-2 h-2 rounded-full bg-current opacity-60"></span>`+
+               `${escapeHtml(title)}</div>`+
+               `<div class="text-sm leading-relaxed">${innerHtml}</div></div>`;
       }
     );
 
     // Remove FAQList component (render FAQs separately below if present)
     let html = work.replace(/<FAQList\s*\/>/g, '');
 
-    // Headings
-    html = html.replace(/^###\s+(.+)$/gm, (_m, t) => `<h3 id="${slugifyHeading(String(t).trim())}">${escapeHtml(String(t).trim())}</h3>`);
-    html = html.replace(/^##\s+(.+)$/gm, (_m, t) => `<h2 id="${slugifyHeading(String(t).trim())}">${escapeHtml(String(t).trim())}</h2>`);
-
-    // Lists
-    html = html.replace(/(^-\s+.+(?:\n-\s+.+)*)/gm, (block) => {
-      const items = block.split('\n').map(l => l.replace(/^-\s+/, '').trim());
-      return `<ul>${items.map(it => `<li>${escapeHtml(it)}</li>`).join('')}</ul>`;
+    // Headings with better styling
+    html = html.replace(/^###\s+(.+)$/gm, (_m, t) => {
+      const id = slugifyHeading(String(t).trim());
+      return `<h3 id="${id}" class="text-xl font-bold text-neutral-900 dark:text-white mt-8 mb-4 scroll-mt-20">${escapeHtml(String(t).trim())}</h3>`;
+    });
+    html = html.replace(/^##\s+(.+)$/gm, (_m, t) => {
+      const id = slugifyHeading(String(t).trim());
+      return `<h2 id="${id}" class="text-2xl font-bold text-neutral-900 dark:text-white mt-10 mb-6 pb-2 border-b border-neutral-200 dark:border-neutral-700 scroll-mt-20">${escapeHtml(String(t).trim())}</h2>`;
     });
 
-    // Bold
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1<\/strong>');
+    // Lists with better styling
+    html = html.replace(/(^-\s+.+(?:\n-\s+.+)*)/gm, (block) => {
+      const items = block.split('\n').map(l => l.replace(/^-\s+/, '').trim().replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'));
+      return `<ul class="space-y-2 my-4 pl-6">${items.map(it => `<li class="relative"><span class="absolute -left-6 top-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full"></span>${it}</li>`).join('')}</ul>`;
+    });
 
-    // Paragraphs: wrap leftover lines into paragraphs
+    // Bold text
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-neutral-900 dark:text-white">$1</strong>');
+
+    // Paragraphs: wrap leftover lines into paragraphs with better styling
     html = html
       .split(/\n\n+/)
-      .map(chunk => /<h\d|<ul|<div/.test(chunk) ? chunk : `<p>${escapeHtml(chunk)}</p>`)
+      .map(chunk => {
+        if (/<h\d|<ul|<div/.test(chunk)) return chunk;
+        const processed = chunk.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-neutral-900 dark:text-white">$1</strong>');
+        return `<p class="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">${processed}</p>`;
+      })
       .join('');
 
     return html;
@@ -295,7 +307,7 @@ export async function getGuideBySlug(slug: string) {
     console.error('[guides] MDX compile failed (fallback to simple renderer):', slug, err);
     const html = simpleRender(stripped);
     const contentEl = React.createElement('div', {
-      className: 'prose prose-invert max-w-none',
+      className: 'prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-200 dark:prose-h2:border-neutral-700 prose-h3:text-xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4 prose-p:text-neutral-700 dark:prose-p:text-neutral-300 prose-p:leading-relaxed prose-p:mb-4 prose-strong:font-semibold prose-strong:text-neutral-900 dark:prose-strong:text-white prose-ul:space-y-2 prose-ul:my-4 prose-li:relative',
       dangerouslySetInnerHTML: { __html: html },
     });
     const frontmatter: GuideFrontmatter = {
